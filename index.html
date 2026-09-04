@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PLAYORA Mobile Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .wheel { transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1); }
+  </style>
+</head>
+<body class="bg-[#F6F7FB] text-[#21113F] pb-24">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-100 p-4 sticky top-0 z-40 flex justify-between items-center shadow-sm">
+    <span class="text-xl font-black text-[#7040E8] tracking-tight">PLAYORA</span>
+    <button class="bg-slate-100 px-3 py-1 rounded-full text-xs font-bold">🛒 কার্ট (০)</button>
+  </header>
+
+  <main class="p-4 max-w-sm mx-auto space-y-4">
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-[#7040E8] to-[#21113F] text-white p-5 rounded-[16px] shadow-lg">
+      <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-black px-2 py-0.5 rounded-full">Play • Win • Shop</span>
+      <h2 class="text-lg font-black mt-2 leading-snug">গেম খেলুন, ডিসকাউন্ট জিতে শপিং করুন!</h2>
+      <p class="text-xs text-purple-200 mt-1">প্রতিটি অর্ডারে সাশ্রয় করুন সর্বোচ্চ ১৫% পর্যন্ত।</p>
+    </div>
+
+    <!-- Spin & Win Widget -->
+    <div class="bg-white p-4 rounded-[16px] border border-slate-100 shadow-sm text-center">
+      <h3 class="text-sm font-black mb-1">🎡 স্পিন অ্যান্ড উইন</h3>
+      <p class="text-[11px] text-slate-500 mb-4">চাকা ঘুরিয়ে আনলক করুন আপনার ভাউচার</p>
+
+      <div class="relative w-48 h-48 mx-auto flex items-center justify-center my-2">
+        <div class="absolute -top-2 z-20 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[14px] border-t-[#21113F]"></div>
+        <div id="wheel" class="wheel w-full h-full rounded-full border-4 border-[#21113F] overflow-hidden relative shadow-inner">
+          <div class="w-full h-full bg-[#7040E8] flex items-center justify-center text-white text-xs font-black">
+            <span>🎁 ঘুরিয়ে দেখুন</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="spinBtn" onclick="playSpin()" class="w-full mt-3 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md">
+        স্পিন করুন
+      </button>
+
+      <div id="rewardBox" class="hidden mt-3 p-3 bg-amber-50 border border-dashed border-[#FFC94D] rounded-[10px]">
+        <span class="text-xs font-black text-[#17A66B]">🎉 অভিনন্দন! আপনি ১০% ছাড় পেয়েছেন</span>
+        <p class="text-[10px] text-slate-600 mt-0.5">ভাউচার কোড: <b class="text-black">PLAY-WIN10</b></p>
+      </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div>
+      <h3 class="text-xs font-black text-slate-700 uppercase mb-2">জনপ্রিয় পণ্যসমূহ</h3>
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="bg-white p-2.5 rounded-[16px] border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div class="aspect-square bg-slate-100 rounded-[10px] flex items-center justify-center text-2xl">🎧</div>
+          <h4 class="text-xs font-bold mt-2 line-clamp-1">Wireless Headset</h4>
+          <span class="text-xs font-black text-[#7040E8]">৳১,৪৫০</span>
+          <button class="mt-2 w-full py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[8px]">+ কার্ট</button>
+        </div>
+        <div class="bg-white p-2.5 rounded-[16px] border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div class="aspect-square bg-slate-100 rounded-[10px] flex items-center justify-center text-2xl">⌚</div>
+          <h4 class="text-xs font-bold mt-2 line-clamp-1">Smart Fit Watch</h4>
+          <span class="text-xs font-black text-[#7040E8]">৳২,২০০</span>
+          <button class="mt-2 w-full py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[8px]">+ কার্ট</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-100 px-4 py-2 flex justify-around shadow-lg">
+    <button class="flex flex-col items-center text-[#7040E8] font-bold text-[10px]">
+      <span class="text-lg">🏠</span>হোম
+    </button>
+    <button class="flex flex-col items-center text-slate-400 text-[10px]">
+      <span class="text-lg">🎮</span>গেমস
+    </button>
+    <button class="flex flex-col items-center text-slate-400 text-[10px]">
+      <span class="text-lg">🛍️</span>শপ
+    </button>
+    <button class="flex flex-col items-center text-slate-400 text-[10px]">
+      <span class="text-lg">📦</span>অর্ডারস
+    </button>
+  </nav>
+
+  <script>
+    let deg = 0;
+    function playSpin() {
+      const btn = document.getElementById('spinBtn');
+      const wheel = document.getElementById('wheel');
+      const reward = document.getElementById('rewardBox');
+      btn.disabled = true;
+      btn.innerText = 'ঘুরছে...';
+      deg += 1440 + Math.floor(Math.random() * 360);
+      wheel.style.transform = `rotate(${deg}deg)`;
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerText = 'আবার ঘুরান';
+        reward.classList.remove('hidden');
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
