@@ -3,33 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA Mobile Preview</title>
+  <title>PLAYORA - Mobile App</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; }
     .wheel { transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-[#F6F7FB] text-[#21113F] pb-24">
+<body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
 
   <!-- Header -->
   <header class="bg-white border-b border-slate-100 p-4 sticky top-0 z-40 flex justify-between items-center shadow-sm">
-    <span class="text-xl font-black text-[#7040E8] tracking-tight">PLAYORA</span>
-    <button class="bg-slate-100 px-3 py-1 rounded-full text-xs font-bold">🛒 কার্ট (০)</button>
+    <div class="flex items-center gap-2">
+      <span class="text-xl font-black text-[#7040E8] tracking-tight">PLAYORA</span>
+      <span class="text-[9px] bg-purple-100 text-[#7040E8] font-bold px-1.5 py-0.5 rounded">BETA</span>
+    </div>
+    <button onclick="switchTab('cart')" class="bg-slate-100 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 active:scale-95 transition">
+      <span>🛒 কার্ট</span>
+      <span id="cartCountBadge" class="bg-[#7040E8] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+    </button>
   </header>
 
-  <main class="p-4 max-w-sm mx-auto space-y-4">
+  <!-- ==================== TAB 1: HOME ==================== -->
+  <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
     <!-- Hero Banner -->
     <div class="bg-gradient-to-r from-[#7040E8] to-[#21113F] text-white p-5 rounded-[16px] shadow-lg">
       <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-black px-2 py-0.5 rounded-full">Play • Win • Shop</span>
-      <h2 class="text-lg font-black mt-2 leading-snug">গেম খেলুন, ডিসকাউন্ট জিতে শপিং করুন!</h2>
-      <p class="text-xs text-purple-200 mt-1">প্রতিটি অর্ডারে সাশ্রয় করুন সর্বোচ্চ ১৫% পর্যন্ত।</p>
+      <h2 class="text-lg font-black mt-2 leading-snug">গেম খেলুন, রিওয়ার্ড জিতে শপিং করুন!</h2>
+      <p class="text-xs text-purple-200 mt-1">প্রতিটি অর্ডারে সাশ্রয় করুন আকর্ষণীয় ডিসকাউন্ট।</p>
+      <button onclick="switchTab('games')" class="mt-3 bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2 rounded-[10px] shadow">
+        এখনই খেলুন →
+      </button>
+    </div>
+
+    <!-- Quick Game Banner -->
+    <div class="bg-white p-4 rounded-[16px] border border-slate-100 shadow-sm flex items-center justify-between">
+      <div>
+        <h3 class="text-xs font-black">🎡 লাকি স্পিন চালু আছে!</h3>
+        <p class="text-[11px] text-slate-500">স্পিন করে ১৫% পর্যন্ত ভাউচার পান</p>
+      </div>
+      <button onclick="switchTab('games')" class="bg-[#7040E8] text-white text-xs font-bold px-3 py-1.5 rounded-[8px]">
+        স্পিন করুন
+      </button>
+    </div>
+
+    <!-- Featured Products Preview -->
+    <div>
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-xs font-black text-slate-700 uppercase">জনপ্রিয় পণ্যসমূহ</h3>
+        <button onclick="switchTab('shop')" class="text-xs font-bold text-[#7040E8]">সব দেখুন →</button>
+      </div>
+      <div id="homeProductsList" class="grid grid-cols-2 gap-2.5">
+        <!-- JS Injected -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TAB 2: GAMES ==================== -->
+  <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
+    <div class="text-center">
+      <h2 class="text-lg font-black text-[#21113F]">গেমিং জোন 🎮</h2>
+      <p class="text-xs text-slate-500">গেম জিতুন এবং শপিং ভাউচার কোড সংগ্রহ করুন</p>
     </div>
 
     <!-- Spin & Win Widget -->
     <div class="bg-white p-4 rounded-[16px] border border-slate-100 shadow-sm text-center">
       <h3 class="text-sm font-black mb-1">🎡 স্পিন অ্যান্ড উইন</h3>
-      <p class="text-[11px] text-slate-500 mb-4">চাকা ঘুরিয়ে আনলক করুন আপনার ভাউচার</p>
+      <p class="text-[11px] text-slate-500 mb-2">চাকা ঘুরিয়ে আনলক করুন আপনার পুরস্কার</p>
 
       <div class="relative w-48 h-48 mx-auto flex items-center justify-center my-2">
         <div class="absolute -top-2 z-20 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[14px] border-t-[#21113F]"></div>
@@ -40,54 +82,192 @@
         </div>
       </div>
 
-      <button id="spinBtn" onclick="playSpin()" class="w-full mt-3 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md">
+      <button id="spinBtn" onclick="playSpin()" class="w-full mt-2 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md">
         স্পিন করুন
       </button>
 
       <div id="rewardBox" class="hidden mt-3 p-3 bg-amber-50 border border-dashed border-[#FFC94D] rounded-[10px]">
-        <span class="text-xs font-black text-[#17A66B]">🎉 অভিনন্দন! আপনি ১০% ছাড় পেয়েছেন</span>
-        <p class="text-[10px] text-slate-600 mt-0.5">ভাউচার কোড: <b class="text-black">PLAY-WIN10</b></p>
+        <span id="rewardTitle" class="text-xs font-black text-[#17A66B]">🎉 অভিনন্দন!</span>
+        <p class="text-[10px] text-slate-600 mt-0.5">ভাউচার কোড: <b id="rewardCodeText" class="text-black bg-white px-2 py-0.5 rounded border border-slate-200">PLAY-WIN10</b></p>
+        <button onclick="applyVoucherAndShop()" class="mt-2 text-[10px] bg-[#17A66B] text-white px-3 py-1 rounded font-bold">ভাউচার নিয়ে শপিং করুন</button>
       </div>
     </div>
 
-    <!-- Featured Products -->
-    <div>
-      <h3 class="text-xs font-black text-slate-700 uppercase mb-2">জনপ্রিয় পণ্যসমূহ</h3>
-      <div class="grid grid-cols-2 gap-2.5">
-        <div class="bg-white p-2.5 rounded-[16px] border border-slate-100 shadow-sm flex flex-col justify-between">
-          <div class="aspect-square bg-slate-100 rounded-[10px] flex items-center justify-center text-2xl">🎧</div>
-          <h4 class="text-xs font-bold mt-2 line-clamp-1">Wireless Headset</h4>
-          <span class="text-xs font-black text-[#7040E8]">৳১,৪৫০</span>
-          <button class="mt-2 w-full py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[8px]">+ কার্ট</button>
-        </div>
-        <div class="bg-white p-2.5 rounded-[16px] border border-slate-100 shadow-sm flex flex-col justify-between">
-          <div class="aspect-square bg-slate-100 rounded-[10px] flex items-center justify-center text-2xl">⌚</div>
-          <h4 class="text-xs font-bold mt-2 line-clamp-1">Smart Fit Watch</h4>
-          <span class="text-xs font-black text-[#7040E8]">৳২,২০০</span>
-          <button class="mt-2 w-full py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[8px]">+ কার্ট</button>
-        </div>
+    <!-- Mystery Box Widget -->
+    <div class="bg-white p-4 rounded-[16px] border border-slate-100 shadow-sm">
+      <h3 class="text-xs font-black mb-1">📦 মিস্ট্রি বক্স</h3>
+      <p class="text-[10px] text-slate-500 mb-3">যেকোনো একটি বক্স নির্বাচন করুন</p>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <button onclick="openBox(1)" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-2xl active:scale-90 transition">🎁</button>
+        <button onclick="openBox(2)" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-2xl active:scale-90 transition">🎁</button>
+        <button onclick="openBox(3)" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-2xl active:scale-90 transition">🎁</button>
       </div>
     </div>
   </main>
 
+  <!-- ==================== TAB 3: SHOP ==================== -->
+  <main id="tab-shop" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
+    <div>
+      <h2 class="text-lg font-black text-[#21113F]">শপ ক্যাটালগ 🛍️</h2>
+      <p class="text-xs text-slate-500">পছন্দের পণ্য নির্বাচন করে কার্টে যোগ করুন</p>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="shopProductsList" class="grid grid-cols-2 gap-2.5">
+      <!-- JS Injected -->
+    </div>
+  </main>
+
+  <!-- ==================== TAB 4: CART & CHECKOUT ==================== -->
+  <main id="tab-cart" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
+    <div>
+      <h2 class="text-lg font-black text-[#21113F]">আপনার শপিং কার্ট 🛒</h2>
+      <p class="text-xs text-slate-500">রিওয়ার্ড ভাউচার যোগ করে ডিসকাউন্ট উপভোগ করুন</p>
+    </div>
+
+    <!-- Cart Items Container -->
+    <div id="cartItemsContainer" class="space-y-2">
+      <!-- Injected -->
+    </div>
+
+    <!-- Voucher Field -->
+    <div class="bg-white p-3 rounded-[12px] border border-slate-100 flex gap-2">
+      <input id="voucherInput" type="text" placeholder="ভাউচার কোড (e.g. PLAY-WIN10)" class="w-full text-xs px-2.5 py-1.5 border border-slate-200 rounded uppercase font-bold focus:outline-none" />
+      <button onclick="applyManualVoucher()" class="bg-[#21113F] text-white text-xs px-3 py-1.5 rounded font-bold whitespace-nowrap">প্রয়োগ</button>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="bg-white p-4 rounded-[16px] border border-slate-100 space-y-2 text-xs">
+      <div class="flex justify-between text-slate-600">
+        <span>সাবটোটাল</span>
+        <span id="summarySubtotal">৳০</span>
+      </div>
+      <div class="flex justify-between text-[#17A66B] font-bold">
+        <span>ভাউচার ডিসকাউন্ট</span>
+        <span id="summaryDiscount">-৳০</span>
+      </div>
+      <div class="flex justify-between text-slate-600">
+        <span>ডেলিভারি ফি</span>
+        <span id="summaryDelivery">৳৬০</span>
+      </div>
+      <div class="border-t border-slate-100 pt-2 flex justify-between font-black text-sm text-[#21113F]">
+        <span>সর্বমোট বিল</span>
+        <span id="summaryTotal" class="text-[#7040E8]">৳০</span>
+      </div>
+
+      <button onclick="confirmOrder()" class="w-full mt-3 py-3 bg-[#17A66B] text-white text-xs font-black rounded-[12px] shadow active:scale-95 transition">
+        অর্ডার সম্পন্ন করুন (ক্যাশ অন ডেলিভারি)
+      </button>
+    </div>
+  </main>
+
   <!-- Mobile Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-100 px-4 py-2 flex justify-around shadow-lg">
-    <button class="flex flex-col items-center text-[#7040E8] font-bold text-[10px]">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-100 px-4 py-2 flex justify-around shadow-lg z-50">
+    <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center text-[#7040E8] font-bold text-[10px]">
       <span class="text-lg">🏠</span>হোম
     </button>
-    <button class="flex flex-col items-center text-slate-400 text-[10px]">
+    <button onclick="switchTab('games')" id="nav-games" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
       <span class="text-lg">🎮</span>গেমস
     </button>
-    <button class="flex flex-col items-center text-slate-400 text-[10px]">
+    <button onclick="switchTab('shop')" id="nav-shop" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
       <span class="text-lg">🛍️</span>শপ
     </button>
-    <button class="flex flex-col items-center text-slate-400 text-[10px]">
-      <span class="text-lg">📦</span>অর্ডারস
+    <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
+      <span class="text-lg">🛒</span>কার্ট
     </button>
   </nav>
 
   <script>
+    // Mock Catalog Products
+    const PRODUCTS = [
+      { id: 1, name: 'Pro Wireless Headset', price: 1450, icon: '🎧' },
+      { id: 2, name: 'Smart Fit Watch V2', price: 2200, icon: '⌚' },
+      { id: 3, name: 'RGB Gaming Mouse', price: 850, icon: '🖱️' },
+      { id: 4, name: 'Fast Charging Powerbank', price: 1200, icon: '🔋' }
+    ];
+
+    let cart = [];
+    let appliedDiscountRate = 0; // percentage
     let deg = 0;
+
+    function renderProducts() {
+      const template = (p) => `
+        <div class="bg-white p-2.5 rounded-[16px] border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div class="aspect-square bg-slate-100 rounded-[10px] flex items-center justify-center text-3xl">${p.icon}</div>
+          <h4 class="text-xs font-bold mt-2 line-clamp-1">${p.name}</h4>
+          <span class="text-xs font-black text-[#7040E8]">৳${p.price}</span>
+          <button onclick="addToCart(${p.id})" class="mt-2 w-full py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[8px] active:scale-95 transition">+ কার্টে যোগ করুন</button>
+        </div>
+      `;
+      document.getElementById('homeProductsList').innerHTML = PRODUCTS.slice(0, 2).map(template).join('');
+      document.getElementById('shopProductsList').innerHTML = PRODUCTS.map(template).join('');
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(el => {
+        el.classList.remove('text-[#7040E8]', 'font-bold');
+        el.classList.add('text-slate-400');
+      });
+
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      const activeNav = document.getElementById(`nav-${tabName}`);
+      activeNav.classList.add('text-[#7040E8]', 'font-bold');
+      activeNav.classList.remove('text-slate-400');
+
+      if(tabName === 'cart') renderCart();
+    }
+
+    function addToCart(id) {
+      const prod = PRODUCTS.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...prod, qty: 1 });
+      }
+      updateCartBadge();
+      alert(`"${prod.name}" কার্টে যুক্ত হয়েছে!`);
+    }
+
+    function updateCartBadge() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartCountBadge').innerText = count;
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsContainer');
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-xs text-slate-400">আপনার কার্ট খালি। পণ্য যোগ করুন!</div>';
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div class="bg-white p-3 rounded-[12px] border border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">${item.icon}</span>
+              <div>
+                <h4 class="text-xs font-bold">${item.name}</h4>
+                <span class="text-[11px] text-slate-500">৳${item.price} × ${item.qty}</span>
+              </div>
+            </div>
+            <span class="text-xs font-black text-[#21113F]">৳${item.price * item.qty}</span>
+          </div>
+        `).join('');
+      }
+      calculateCartTotals();
+    }
+
+    function calculateCartTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const discount = Math.round((subtotal * appliedDiscountRate) / 100);
+      const delivery = subtotal > 0 ? 60 : 0;
+      const total = Math.max(0, subtotal - discount) + delivery;
+
+      document.getElementById('summarySubtotal').innerText = `৳${subtotal}`;
+      document.getElementById('summaryDiscount').innerText = `-৳${discount}`;
+      document.getElementById('summaryDelivery').innerText = `৳${delivery}`;
+      document.getElementById('summaryTotal').innerText = `৳${total}`;
+    }
+
     function playSpin() {
       const btn = document.getElementById('spinBtn');
       const wheel = document.getElementById('wheel');
@@ -96,12 +276,54 @@
       btn.innerText = 'ঘুরছে...';
       deg += 1440 + Math.floor(Math.random() * 360);
       wheel.style.transform = `rotate(${deg}deg)`;
+
       setTimeout(() => {
         btn.disabled = false;
         btn.innerText = 'আবার ঘুরান';
         reward.classList.remove('hidden');
+        appliedDiscountRate = 15; // 15% discount
+        document.getElementById('rewardTitle').innerText = '🎉 আপনি জিতেছেন ১৫% ভাউচার!';
+        document.getElementById('rewardCodeText').innerText = 'PLAY-WIN15';
       }, 4000);
     }
+
+    function openBox(num) {
+      alert(`বক্স ${num} খোলা হয়েছে! আপনি পেয়েছেন ৳৫০ ক্যাশব্যাক ভাউচার (কোড: BOX50)`);
+    }
+
+    function applyVoucherAndShop() {
+      document.getElementById('voucherInput').value = 'PLAY-WIN15';
+      switchTab('shop');
+    }
+
+    function applyManualVoucher() {
+      const code = document.getElementById('voucherInput').value.trim().toUpperCase();
+      if (code === 'PLAY-WIN15') {
+        appliedDiscountRate = 15;
+        alert('১৫% ডিসকাউন্ট ভাউচার সফলভাবে যুক্ত হয়েছে!');
+      } else if (code === 'PLAY-WIN10') {
+        appliedDiscountRate = 10;
+        alert('১০% ডিসকাউন্ট ভাউচার যুক্ত হয়েছে!');
+      } else {
+        alert('অবৈধ ভাউচার কোড!');
+      }
+      calculateCartTotals();
+    }
+
+    function confirmOrder() {
+      if (cart.length === 0) {
+        alert('কার্টে কোনো পণ্য নেই!');
+        return;
+      }
+      alert('🎉 আপনার ক্যাশ অন ডেলিভারি অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে!');
+      cart = [];
+      appliedDiscountRate = 0;
+      updateCartBadge();
+      switchTab('home');
+    }
+
+    // Init
+    renderProducts();
   </script>
 </body>
 </html>
