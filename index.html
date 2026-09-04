@@ -3,27 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA - Spin & Win Exclusive</title>
+  <title>PLAYORA - VIP Gamified E-Commerce</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .wheel { transition: transform 4.5s cubic-bezier(0.12, 0.8, 0.15, 1); }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .gold-glow { box-shadow: 0 0 25px -3px rgba(255, 201, 77, 0.45); }
   </style>
 </head>
 <body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
 
   <!-- ==================== MANDATORY WELCOME GATE POPUP ==================== -->
   <div id="welcomeGateModal" class="fixed inset-0 bg-[#21113F]/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-xs p-6 rounded-[24px] shadow-2xl space-y-4 border border-purple-100 animate-in fade-in zoom-in duration-300">
+    <div class="bg-white w-full max-w-xs p-6 rounded-[24px] shadow-2xl space-y-4 border border-purple-100">
       <div class="text-center">
         <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">
           🎁
         </div>
         <h3 class="text-lg font-black text-slate-800">প্লেয়োরাতে স্বাগতম!</h3>
         <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-          বিশেষ ডিসকাউন্ট ভাউচার জিততে আপনার নাম ও মোবাইল নম্বর প্রদান করুন।
+          স্পিন ভাউচার আনলক করতে আপনার নাম ও মোবাইল নম্বর প্রদান করুন।
         </p>
       </div>
 
@@ -40,7 +41,6 @@
           ভাউচার স্পিন আনলক করুন 🎡
         </button>
       </div>
-      <p class="text-[9px] text-center text-slate-400 font-medium">আপনার তথ্য ১০০% সুরক্ষিত থাকবে।</p>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
   <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-sm">
     <div class="flex items-center gap-2">
       <span onclick="switchTab('home')" class="text-xl font-black text-[#7040E8] tracking-tight cursor-pointer">PLAYORA</span>
-      <span id="userStatusTag" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2.5 py-0.5 rounded-full border border-purple-100 truncate max-w-[90px]">স্বাগতম</span>
+      <span id="userStatusTag" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2.5 py-0.5 rounded-full border border-purple-100 truncate max-w-[90px]">অতিথি</span>
     </div>
     <div class="flex items-center gap-2">
       <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
@@ -60,25 +60,39 @@
 
   <!-- ==================== TAB 1: HOME ==================== -->
   <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
+    <!-- VIP Post-Delivery Alert Banner (Hidden by default) -->
+    <div id="vipDeliveryAlertBanner" onclick="switchTab('games')" class="hidden bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-[#21113F] p-3.5 rounded-[18px] shadow-lg gold-glow cursor-pointer animate-pulse">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl">👑</span>
+          <div>
+            <span class="text-[9px] font-black uppercase bg-[#21113F] text-amber-300 px-2 py-0.5 rounded-full">VIP UNLOCKED</span>
+            <h4 class="text-xs font-black mt-0.5">ডেলিভারি সফল! মেগা ভল্ট আনলক হয়েছে</h4>
+          </div>
+        </div>
+        <span class="text-xs font-black bg-white/90 px-2.5 py-1 rounded-[10px]">খেলুন →</span>
+      </div>
+    </div>
+
     <!-- Hero Banner -->
     <div class="relative overflow-hidden bg-gradient-to-br from-[#7040E8] via-[#4d23bb] to-[#21113F] text-white p-5 rounded-[20px] shadow-lg">
       <div class="flex items-center gap-2 mb-2">
         <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">
-          EXCLUSIVE OFFER
+          EXCLUSIVE COMMERCE
         </span>
       </div>
       <h2 class="text-lg font-black leading-snug tracking-tight">
         স্পিন করে জিতে নিন<br/>নিশ্চিত ডিসকাউন্ট ভাউচার!
       </h2>
       <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">
-        প্রতি অর্ডারে সর্বোচ্চ ২০% পর্যন্ত ছাড় অথবা ফ্রি ডেলিভারি অফার।
+        প্রতি অর্ডারে সর্বোচ্চ ২৫% পর্যন্ত ভিআইপি রিওয়ার্ড সুবিধা।
       </p>
       <div class="mt-4 flex gap-2">
         <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow active:scale-95 transition">
-          🎡 লাকি স্পিন খেলুন
+          🎮 গেমিং জোন
         </button>
         <button onclick="switchTab('shop')" class="bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs font-bold px-3.5 py-2.5 rounded-[12px] active:scale-95 transition">
-          শপ কালেকশন
+          শপ ঘুরে দেখুন
         </button>
       </div>
     </div>
@@ -106,13 +120,55 @@
 
   <!-- ==================== TAB 2: GAMES ==================== -->
   <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    <div class="text-center">
-      <h2 class="text-lg font-black text-[#21113F]">লাকি গেমিং জোন 🎡</h2>
-      <p class="text-xs text-slate-500" id="gameWelcomeSub">চাকা ঘুরিয়ে আনলক করুন আপনার ভাউচার</p>
+    
+    <!-- LEVEL 2: VIP SECRET VAULT (ডেলিভারির পর প্রদর্শিত হবে) -->
+    <div id="vipGameSection" class="hidden bg-gradient-to-b from-[#21113F] to-[#3a1d6e] text-white p-5 rounded-[24px] shadow-xl border-2 border-amber-400/60 relative overflow-hidden">
+      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="text-center">
+        <span class="text-[10px] font-black uppercase bg-gradient-to-r from-amber-400 to-yellow-300 text-black px-3 py-1 rounded-full shadow">
+          👑 LEVEL 2: VIP VAULT
+        </span>
+        <h3 class="text-base font-black mt-2">পার্সেল রিসিভ করায় মেগা রিওয়ার্ড!</h3>
+        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সোনার সিন্দুক ট্যাপ করে বড় অফার আনলক করুন</p>
+      </div>
+
+      <!-- Urgency Timer -->
+      <div class="mt-3 bg-black/30 border border-amber-400/30 py-1.5 px-3 rounded-full text-center text-[10px] font-bold text-amber-300">
+        ⏳ অফারের মেয়াদ বাকি: <span id="vipTimer" class="font-mono font-black text-white">47:59:45</span>
+      </div>
+
+      <!-- 3 Gold Vault Chests -->
+      <div id="vaultChestsContainer" class="grid grid-cols-3 gap-2.5 my-4 text-center">
+        <button onclick="openVipVault(1)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
+          🪙
+        </button>
+        <button onclick="openVipVault(2)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
+          🏆
+        </button>
+        <button onclick="openVipVault(3)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
+          👑
+        </button>
+      </div>
+
+      <div id="vipRewardResultBox" class="hidden p-3.5 bg-amber-400 text-[#21113F] rounded-[16px] text-center font-black">
+        <span class="text-xs block">🎉 মেগা ভিআইপি রিওয়ার্ড আনলকড!</span>
+        <p id="vipRewardTitle" class="text-base mt-0.5"></p>
+        <div class="bg-black text-amber-300 py-1 px-3 rounded-lg text-xs font-mono tracking-wider mt-1.5 inline-block" id="vipRewardCode"></div>
+        <button onclick="applyVipAndShop()" class="mt-2.5 w-full py-2 bg-[#21113F] text-white text-[11px] font-black rounded-[10px]">
+          পরবর্তী অর্ডারে ব্যবহার করুন →
+        </button>
+      </div>
     </div>
 
-    <!-- Spin Wheel -->
-    <div class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative">
+    <!-- LEVEL 1: STANDARD SPIN WHEEL -->
+    <div id="standardSpinSection" class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative">
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-[10px] font-bold text-slate-400 uppercase">LEVEL 1: প্রথম অর্ডার স্পিন</span>
+        <span id="spinBadgeStatus" class="text-[9px] bg-purple-50 text-[#7040E8] font-bold px-2 py-0.5 rounded-full">১টি ফ্রি স্পিন</span>
+      </div>
+      <h3 class="text-sm font-black text-slate-800">🎡 লাকি হুইল স্পিন</h3>
+      <p class="text-[11px] text-slate-500 mb-2">চাকা ঘুরিয়ে আনলক করুন আপনার প্রথম ডিসকাউন্ট</p>
+
       <div class="relative w-52 h-52 mx-auto flex items-center justify-center my-2">
         <div class="absolute -top-3 z-20 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-[#21113F] drop-shadow"></div>
         <div id="wheel" class="wheel w-full h-full rounded-full border-4 border-[#21113F] overflow-hidden relative shadow-md bg-slate-50">
@@ -126,14 +182,13 @@
         </div>
       </div>
 
-      <button id="spinBtn" onclick="executeLeadSpin()" class="w-full mt-3 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md shadow-purple-500/20 transition">
+      <button id="spinBtn" onclick="executeLeadSpin()" class="w-full mt-3 py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md shadow-purple-500/20 transition disabled:opacity-50 disabled:cursor-not-allowed">
         স্পিন করুন 🎯
       </button>
 
       <div id="rewardBox" class="hidden mt-3 p-3.5 bg-amber-50 border border-dashed border-[#FFC94D] rounded-[14px]">
         <span id="rewardTitle" class="text-xs font-black text-[#17A66B] block"></span>
         <p class="text-xs font-black text-slate-800 mt-1">ভাউচার কোড: <b id="rewardCodeText" class="text-[#7040E8] bg-white px-2 py-0.5 rounded border border-slate-200"></b></p>
-        <p class="text-[10px] text-slate-500 mt-1">আপনার এই রিওয়ার্ড তথ্যটি অ্যাডমিন সিস্টেমে রেকর্ড করা হয়েছে।</p>
         <button onclick="applyAndGoShop()" class="mt-2 text-[11px] bg-[#17A66B] text-white px-3.5 py-1.5 rounded-[8px] font-bold shadow-sm">
           ভাউচার নিয়ে কেনাকাটা করুন →
         </button>
@@ -154,16 +209,15 @@
   <main id="tab-cart" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     <div>
       <h2 class="text-lg font-black text-[#21113F]">শপিং কার্ট 🛒</h2>
-      <p class="text-xs text-slate-500">আপনার সংরক্ষিত পণ্য ও ডিসকাউন্ট ভাউচার</p>
+      <p class="text-xs text-slate-500">সংরক্ষিত পণ্য ও ডিসকাউন্ট ভাউচার</p>
     </div>
 
     <div id="cartItemsContainer" class="space-y-2"></div>
 
-    <!-- Voucher Field -->
     <div class="bg-white p-3.5 rounded-[16px] border border-slate-100 shadow-sm space-y-1.5">
       <label class="block text-[11px] font-bold text-slate-700">🎁 ডিসকাউন্ট ভাউচার কোড</label>
       <div class="flex gap-2">
-        <input id="voucherInput" type="text" placeholder="e.g. PLAY-WIN15" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-[10px] uppercase font-bold focus:outline-none focus:border-[#7040E8]" />
+        <input id="voucherInput" type="text" placeholder="ভাউচার কোড দিন" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-[10px] uppercase font-bold focus:outline-none focus:border-[#7040E8]" />
         <button onclick="applyVoucher()" class="bg-[#21113F] text-white text-xs px-4 py-2 rounded-[10px] font-bold">প্রয়োগ</button>
       </div>
     </div>
@@ -193,34 +247,32 @@
     </div>
   </main>
 
-  <!-- ==================== TAB 5: ADMIN CRM PANEL ==================== -->
+  <!-- ==================== TAB 5: ADMIN CRM & DELIVERY DISPATCH ==================== -->
   <main id="tab-admin" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     <div class="flex justify-between items-center">
       <div>
-        <h2 class="text-lg font-black text-[#21113F]">কাস্টমার লিড ও অ্যাডমিন 🛠️</h2>
-        <p class="text-xs text-slate-500">স্পিন করা কাস্টমারদের তালিকা ও ফোন নম্বর</p>
+        <h2 class="text-lg font-black text-[#21113F]">অ্যাডমিন ও ডেলিভারি কন্ট্রোল 🛠️</h2>
+        <p class="text-xs text-slate-500">ডেলিভারি সফল করে কাস্টমারের VIP গেম আনলক করুন</p>
       </div>
-      <button onclick="clearAllLeads()" class="text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">ডাটা মুছুন</button>
+      <button onclick="clearAllData()" class="text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">রিসেট</button>
     </div>
 
-    <!-- Stats -->
+    <!-- Admin Stats -->
     <div class="grid grid-cols-2 gap-2">
       <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট কাস্টমার লিড</span>
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট কাস্টমার</span>
         <span id="adminTotalLeads" class="text-base font-black text-[#7040E8]">০</span>
       </div>
       <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">অর্ডার সংখ্যা</span>
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট অর্ডার</span>
         <span id="adminTotalOrders" class="text-base font-black text-slate-800">০</span>
       </div>
     </div>
 
-    <!-- Leads CRM Table / Cards -->
+    <!-- Customer Orders & Delivery Actions -->
     <div class="space-y-2">
-      <h3 class="text-xs font-black text-slate-800">সংরক্ষিত কাস্টমার তালিকা (কল করার জন্য)</h3>
-      <div id="adminLeadsList" class="space-y-2">
-        <!-- Injected via JS -->
-      </div>
+      <h3 class="text-xs font-black text-slate-800">কাস্টমার অর্ডার ও VIP অ্যাক্টিভেশন</h3>
+      <div id="adminOrdersList" class="space-y-2.5"></div>
     </div>
   </main>
 
@@ -244,9 +296,10 @@
   </nav>
 
   <script>
-    // State Stores
+    // System State Architecture
     let activeCustomer = JSON.parse(localStorage.getItem('playora_active_user')) || null;
     let leadsStore = JSON.parse(localStorage.getItem('playora_leads_crm')) || [];
+    let ordersStore = JSON.parse(localStorage.getItem('playora_orders_db')) || [];
 
     let products = [
       { id: 1, name: 'SoundCore ANC Wireless Headphone', price: 2650, originalPrice: 3200, tag: 'HOT', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80' },
@@ -257,10 +310,8 @@
 
     let cart = [];
     let appliedVoucher = { code: null, rate: 0 };
-    let totalOrdersCount = 0;
     let deg = 0;
 
-    // Initialize Gate Check
     window.addEventListener('DOMContentLoaded', () => {
       renderCatalog();
       if (!activeCustomer) {
@@ -268,10 +319,11 @@
       } else {
         document.getElementById('welcomeGateModal').classList.add('hidden');
         updateCustomerUI();
+        syncGameStates();
       }
     });
 
-    // 1. Mandatory Gate Submission
+    // 1. Mandatory Gate Check
     function submitLeadAndUnlock() {
       const name = document.getElementById('gateName').value.trim();
       const phone = document.getElementById('gatePhone').value.trim();
@@ -281,18 +333,33 @@
         return alert('সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (যেমন: 017XXXXXXXX)।');
       }
 
-      activeCustomer = { name, phone, spinReward: 'এখনও স্পিন করেনি', code: 'N/A', time: new Date().toLocaleTimeString() };
+      const existing = leadsStore.find(l => l.phone === phone);
+      if (existing) {
+        activeCustomer = existing;
+      } else {
+        activeCustomer = { 
+          name, 
+          phone, 
+          hasSpun: false, 
+          spinReward: 'N/A', 
+          code: 'N/A',
+          isVipUnlocked: false,
+          hasOpenedVipVault: false,
+          vipReward: null
+        };
+        leadsStore.unshift(activeCustomer);
+        localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+      }
+
       localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
-
-      // Add to CRM leads
-      leadsStore.unshift(activeCustomer);
-      localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
-
       document.getElementById('welcomeGateModal').classList.add('hidden');
       updateCustomerUI();
+      syncGameStates();
 
-      alert(`ধন্যবাদ ${name}! আপনার স্পিন আনলক হয়েছে। চলুন লাকি স্পিন করি!`);
-      switchTab('games');
+      if (!activeCustomer.hasSpun) {
+        alert(`স্বাগতম ${name}! আপনার ১ম স্পিন আনলক হয়েছে। চলুন লাকি স্পিন করি!`);
+        switchTab('games');
+      }
     }
 
     function updateCustomerUI() {
@@ -300,15 +367,52 @@
       document.getElementById('userStatusTag').innerText = activeCustomer.name;
       document.getElementById('displayCustomerName').innerText = activeCustomer.name;
       document.getElementById('displayCustomerPhone').innerText = activeCustomer.phone;
-      document.getElementById('gameWelcomeSub').innerText = `স্বাগতম ${activeCustomer.name}, চাকা ঘুরিয়ে ভাউচার জিতুন`;
     }
 
-    // 2. Spin Execution & CRM Sync
-    function executeLeadSpin() {
-      if (!activeCustomer) {
-        document.getElementById('welcomeGateModal').classList.remove('hidden');
-        return;
+    // 2. State Engine Sync (Single-Spin & VIP Locks)
+    function syncGameStates() {
+      if (!activeCustomer) return;
+
+      const spinBtn = document.getElementById('spinBtn');
+      const standardSection = document.getElementById('standardSpinSection');
+      const vipSection = document.getElementById('vipGameSection');
+      const vipAlertBanner = document.getElementById('vipDeliveryAlertBanner');
+
+      // লেভেল ১ স্পিন লক চেক
+      if (activeCustomer.hasSpun) {
+        spinBtn.disabled = true;
+        spinBtn.innerText = '🔒 আপনি ১ম স্পিন সম্পন্ন করেছেন';
+        spinBtn.classList.replace('bg-[#7040E8]', 'bg-slate-300');
+        spinBtn.classList.replace('text-white', 'text-slate-600');
+
+        if (activeCustomer.code !== 'N/A') {
+          document.getElementById('rewardTitle').innerText = `🎉 প্রথম অর্ডারের ভাউচার: ${activeCustomer.spinReward}`;
+          document.getElementById('rewardCodeText').innerText = activeCustomer.code;
+          document.getElementById('rewardBox').classList.remove('hidden');
+        }
       }
+
+      // লেভেল ২ ভিআইপি মেগা ভল্ট চেক (ডেলিভারির পর)
+      if (activeCustomer.isVipUnlocked) {
+        vipSection.classList.remove('hidden');
+        vipAlertBanner.classList.remove('hidden');
+
+        if (activeCustomer.hasOpenedVipVault && activeCustomer.vipReward) {
+          document.getElementById('vaultChestsContainer').classList.add('hidden');
+          document.getElementById('vipRewardResultBox').classList.remove('hidden');
+          document.getElementById('vipRewardTitle').innerText = activeCustomer.vipReward.title;
+          document.getElementById('vipRewardCode').innerText = activeCustomer.vipReward.code;
+        }
+      } else {
+        vipSection.classList.add('hidden');
+        vipAlertBanner.classList.add('hidden');
+      }
+    }
+
+    // 3. Level 1 Spin Execution
+    function executeLeadSpin() {
+      if (!activeCustomer) return;
+      if (activeCustomer.hasSpun) return alert('আপনি ইতিমধ্যে ১ম স্পিন ব্যবহার করেছেন!');
 
       const btn = document.getElementById('spinBtn');
       const wheel = document.getElementById('wheel');
@@ -318,85 +422,165 @@
       deg += 1800 + Math.floor(Math.random() * 360);
       wheel.style.transform = `rotate(${deg}deg)`;
 
-      // Rewards pool
       const outcomes = [
-        { label: '১৫% মেগা ডিসকাউন্ট', code: 'PLAY-WIN15', rate: 15 },
-        { label: '১০% স্পেশাল ছাড়', code: 'PLAY-WIN10', rate: 10 },
-        { label: 'ফ্রি ডেলিভারি অফার', code: 'FREE-DELIVERY', rate: 5 }
+        { label: '১৫% ডিসকাউন্ট', code: 'PLAY-WIN15', rate: 15 },
+        { label: '১০% বিশেষ ছাড়', code: 'PLAY-WIN10', rate: 10 },
+        { label: 'ফ্রি ডেলিভারি', code: 'FREE-DELIVERY', rate: 5 }
       ];
       const picked = outcomes[Math.floor(Math.random() * outcomes.length)];
 
       setTimeout(() => {
-        btn.disabled = false;
-        btn.innerText = 'আবার ঘুরান';
-        appliedVoucher = { code: picked.code, rate: picked.rate };
-
-        document.getElementById('rewardTitle').innerText = `🎉 অভিনন্দন ${activeCustomer.name}! আপনি জিতেছেন: ${picked.label}`;
-        document.getElementById('rewardCodeText').innerText = picked.code;
-        document.getElementById('rewardBox').classList.remove('hidden');
-
-        // Update in CRM Store
+        activeCustomer.hasSpun = true;
         activeCustomer.spinReward = picked.label;
         activeCustomer.code = picked.code;
-        localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
+        appliedVoucher = { code: picked.code, rate: picked.rate };
 
-        // Sync with existing lead in array
-        const index = leadsStore.findIndex(l => l.phone === activeCustomer.phone);
-        if (index !== -1) {
-          leadsStore[index].spinReward = picked.label;
-          leadsStore[index].code = picked.code;
-          leadsStore[index].time = new Date().toLocaleTimeString();
-          localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
-        }
-
-        updateAdminCRM();
+        saveCustomerState();
+        syncGameStates();
+        updateAdminView();
       }, 4500);
     }
 
-    // 3. Admin CRM Render
-    function updateAdminCRM() {
-      document.getElementById('adminTotalLeads').innerText = leadsStore.length;
-      document.getElementById('adminTotalOrders').innerText = totalOrdersCount;
+    // 4. Level 2 VIP Vault Open (Mega Rewards)
+    function openVipVault(chestNum) {
+      if (!activeCustomer || !activeCustomer.isVipUnlocked) return;
+      if (activeCustomer.hasOpenedVipVault) return alert('আপনি অলরেডি আপনার ভিআইপি রিওয়ার্ড আনলক করেছেন!');
 
-      const container = document.getElementById('adminLeadsList');
-      if (leadsStore.length === 0) {
-        container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400 bg-white rounded-xl border">কোনো কাস্টমার ডাটা নেই</div>';
+      const vipPool = [
+        { title: '২৫% মেগা ভিআইপি ছাড় (পরবর্তী অর্ডারে)', code: 'VIP-MEGA25', rate: 25 },
+        { title: '৳৩০০ ফ্ল্যাট ক্যাশব্যাক ছাড়', code: 'VIP-CASH300', rate: 20 },
+        { title: '২০% ছাড় + ফ্রি হোম ডেলিভারি', code: 'VIP-SUPER20', rate: 20 }
+      ];
+      const selected = vipPool[chestNum - 1] || vipPool[0];
+
+      activeCustomer.hasOpenedVipVault = true;
+      activeCustomer.vipReward = selected;
+      appliedVoucher = { code: selected.code, rate: selected.rate };
+
+      saveCustomerState();
+      syncGameStates();
+      updateAdminView();
+
+      alert(`👑 অভিনন্দন ${activeCustomer.name}!\nআপনি জিতেছেন: ${selected.title}\nভাউচার কোড: ${selected.code}`);
+    }
+
+    // 5. Checkout & Order Placement
+    function processOrderCheckout() {
+      if (cart.length === 0) return alert('কার্ট খালি!');
+      if (!activeCustomer) return;
+
+      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+      const disc = Math.round((sub * appliedVoucher.rate) / 100);
+      const finalAmount = Math.max(0, sub - disc) + 60;
+
+      const newOrder = {
+        orderId: `PL-${Date.now().toString().slice(-5)}`,
+        customerName: activeCustomer.name,
+        customerPhone: activeCustomer.phone,
+        total: finalAmount,
+        status: 'PENDING', // PENDING -> DELIVERED
+        date: new Date().toLocaleTimeString(),
+        itemsCount: cart.length
+      };
+
+      ordersStore.unshift(newOrder);
+      localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
+
+      alert(`🎉 অর্ডার সফল!\nঅর্ডার আইডি: ${newOrder.orderId}\nডেলিভারি সম্পন্ন হলে আপনার জন্য VIP স্পেশাল গেম আনলক হবে!`);
+      
+      cart = [];
+      updateCartBadge();
+      switchTab('home');
+      updateAdminView();
+    }
+
+    // 6. Admin Delivery Confirmation Trigger (Unlock Level 2)
+    function markOrderAsDelivered(orderId) {
+      const order = ordersStore.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      order.status = 'DELIVERED';
+      localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
+
+      // যদি বর্তমানে ব্রাউজ করা কাস্টমারই এই অর্ডারের মালিক হন
+      if (activeCustomer && activeCustomer.phone === order.customerPhone) {
+        activeCustomer.isVipUnlocked = true;
+        saveCustomerState();
+        syncGameStates();
+      } else {
+        // সিআরএম-এর লিড আপডেট
+        const lead = leadsStore.find(l => l.phone === order.customerPhone);
+        if (lead) {
+          lead.isVipUnlocked = true;
+          localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+        }
+      }
+
+      alert(`✅ অর্ডার ${orderId} সফলভাবে DELIVERED চিহ্নিত হয়েছে!\nগ্রাহক (${order.customerName}) এর জন্য VIP Secret Vault গেমটি উন্মুক্ত করা হয়েছে।`);
+      updateAdminView();
+    }
+
+    function updateAdminView() {
+      document.getElementById('adminTotalLeads').innerText = leadsStore.length;
+      document.getElementById('adminTotalOrders').innerText = ordersStore.length;
+
+      const container = document.getElementById('adminOrdersList');
+      if (ordersStore.length === 0) {
+        container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400 bg-white rounded-xl border">কোনো পেন্ডিং অর্ডার নেই</div>';
         return;
       }
 
-      container.innerHTML = leadsStore.map((lead, idx) => `
-        <div class="bg-white p-3 rounded-[16px] border border-slate-100 shadow-sm space-y-1.5">
+      container.innerHTML = ordersStore.map(order => `
+        <div class="bg-white p-3 rounded-[16px] border border-slate-100 shadow-sm space-y-2">
           <div class="flex justify-between items-start">
             <div>
-              <h4 class="text-xs font-black text-slate-800">${lead.name}</h4>
-              <p class="text-[11px] font-bold text-[#7040E8]">${lead.phone}</p>
+              <span class="text-[9px] font-bold text-slate-400">আইডি: ${order.orderId}</span>
+              <h4 class="text-xs font-black text-slate-800">${order.customerName}</h4>
+              <p class="text-[11px] font-bold text-[#7040E8]">${order.customerPhone}</p>
             </div>
-            <a href="tel:${lead.phone}" class="bg-[#17A66B] text-white text-[10px] font-black px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm active:scale-95 transition">
-              <span>📞</span> কল করুন
-            </a>
+            <div class="text-right">
+              <span class="text-xs font-black text-slate-800 block">৳${order.total}</span>
+              <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${order.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+                ${order.status}
+              </span>
+            </div>
           </div>
 
-          <div class="bg-slate-50 p-2 rounded-[10px] flex justify-between items-center text-[10px]">
-            <span class="text-slate-600 font-medium">জিতেছেন: <b class="text-[#17A66B]">${lead.spinReward}</b></span>
-            <span class="text-slate-400 font-mono">${lead.code}</span>
+          <div class="flex gap-2 pt-1 border-t border-slate-50">
+            <a href="tel:${order.customerPhone}" class="flex-1 text-center bg-slate-100 text-slate-700 text-[10px] font-bold py-1.5 rounded-[8px]">
+              📞 কল করুন
+            </a>
+            ${order.status !== 'DELIVERED' ? `
+              <button onclick="markOrderAsDelivered('${order.orderId}')" class="flex-1 bg-[#17A66B] text-white text-[10px] font-black py-1.5 rounded-[8px] shadow-sm active:scale-95 transition">
+                📦 ডেলিভারি সফল করুন
+              </button>
+            ` : `
+              <span class="flex-1 text-center text-emerald-600 text-[10px] font-bold py-1.5">
+                ✓ VIP অ্যাক্টিভেটেড
+              </span>
+            `}
           </div>
-          <div class="text-[9px] text-slate-400 text-right">এন্ট্রি টাইম: ${lead.time}</div>
         </div>
       `).join('');
     }
 
-    function clearAllLeads() {
-      if (confirm('আপনি কি নিশ্চিত যে সকল লিড ডাটা মুছে ফেলতে চান?')) {
-        leadsStore = [];
-        localStorage.removeItem('playora_leads_crm');
-        localStorage.removeItem('playora_active_user');
-        activeCustomer = null;
-        updateAdminCRM();
+    function saveCustomerState() {
+      localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
+      const idx = leadsStore.findIndex(l => l.phone === activeCustomer.phone);
+      if (idx !== -1) {
+        leadsStore[idx] = activeCustomer;
+        localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+      }
+    }
+
+    function clearAllData() {
+      if (confirm('সকল ডাটা মুছে রিসেট করতে চান?')) {
+        localStorage.clear();
         location.reload();
       }
     }
 
-    // Tab Navigation
+    // Helper functions
     function switchTab(name) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(el => {
@@ -414,10 +598,10 @@
       }
 
       if (name === 'cart') renderCart();
-      if (name === 'admin') updateAdminCRM();
+      if (name === 'admin') updateAdminView();
+      if (name === 'games') syncGameStates();
     }
 
-    // Catalog & Cart Logic
     function renderCatalog() {
       const template = (p) => `
         <div class="bg-white p-2.5 rounded-[18px] border border-slate-100 shadow-sm flex flex-col justify-between">
@@ -458,7 +642,7 @@
     function renderCart() {
       const cont = document.getElementById('cartItemsContainer');
       if (cart.length === 0) {
-        cont.innerHTML = '<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-[14px] border border-slate-100">আপনার কার্ট খালি।</div>';
+        cont.innerHTML = '<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-[14px] border border-slate-100">কার্ট খালি।</div>';
       } else {
         cont.innerHTML = cart.map(i => `
           <div class="bg-white p-3 rounded-[12px] border border-slate-100 flex items-center justify-between">
@@ -493,24 +677,23 @@
       switchTab('shop');
     }
 
+    function applyVipAndShop() {
+      if (activeCustomer && activeCustomer.vipReward) {
+        appliedVoucher = { code: activeCustomer.vipReward.code, rate: activeCustomer.vipReward.rate };
+        document.getElementById('voucherInput').value = activeCustomer.vipReward.code;
+        switchTab('shop');
+      }
+    }
+
     function applyVoucher() {
       const code = document.getElementById('voucherInput').value.trim().toUpperCase();
-      if (code === appliedVoucher.code) {
+      if (appliedVoucher.code && code === appliedVoucher.code) {
         alert('ভাউচার সফলভাবে সক্রিয় হয়েছে!');
       } else {
         alert('ভাউচার কোড সঠিক নয়!');
       }
       calculateTotals();
     }
-
-    function processOrderCheckout() {
-      if (cart.length === 0) return alert('কার্টে কোনো পণ্য নেই!');
-      totalOrdersCount += 1;
-      alert(`🎉 ধন্যবাদ ${activeCustomer.name}!\nআপনার অর্ডারটি ক্যাশ অন ডেলিভারিতে গ্রহণ করা হয়েছে।\nআমাদের প্রতিনিধি ${activeCustomer.phone} নম্বরে যোগাযোগ করবেন।`);
-      cart = [];
-      updateCartBadge();
-      switchTab('home');
-    }
   </script>
 </body>
-  </html>
+        </html>
