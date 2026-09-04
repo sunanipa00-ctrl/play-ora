@@ -3,39 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA - Gamified Shopping</title>
+  <title>PLAYORA - All-in-One Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .wheel { transition: transform 4.5s cubic-bezier(0.12, 0.8, 0.15, 1); }
+    .wheel { transition: transform 4s cubic-bezier(0.12, 0.8, 0.15, 1); }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
 
-  <!-- Minimal Header -->
+  <!-- Main Top Bar -->
   <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-sm">
-    <div class="flex items-center gap-1.5">
-      <span class="text-xl font-black text-[#7040E8] tracking-tight">PLAYORA</span>
-      <span class="text-[9px] bg-[#7040E8]/10 text-[#7040E8] font-black px-2 py-0.5 rounded-full uppercase">Official</span>
+    <div class="flex items-center gap-2">
+      <span onclick="switchTab('home')" class="text-xl font-black text-[#7040E8] tracking-tight cursor-pointer">PLAYORA</span>
+      <span id="userStatusTag" class="text-[9px] bg-slate-100 text-slate-500 font-black px-2 py-0.5 rounded-full">GUEST</span>
     </div>
-    <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
-      <span>🛒 কার্ট</span>
-      <span id="cartCountBadge" class="bg-[#7040E8] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
-    </button>
+    <div class="flex items-center gap-2">
+      <button onclick="switchTab('admin')" class="bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-full text-[10px] font-bold">
+        🛠️ অ্যাডমিন
+      </button>
+      <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
+        <span>🛒 কার্ট</span>
+        <span id="cartCountBadge" class="bg-[#7040E8] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
+      </button>
+    </div>
   </header>
 
   <!-- ==================== TAB 1: HOME ==================== -->
   <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
-    <!-- Premium Hero Banner -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-[#7040E8] via-[#4d23bb] to-[#21113F] text-white p-5 rounded-[20px] shadow-lg shadow-purple-500/10">
-      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+    <!-- Hero Banner -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-[#7040E8] via-[#4d23bb] to-[#21113F] text-white p-5 rounded-[20px] shadow-lg">
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider shadow-sm">
+        <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">
           PLAY • WIN • SAVE
         </span>
-        <span class="text-[10px] text-purple-200 font-semibold">সীমিত সময়ের অফার</span>
       </div>
       <h2 class="text-lg font-black leading-snug tracking-tight">
         কেনাকাটার আগে গেম খেলুন,<br/>জিতে নিন নিশ্চিত ডিসকাউন্ট!
@@ -44,7 +47,7 @@
         প্রতি অর্ডারে সর্বোচ্চ ২০% পর্যন্ত ছাড় অথবা ফ্রি ডেলিভারি আনলক করুন।
       </p>
       <div class="mt-4 flex gap-2">
-        <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow hover:opacity-95 active:scale-95 transition">
+        <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow active:scale-95 transition">
           🎡 লাকি স্পিন খেলুন
         </button>
         <button onclick="switchTab('shop')" class="bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs font-bold px-3.5 py-2.5 rounded-[12px] active:scale-95 transition">
@@ -53,95 +56,73 @@
       </div>
     </div>
 
-    <!-- Live Winners Ticker -->
+    <!-- Quick Live Status -->
     <div class="bg-white px-3 py-2 rounded-[12px] border border-slate-100 flex items-center gap-2 text-[11px] shadow-sm">
       <span class="text-base">🔥</span>
       <p class="text-slate-600 truncate">
-        <span class="font-bold text-[#7040E8]">Riaz Morshed</span> এইমাত্র জিতেছেন <b class="text-[#17A66B]">১৫% ডিসকাউন্ট ভাউচার</b>!
+        <span class="font-bold text-[#7040E8]" id="liveUserName">কাস্টমার</span> এইমাত্র জিতেছেন <b class="text-[#17A66B]">১৫% ডিসকাউন্ট ভাউচার</b>!
       </p>
     </div>
 
-    <!-- Categories Strip -->
-    <div class="flex gap-2 overflow-x-auto no-scrollbar py-1">
-      <button onclick="filterCategory('all')" class="cat-btn bg-[#21113F] text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-sm">সব পণ্য</button>
-      <button onclick="filterCategory('Gadgets')" class="cat-btn bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-3.5 py-1.5 rounded-full whitespace-nowrap">গ্যাজেটস</button>
-      <button onclick="filterCategory('Accessories')" class="cat-btn bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-3.5 py-1.5 rounded-full whitespace-nowrap">অ্যাক্সেসরিজ</button>
-      <button onclick="filterCategory('Fashion')" class="cat-btn bg-white border border-slate-200 text-slate-600 text-[11px] font-bold px-3.5 py-1.5 rounded-full whitespace-nowrap">স্মার্ট লাইফস্টাইল</button>
-    </div>
-
-    <!-- Featured Products Preview -->
+    <!-- Products Section -->
     <div>
       <div class="flex justify-between items-center mb-2.5">
         <div>
           <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider">হট ডিল কালেকশন</h3>
-          <p class="text-[10px] text-slate-400">গেম ভাউচার দিয়ে সেরা দামে কিনুন</p>
+          <p class="text-[10px] text-slate-400">ভাউচার কোড অ্যাপ্লাই করে সাশ্রয় করুন</p>
         </div>
-        <button onclick="switchTab('shop')" class="text-xs font-black text-[#7040E8] flex items-center gap-0.5">
-          সবগুলো <span class="text-sm">›</span>
-        </button>
+        <button onclick="switchTab('shop')" class="text-xs font-black text-[#7040E8]">সবগুলো ›</button>
       </div>
-      <div id="homeProductsList" class="grid grid-cols-2 gap-2.5">
-        <!-- Injected via JS -->
-      </div>
+      <div id="homeProductsList" class="grid grid-cols-2 gap-2.5"></div>
     </div>
   </main>
 
   <!-- ==================== TAB 2: GAMES ==================== -->
   <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    <div class="text-center pt-1">
-      <h2 class="text-lg font-black text-[#21113F]">প্লেয়োরা গেমিং অ্যারেনা 🎮</h2>
-      <p class="text-xs text-slate-500">গেম জিতুন এবং আপনার শপিং কার্টে অতিরিক্ত সাশ্রয় করুন</p>
+    <div class="text-center">
+      <h2 class="text-lg font-black text-[#21113F]">গেমিং জোন 🎮</h2>
+      <p class="text-xs text-slate-500">গেম জিতুন এবং শপিং ভাউচার কোড সংগ্রহ করুন</p>
     </div>
 
-    <!-- Spin & Win Widget -->
-    <div class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative overflow-hidden">
-      <div class="inline-flex items-center gap-1 bg-amber-50 text-[#D97706] text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-200/60 mb-2">
-        <span>⚡ দৈনিক ফ্রি স্পিন বাকি: ১/১</span>
-      </div>
+    <!-- Spin Wheel -->
+    <div class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative">
       <h3 class="text-sm font-black text-slate-800">🎡 লাকি হুইল স্পিন</h3>
-      <p class="text-[11px] text-slate-500 mb-3">স্পিন করে সরাসরি ভাউচার কোড আনলক করুন</p>
+      <p class="text-[11px] text-slate-500 mb-3">সার্ভার-ড্রিভেন ফেয়ার অ্যালগরিদম</p>
 
       <div class="relative w-52 h-52 mx-auto flex items-center justify-center my-2">
         <div class="absolute -top-3 z-20 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-[#21113F] drop-shadow"></div>
         <div id="wheel" class="wheel w-full h-full rounded-full border-4 border-[#21113F] overflow-hidden relative shadow-md bg-slate-50">
           <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
-            <!-- 5 Slices -->
             <path d="M 50 50 L 100 50 A 50 50 0 0 1 65.45 97.55 Z" fill="#7040E8"></path>
             <path d="M 50 50 L 65.45 97.55 A 50 50 0 0 1 9.55 79.39 Z" fill="#21113F"></path>
             <path d="M 50 50 L 9.55 79.39 A 50 50 0 0 1 9.55 20.61 Z" fill="#FFC94D"></path>
             <path d="M 50 50 L 9.55 20.61 A 50 50 0 0 1 65.45 2.45 Z" fill="#17A66B"></path>
             <path d="M 50 50 L 65.45 2.45 A 50 50 0 0 1 100 50 Z" fill="#9333EA"></path>
           </svg>
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span class="text-[11px] font-black text-white bg-[#21113F]/80 px-2 py-0.5 rounded-full backdrop-blur-sm">স্পিন করুন</span>
-          </div>
         </div>
       </div>
 
-      <button id="spinBtn" onclick="playSpin()" class="w-full mt-3 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md shadow-purple-500/20 transition">
-        চাকা ঘুরান
+      <button id="spinBtn" onclick="executeEngineSpin()" class="w-full mt-3 py-3 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md transition">
+        স্পিন করুন
       </button>
 
-      <div id="rewardBox" class="hidden mt-3 p-3.5 bg-amber-50/70 border border-dashed border-[#FFC94D] rounded-[14px]">
-        <span id="rewardTitle" class="text-xs font-black text-[#17A66B] block">🎉 অভিনন্দন! আপনি জিতেছেন</span>
-        <p class="text-xs font-black text-slate-800 mt-0.5">ভাউচার কোড: <b id="rewardCodeText" class="text-[#7040E8] bg-white px-2.5 py-1 rounded-md border border-slate-200 tracking-wider">PLAY-WIN15</b></p>
-        <button onclick="applyVoucherAndShop()" class="mt-2 text-[11px] bg-[#17A66B] text-white px-3.5 py-1.5 rounded-[8px] font-bold shadow-sm">
-          ভাউচার দিয়ে শপিং করুন →
+      <div id="rewardBox" class="hidden mt-3 p-3.5 bg-amber-50 border border-dashed border-[#FFC94D] rounded-[14px]">
+        <span id="rewardTitle" class="text-xs font-black text-[#17A66B] block"></span>
+        <p class="text-xs font-black text-slate-800 mt-1">ভাউচার কোড: <b id="rewardCodeText" class="text-[#7040E8] bg-white px-2 py-0.5 rounded border border-slate-200"></b></p>
+        <button onclick="applyAndGoShop()" class="mt-2 text-[11px] bg-[#17A66B] text-white px-3.5 py-1.5 rounded-[8px] font-bold">
+          ভাউচার অ্যাপ্লাই করে শপ করুন →
         </button>
       </div>
     </div>
 
-    <!-- Mystery Gift Box -->
+    <!-- Mystery Box -->
     <div class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm">
-      <div class="flex justify-between items-center mb-1">
-        <h3 class="text-xs font-black text-slate-800">🎁 সারপ্রাইজ মিস্ট্রি বক্স</h3>
-        <span class="text-[10px] text-slate-400 font-semibold">১টি বেছে নিন</span>
-      </div>
-      <p class="text-[11px] text-slate-500 mb-3">যেকোনো একটি বক্সে লুকিয়ে আছে বিশেষ গিফট</p>
+      <h3 class="text-xs font-black text-slate-800 mb-1">🎁 সারপ্রাইজ মিস্ট্রি বক্স</h3>
+      <p class="text-[11px] text-slate-500 mb-3">যেকোনো একটি বক্সে ক্লিক করে ভাউচার আনলক করুন</p>
       <div class="grid grid-cols-3 gap-2 text-center">
-        <button onclick="openBox(1)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
-        <button onclick="openBox(2)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
-        <button onclick="openBox(3)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
+        <button onclick="pickMysteryBox(1)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
+        <button onclick="pickMysteryBox(2)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
+        <button onclick="pickMysteryBox(3)" class="p-4 bg-slate-50 rounded-[14px] border border-slate-200 text-3xl active:scale-90 transition">📦</button>
       </div>
     </div>
   </main>
@@ -150,63 +131,128 @@
   <main id="tab-shop" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     <div>
       <h2 class="text-lg font-black text-[#21113F]">শপ ক্যাটালগ 🛍️</h2>
-      <p class="text-xs text-slate-500">গেমিং রিওয়ার্ড যুক্ত করে আসল ডিসকাউন্টে অর্ডার করুন</p>
+      <p class="text-xs text-slate-500">পণ্য নির্বাচন করে কার্টে যুক্ত করুন</p>
     </div>
-
-    <div id="shopProductsList" class="grid grid-cols-2 gap-2.5">
-      <!-- Injected via JS -->
-    </div>
+    <div id="shopProductsList" class="grid grid-cols-2 gap-2.5"></div>
   </main>
 
   <!-- ==================== TAB 4: CART & CHECKOUT ==================== -->
   <main id="tab-cart" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     <div>
-      <h2 class="text-lg font-black text-[#21113F]">শপিং কার্ট 🛒</h2>
-      <p class="text-xs text-slate-500">আপনার সংরক্ষিত পণ্য ও অফার ভাউচার</p>
+      <h2 class="text-lg font-black text-[#21113F]">শপিং কার্ট ও চেকআউট 🛒</h2>
+      <p class="text-xs text-slate-500">অর্ডার নিশ্চিত করার আগে ভাউচার ব্যবহার করুন</p>
     </div>
 
-    <!-- Cart Items List -->
-    <div id="cartItemsContainer" class="space-y-2">
-      <!-- Injected via JS -->
-    </div>
+    <div id="cartItemsContainer" class="space-y-2"></div>
 
     <!-- Voucher Field -->
     <div class="bg-white p-3.5 rounded-[16px] border border-slate-100 shadow-sm space-y-1.5">
-      <label class="block text-[11px] font-bold text-slate-700">🎁 গেম রিওয়ার্ড বা ভাউচার কোড</label>
+      <label class="block text-[11px] font-bold text-slate-700">🎁 রিওয়ার্ড বা ভাউচার কোড</label>
       <div class="flex gap-2">
         <input id="voucherInput" type="text" placeholder="e.g. PLAY-WIN15" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-[10px] uppercase font-bold focus:outline-none focus:border-[#7040E8]" />
-        <button onclick="applyManualVoucher()" class="bg-[#21113F] text-white text-xs px-4 py-2 rounded-[10px] font-bold active:scale-95 transition">প্রয়োগ</button>
+        <button onclick="applyVoucher()" class="bg-[#21113F] text-white text-xs px-4 py-2 rounded-[10px] font-bold">প্রয়োগ</button>
+      </div>
+      <p id="voucherSuccessNote" class="text-[10px] text-brand-green font-bold hidden text-[#17A66B]"></p>
+    </div>
+
+    <!-- Payment Selector -->
+    <div class="bg-white p-3.5 rounded-[16px] border border-slate-100 shadow-sm space-y-2">
+      <label class="block text-[11px] font-bold text-slate-700">পেমেন্ট মেথড নির্বাচন করুন</label>
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="setPaymentMethod('COD')" id="pay-COD" class="pay-method-btn p-2 rounded-[10px] border border-[#7040E8] bg-purple-50 text-[10px] font-black flex flex-col items-center">
+          <span>💵 ক্যাশ অন</span>
+        </button>
+        <button onclick="setPaymentMethod('BKASH')" id="pay-BKASH" class="pay-method-btn p-2 rounded-[10px] border border-slate-200 text-[10px] font-black flex flex-col items-center">
+          <span>📱 বিকাশ</span>
+        </button>
+        <button onclick="setPaymentMethod('NAGAD')" id="pay-NAGAD" class="pay-method-btn p-2 rounded-[10px] border border-slate-200 text-[10px] font-black flex flex-col items-center">
+          <span>💳 নগদ</span>
+        </button>
       </div>
     </div>
 
-    <!-- Order Summary Breakdown -->
-    <div class="bg-white p-4 rounded-[18px] border border-slate-100 space-y-2.5 text-xs shadow-sm">
-      <h3 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider">অর্ডার সারাংশ</h3>
+    <!-- Summary -->
+    <div class="bg-white p-4 rounded-[18px] border border-slate-100 space-y-2 text-xs shadow-sm">
       <div class="flex justify-between text-slate-600">
         <span>সাবটোটাল</span>
         <span id="summarySubtotal" class="font-bold">৳০</span>
       </div>
       <div class="flex justify-between text-[#17A66B] font-bold">
-        <span>গেম ভাউচার ডিসকাউন্ট</span>
+        <span>ভাউচার ডিসকাউন্ট</span>
         <span id="summaryDiscount">-৳০</span>
       </div>
       <div class="flex justify-between text-slate-600">
         <span>ডেলিভারি চার্জ</span>
         <span id="summaryDelivery" class="font-bold">৳৬০</span>
       </div>
-      <div class="border-t border-slate-100 pt-2.5 flex justify-between font-black text-sm text-[#21113F]">
-        <span>সর্বমোট পরিশোধযোগ্য</span>
+      <div class="border-t border-slate-100 pt-2 flex justify-between font-black text-sm text-[#21113F]">
+        <span>সর্বমোট বিল</span>
         <span id="summaryTotal" class="text-[#7040E8] text-base">৳০</span>
       </div>
 
-      <button onclick="confirmOrder()" class="w-full mt-3 py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[12px] shadow-md shadow-purple-500/20 active:scale-95 transition">
-        ক্যাশ অন ডেলিভারিতে অর্ডার নিশ্চিত করুন
+      <button onclick="processOrderCheckout()" class="w-full mt-3 py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[12px] shadow active:scale-95 transition">
+        অর্ডার কনফার্ম করুন
       </button>
     </div>
   </main>
 
-  <!-- Mobile Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-2 flex justify-around shadow-lg z-50">
+  <!-- ==================== TAB 5: ADMIN ==================== -->
+  <main id="tab-admin" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
+    <div class="flex justify-between items-center">
+      <div>
+        <h2 class="text-lg font-black text-[#21113F]">অ্যাডমিন ড্যাশবোর্ড 🛠️</h2>
+        <p class="text-xs text-slate-500">প্রোডাক্ট যোগ ও লাইভ সেলস অ্যানালিটিক্স</p>
+      </div>
+      <button onclick="switchTab('home')" class="text-xs text-[#7040E8] font-bold">প্রস্থান ✕</button>
+    </div>
+
+    <!-- Analytics Cards -->
+    <div class="grid grid-cols-2 gap-2">
+      <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট সেলস</span>
+        <span id="adminTotalRevenue" class="text-base font-black text-[#7040E8]">৳০</span>
+      </div>
+      <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">অর্ডার সংখ্যা</span>
+        <span id="adminTotalOrders" class="text-base font-black text-slate-800">০</span>
+      </div>
+    </div>
+
+    <!-- Add Product Form -->
+    <div class="bg-white p-4 rounded-[18px] border border-slate-100 shadow-sm space-y-2.5">
+      <h3 class="text-xs font-black text-slate-800">নতুন পণ্য যোগ করুন</h3>
+      <input id="newProdName" type="text" placeholder="পণ্যের নাম" class="w-full text-xs p-2 border border-slate-200 rounded-[8px]" />
+      <input id="newProdPrice" type="number" placeholder="বিক্রয় মূল্য (৳)" class="w-full text-xs p-2 border border-slate-200 rounded-[8px]" />
+      <input id="newProdImg" type="text" placeholder="ছবির লিংক (Unsplash Image URL)" class="w-full text-xs p-2 border border-slate-200 rounded-[8px]" />
+      <button onclick="adminAddProduct()" class="w-full py-2.5 bg-[#17A66B] text-white text-xs font-bold rounded-[10px]">
+        + ক্যাটালগে যুক্ত করুন
+      </button>
+    </div>
+  </main>
+
+  <!-- ==================== TAB 6: AUTH MODAL ==================== -->
+  <div id="authModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-xs p-5 rounded-[20px] shadow-2xl space-y-4">
+      <div class="text-center">
+        <h3 class="text-base font-black text-slate-800">লগইন / ভেরিফিকেশন</h3>
+        <p class="text-xs text-slate-500 mt-0.5">নিরাপদ শপিং নিশ্চিত করতে ওটিপি দিন</p>
+      </div>
+
+      <div id="authStepPhone" class="space-y-3">
+        <input id="authPhoneInput" type="tel" placeholder="017XXXXXXXX" class="w-full text-xs p-2.5 border border-slate-200 rounded-[10px]" />
+        <button onclick="sendMockOtp()" class="w-full py-2.5 bg-[#7040E8] text-white text-xs font-black rounded-[10px]">OTP কোড পাঠান</button>
+      </div>
+
+      <div id="authStepOtp" class="hidden space-y-3">
+        <input id="authCodeInput" type="text" maxlength="4" placeholder="1234" class="w-full text-center tracking-widest text-lg font-black p-2 border border-slate-200 rounded-[10px]" />
+        <button onclick="verifyMockOtp()" class="w-full py-2.5 bg-[#17A66B] text-white text-xs font-black rounded-[10px]">যাচাই করে নিশ্চিত করুন</button>
+      </div>
+      <button onclick="closeAuthModal()" class="w-full text-center text-[10px] text-slate-400 font-bold">বাতিল করুন</button>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-2 flex justify-around shadow-lg z-30">
     <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center text-[#7040E8] font-bold text-[10px]">
       <span class="text-lg">🏠</span>হোম
     </button>
@@ -222,248 +268,248 @@
   </nav>
 
   <script>
-    // Real-world demo products with realistic imagery & attributes
-    const PRODUCTS = [
-      {
-        id: 1,
-        name: 'SoundCore ANC Wireless Headphone',
-        category: 'Gadgets',
-        originalPrice: 3200,
-        price: 2650,
-        tag: 'HOT DEAL',
-        rating: '4.9 ★',
-        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'
-      },
-      {
-        id: 2,
-        name: 'Ultra AMOLED Smart Watch (Call Feature)',
-        category: 'Gadgets',
-        originalPrice: 4500,
-        price: 3490,
-        tag: 'TRENDING',
-        rating: '4.8 ★',
-        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80'
-      },
-      {
-        id: 3,
-        name: 'Pro Tactical Water-Resistant Backpack',
-        category: 'Accessories',
-        originalPrice: 2200,
-        price: 1750,
-        tag: 'POPULAR',
-        rating: '4.7 ★',
-        image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80'
-      },
-      {
-        id: 4,
-        name: 'RGB Mechanical Gaming Keyboard (Blue Switch)',
-        category: 'Gadgets',
-        originalPrice: 2800,
-        price: 2190,
-        tag: 'GAMING',
-        rating: '4.9 ★',
-        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80'
-      },
-      {
-        id: 5,
-        name: 'Magnetic MagSafe Wireless Powerbank 10000mAh',
-        category: 'Accessories',
-        originalPrice: 1950,
-        price: 1550,
-        tag: 'NEW',
-        rating: '4.6 ★',
-        image: 'https://images.unsplash.com/photo-1609081219090-a6d8173087ec?w=500&q=80'
-      },
-      {
-        id: 6,
-        name: 'Matte Black Polarized Clubmaster Sunglasses',
-        category: 'Fashion',
-        originalPrice: 1200,
-        price: 890,
-        tag: 'STYLISH',
-        rating: '4.8 ★',
-        image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80'
-      }
+    // State Store
+    let currentUser = null;
+    let products = [
+      { id: 1, name: 'SoundCore ANC Wireless Headphone', price: 2650, originalPrice: 3200, tag: 'HOT', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80' },
+      { id: 2, name: 'Ultra AMOLED Smart Watch', price: 3490, originalPrice: 4500, tag: 'TREND', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80' },
+      { id: 3, name: 'Tactical Resistant Backpack', price: 1750, originalPrice: 2200, tag: 'PRO', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80' },
+      { id: 4, name: 'Mechanical Gaming Keyboard', price: 2190, originalPrice: 2800, tag: 'RGB', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80' }
     ];
 
     let cart = [];
-    let appliedDiscountRate = 0;
+    let selectedPayment = 'COD';
+    let appliedVoucher = { code: null, rate: 0 };
+    let totalRevenueAccumulator = 0;
+    let totalOrdersCount = 0;
     let deg = 0;
-    let activeCat = 'all';
 
-    function renderProducts() {
+    function renderCatalog() {
       const template = (p) => `
-        <div class="bg-white p-2.5 rounded-[18px] border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white p-2.5 rounded-[18px] border border-slate-100 shadow-sm flex flex-col justify-between">
           <div class="relative overflow-hidden rounded-[12px] bg-slate-100 aspect-square">
-            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" />
-            <span class="absolute top-1.5 left-1.5 bg-[#7040E8] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm">
-              ${p.tag}
-            </span>
-            <span class="absolute bottom-1.5 right-1.5 bg-black/60 backdrop-blur-sm text-amber-400 text-[10px] font-bold px-1.5 py-0.5 rounded">
-              ${p.rating}
-            </span>
+            <img src="${p.image}" class="w-full h-full object-cover" />
+            <span class="absolute top-1.5 left-1.5 bg-[#7040E8] text-white text-[9px] font-black px-2 py-0.5 rounded-full">${p.tag}</span>
           </div>
-
           <div class="mt-2 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">${p.category}</span>
-              <h4 class="text-xs font-bold text-slate-800 line-clamp-2 mt-0.5 leading-snug">${p.name}</h4>
-            </div>
-
-            <div class="mt-2.5 pt-2 border-t border-slate-50 flex items-center justify-between">
+            <h4 class="text-xs font-bold text-slate-800 line-clamp-2 leading-snug">${p.name}</h4>
+            <div class="mt-2 pt-2 border-t border-slate-50 flex items-center justify-between">
               <div>
                 <span class="text-xs font-black text-[#21113F]">৳${p.price}</span>
-                <span class="text-[10px] text-slate-400 line-through block">৳${p.originalPrice}</span>
+                <span class="text-[9px] text-slate-400 line-through block">৳${p.originalPrice}</span>
               </div>
-              <button onclick="addToCart(${p.id})" class="px-2.5 py-1.5 bg-[#7040E8] text-white text-[11px] font-bold rounded-[9px] active:scale-90 transition shadow-sm">
-                + কার্ট
-              </button>
+              <button onclick="addToCart(${p.id})" class="px-2.5 py-1.5 bg-[#7040E8] text-white text-[10px] font-bold rounded-[8px] active:scale-90 transition">+ কার্ট</button>
             </div>
           </div>
         </div>
       `;
-
-      // Home preview (first 4 items)
-      document.getElementById('homeProductsList').innerHTML = PRODUCTS.slice(0, 4).map(template).join('');
-
-      // Shop tab (filtered)
-      const filtered = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(x => x.category === activeCat);
-      document.getElementById('shopProductsList').innerHTML = filtered.map(template).join('');
+      document.getElementById('homeProductsList').innerHTML = products.slice(0, 2).map(template).join('');
+      document.getElementById('shopProductsList').innerHTML = products.map(template).join('');
     }
 
-    function filterCategory(cat) {
-      activeCat = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('bg-[#21113F]', 'text-white');
-        btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-      });
-      event.target.classList.add('bg-[#21113F]', 'text-white');
-      event.target.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-      renderProducts();
-    }
-
-    function switchTab(tabName) {
+    function switchTab(name) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(el => {
         el.classList.remove('text-[#7040E8]', 'font-bold');
         el.classList.add('text-slate-400');
       });
 
-      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-      const activeNav = document.getElementById(`nav-${tabName}`);
-      activeNav.classList.add('text-[#7040E8]', 'font-bold');
-      activeNav.classList.remove('text-slate-400');
+      const tab = document.getElementById(`tab-${name}`);
+      if (tab) tab.classList.remove('hidden');
 
-      if (tabName === 'cart') renderCart();
+      const nav = document.getElementById(`nav-${name}`);
+      if (nav) {
+        nav.classList.add('text-[#7040E8]', 'font-bold');
+        nav.classList.remove('text-slate-400');
+      }
+
+      if (name === 'cart') renderCart();
     }
 
     function addToCart(id) {
-      const prod = PRODUCTS.find(p => p.id === id);
-      const existing = cart.find(item => item.id === id);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ ...prod, qty: 1 });
-      }
+      const prod = products.find(p => p.id === id);
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ ...prod, qty: 1 });
       updateCartBadge();
       alert(`"${prod.name}" কার্টে যুক্ত হয়েছে!`);
     }
 
     function updateCartBadge() {
-      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      const count = cart.reduce((acc, c) => acc + c.qty, 0);
       document.getElementById('cartCountBadge').innerText = count;
     }
 
     function renderCart() {
-      const container = document.getElementById('cartItemsContainer');
+      const cont = document.getElementById('cartItemsContainer');
       if (cart.length === 0) {
-        container.innerHTML = '<div class="text-center py-10 text-xs text-slate-400 bg-white rounded-[16px] border border-slate-100">আপনার কার্ট খালি। শপ থেকে পণ্য যোগ করুন!</div>';
+        cont.innerHTML = '<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-[14px] border border-slate-100">আপনার কার্ট খালি।</div>';
       } else {
-        container.innerHTML = cart.map(item => `
-          <div class="bg-white p-3 rounded-[14px] border border-slate-100 flex items-center justify-between shadow-sm">
-            <div class="flex items-center gap-2.5">
-              <img src="${item.image}" class="w-10 h-10 object-cover rounded-lg bg-slate-50" />
+        cont.innerHTML = cart.map(i => `
+          <div class="bg-white p-3 rounded-[12px] border border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <img src="${i.image}" class="w-10 h-10 object-cover rounded-lg" />
               <div>
-                <h4 class="text-xs font-bold text-slate-800 line-clamp-1 max-w-[170px]">${item.name}</h4>
-                <span class="text-[11px] text-slate-500">৳${item.price} × ${item.qty}</span>
+                <h4 class="text-xs font-bold line-clamp-1 max-w-[170px]">${i.name}</h4>
+                <span class="text-[11px] text-slate-500">৳${i.price} × ${i.qty}</span>
               </div>
             </div>
-            <span class="text-xs font-black text-[#21113F]">৳${item.price * item.qty}</span>
+            <span class="text-xs font-black">৳${i.price * i.qty}</span>
           </div>
         `).join('');
       }
-      calculateCartTotals();
+      calculateTotals();
     }
 
-    function calculateCartTotals() {
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      const discount = Math.round((subtotal * appliedDiscountRate) / 100);
-      const delivery = subtotal > 0 ? 60 : 0;
-      const total = Math.max(0, subtotal - discount) + delivery;
+    function calculateTotals() {
+      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+      const disc = Math.round((sub * appliedVoucher.rate) / 100);
+      const del = sub > 0 ? 60 : 0;
+      const tot = Math.max(0, sub - disc) + del;
 
-      document.getElementById('summarySubtotal').innerText = `৳${subtotal}`;
-      document.getElementById('summaryDiscount').innerText = `-৳${discount}`;
-      document.getElementById('summaryDelivery').innerText = `৳${delivery}`;
-      document.getElementById('summaryTotal').innerText = `৳${total}`;
+      document.getElementById('summarySubtotal').innerText = `৳${sub}`;
+      document.getElementById('summaryDiscount').innerText = `-৳${disc}`;
+      document.getElementById('summaryDelivery').innerText = `৳${del}`;
+      document.getElementById('summaryTotal').innerText = `৳${tot}`;
     }
 
-    function playSpin() {
+    function executeEngineSpin() {
       const btn = document.getElementById('spinBtn');
       const wheel = document.getElementById('wheel');
-      const reward = document.getElementById('rewardBox');
       btn.disabled = true;
-      btn.innerText = 'ঘুরছে...';
+      btn.innerText = 'যাচাই হচ্ছে...';
+
+      // সার্ভার রেপ্লিকা আউটকাম (15% উইন)
       deg += 1800 + Math.floor(Math.random() * 360);
       wheel.style.transform = `rotate(${deg}deg)`;
 
       setTimeout(() => {
         btn.disabled = false;
         btn.innerText = 'আবার ঘুরান';
-        reward.classList.remove('hidden');
-        appliedDiscountRate = 15;
+        appliedVoucher = { code: 'PLAY-WIN15', rate: 15 };
         document.getElementById('rewardTitle').innerText = '🎉 আপনি জিতেছেন ১৫% ভাউচার!';
-        document.getElementById('rewardCodeText').innerText = 'PLAY-WIN15';
-      }, 4500);
+        document.getElementById('rewardCodeText').innerText = appliedVoucher.code;
+        document.getElementById('rewardBox').classList.remove('hidden');
+      }, 4000);
     }
 
-    function openBox(num) {
-      alert(`🎁 মিস্ট্রি বক্স ${num} সফলভাবে খোলা হয়েছে!\nআপনি পেয়েছেন ৳১০০ ফ্ল্যাট ডিসকাউন্ট কোড: BOX100`);
-      document.getElementById('voucherInput').value = 'BOX100';
+    function pickMysteryBox(n) {
+      appliedVoucher = { code: 'BOX-WIN10', rate: 10 };
+      alert(`🎁 মিস্ট্রি বক্স ${n} খোলা হয়েছে! আপনি পেয়েছেন ১০% ভাউচার (কোড: BOX-WIN10)`);
+      document.getElementById('voucherInput').value = appliedVoucher.code;
       switchTab('cart');
     }
 
-    function applyVoucherAndShop() {
-      document.getElementById('voucherInput').value = 'PLAY-WIN15';
+    function applyAndGoShop() {
+      document.getElementById('voucherInput').value = appliedVoucher.code;
       switchTab('shop');
     }
 
-    function applyManualVoucher() {
+    function applyVoucher() {
       const code = document.getElementById('voucherInput').value.trim().toUpperCase();
       if (code === 'PLAY-WIN15') {
-        appliedDiscountRate = 15;
-        alert('১৫% ডিসকাউন্ট ভাউচার সফলভাবে যোগ হয়েছে!');
-      } else if (code === 'BOX100') {
-        appliedDiscountRate = 10;
-        alert('৳১০০ ভাউচার সফলভাবে যোগ হয়েছে!');
+        appliedVoucher = { code, rate: 15 };
+        alert('১৫% ডিসকাউন্ট ভাউচার সক্রিয়!');
+      } else if (code === 'BOX-WIN10') {
+        appliedVoucher = { code, rate: 10 };
+        alert('১০% ডিসকাউন্ট ভাউচার সক্রিয়!');
       } else {
-        alert('অবৈধ ভাউচার কোড!');
+        alert('ভাউচার সঠিক নয়!');
       }
-      calculateCartTotals();
+      calculateTotals();
     }
 
-    function confirmOrder() {
-      if (cart.length === 0) {
-        alert('কার্টে কোনো পণ্য নেই!');
-        return;
+    function setPaymentMethod(method) {
+      selectedPayment = method;
+      document.querySelectorAll('.pay-method-btn').forEach(b => {
+        b.classList.remove('border-[#7040E8]', 'bg-purple-50');
+        b.classList.add('border-slate-200');
+      });
+      document.getElementById(`pay-${method}`).classList.add('border-[#7040E8]', 'bg-purple-50');
+      document.getElementById(`pay-${method}`).classList.remove('border-slate-200');
+    }
+
+    function processOrderCheckout() {
+      if (cart.length === 0) return alert('কার্টে কোনো পণ্য নেই!');
+      if (!currentUser) return document.getElementById('authModal').classList.remove('hidden');
+
+      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+      const disc = Math.round((sub * appliedVoucher.rate) / 100);
+      const total = Math.max(0, sub - disc) + 60;
+
+      if (selectedPayment === 'BKASH' || selectedPayment === 'NAGAD') {
+        const pin = prompt(`[${selectedPayment} GATEWAY]\nটাকার পরিমাণ: ৳${total}\nআপনার সিকিউর ওয়ালেট পিন দিন:`, '12345');
+        if (!pin) return alert('পেমেন্ট বাতিল করা হয়েছে!');
       }
-      alert('🎉 অভিনন্দন! আপনার ক্যাশ অন ডেলিভারি অর্ডারটি গ্রহণ করা হয়েছে। শিগগিরই ডেলিভারি শুরু হবে।');
+
+      totalRevenueAccumulator += total;
+      totalOrdersCount += 1;
+      updateAdminDashboard();
+
+      alert(`🎉 অর্ডার সফল!\nপেমেন্ট মেথড: ${selectedPayment}\nঅর্ডার আইডি: PL-${Date.now().toString().slice(-6)}`);
       cart = [];
-      appliedDiscountRate = 0;
+      appliedVoucher = { code: null, rate: 0 };
       updateCartBadge();
       switchTab('home');
     }
 
-    renderProducts();
+    // Mock OTP Functions
+    function sendMockOtp() {
+      const ph = document.getElementById('authPhoneInput').value.trim();
+      if (ph.length < 11) return alert('সঠিক মোবাইল নম্বর দিন');
+      document.getElementById('authStepPhone').classList.add('hidden');
+      document.getElementById('authStepOtp').classList.remove('hidden');
+      alert(`[SMS GATEWAY SIMULATION]\nআপনার ভেরিফিকেশন কোড: 1234`);
+    }
+
+    function verifyMockOtp() {
+      const cd = document.getElementById('authCodeInput').value.trim();
+      if (cd === '1234') {
+        currentUser = { phone: document.getElementById('authPhoneInput').value };
+        document.getElementById('userStatusTag').innerText = 'VERIFIED';
+        document.getElementById('userStatusTag').classList.replace('text-slate-500', 'text-emerald-600');
+        document.getElementById('authModal').classList.add('hidden');
+        alert('অথেনটিকেশন সফল! এখন অর্ডার নিশ্চিত করুন।');
+        processOrderCheckout();
+      } else {
+        alert('ভুল ওটিপি কোড!');
+      }
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    // Admin Operations
+    function updateAdminDashboard() {
+      document.getElementById('adminTotalRevenue').innerText = `৳${totalRevenueAccumulator}`;
+      document.getElementById('adminTotalOrders').innerText = totalOrdersCount;
+    }
+
+    function adminAddProduct() {
+      const name = document.getElementById('newProdName').value.trim();
+      const price = Number(document.getElementById('newProdPrice').value);
+      const img = document.getElementById('newProdImg').value.trim() || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80';
+
+      if (!name || !price) return alert('নাম ও মূল্য বাধ্যতামূলক');
+      products.unshift({
+        id: Date.now(),
+        name,
+        price,
+        originalPrice: price + 500,
+        tag: 'NEW',
+        image: img
+      });
+
+      renderCatalog();
+      alert('নতুন পণ্য ক্যাটালগে সফলভাবে যুক্ত হয়েছে!');
+      document.getElementById('newProdName').value = '';
+      document.getElementById('newProdPrice').value = '';
+      switchTab('shop');
+    }
+
+    // Run Engine
+    renderCatalog();
   </script>
 </body>
-</html>
+        </html>
