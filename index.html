@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA - Tiered VIP Retention Engine</title>
+  <title>PLAYORA - VIP Gamified Commerce with Auth</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -16,13 +16,15 @@
 </head>
 <body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
 
-  <!-- ==================== MANDATORY WELCOME GATE POPUP ==================== -->
+  <!-- ==================== MANDATORY WELCOME / LOGIN GATE ==================== -->
   <div id="welcomeGateModal" class="fixed inset-0 bg-[#21113F]/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-xs p-6 rounded-[24px] shadow-2xl space-y-4 border border-purple-100">
       <div class="text-center">
-        <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">🎁</div>
-        <h3 class="text-lg font-black text-slate-800">প্লেয়োরাতে স্বাগতম!</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">ডিসকাউন্ট স্পিন আনলক করতে নাম ও মোবাইল নম্বর প্রদান করুন।</p>
+        <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">🔐</div>
+        <h3 class="text-lg font-black text-slate-800">লগইন বা রেজিস্ট্রেশন</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+          আপনার সংরক্ষিত লেভেল, ভাউচার ও ফ্রি ডেলিভারি পেতে লগইন করুন।
+        </p>
       </div>
 
       <div class="space-y-3 pt-1">
@@ -34,10 +36,11 @@
           <label class="block text-[11px] font-bold text-slate-700 mb-1">১১ ডিজিটের মোবাইল নম্বর *</label>
           <input id="gatePhone" type="tel" maxlength="11" placeholder="যেমন: 017XXXXXXXX" class="w-full text-xs p-3 border border-slate-200 rounded-[12px] focus:outline-none focus:border-[#7040E8] bg-slate-50/50 font-bold" />
         </div>
-        <button onclick="submitLeadAndUnlock()" class="w-full py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[14px] shadow-lg shadow-purple-500/25 active:scale-95 transition">
-          ভাউচার স্পিন আনলক করুন 🎡
+        <button onclick="handleLoginOrRegister()" class="w-full py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[14px] shadow-lg shadow-purple-500/25 active:scale-95 transition">
+          প্রবেশ করুন ➔
         </button>
       </div>
+      <p class="text-[9px] text-center text-slate-400">নতুন হলে স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট ও স্পিন তৈরি হবে।</p>
     </div>
   </div>
 
@@ -45,11 +48,32 @@
   <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-sm">
     <div class="flex items-center gap-2">
       <span onclick="switchTab('home')" class="text-xl font-black text-[#7040E8] tracking-tight cursor-pointer">PLAYORA</span>
-      <span id="userTierBadge" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2.5 py-0.5 rounded-full border border-purple-100 uppercase">LVL 1</span>
+      <span id="userTierBadge" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2 py-0.5 rounded-full border border-purple-100 uppercase">LVL 1</span>
     </div>
+
+    <!-- User Profile & Logout Action Area -->
     <div class="flex items-center gap-2">
+      <div class="relative">
+        <button onclick="toggleProfileDropdown()" class="bg-slate-100 border border-slate-200 px-2.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition">
+          <span class="text-sm">👤</span>
+          <span id="headerUserName" class="truncate max-w-[70px] text-[11px]">অতিথি</span>
+          <span class="text-[9px] text-slate-400">▼</span>
+        </button>
+
+        <!-- Dropdown Card -->
+        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-[16px] shadow-xl border border-slate-100 p-2.5 z-50 space-y-2">
+          <div class="border-b border-slate-100 pb-2">
+            <span class="text-[9px] text-slate-400 block uppercase font-bold">লগইন অ্যাকাউন্ট</span>
+            <p id="dropdownUserPhone" class="text-xs font-black text-slate-800 truncate">০১৭...</p>
+          </div>
+          <button onclick="performUserLogout()" class="w-full py-2 bg-red-50 text-red-600 rounded-[10px] text-xs font-black flex items-center justify-center gap-1 active:scale-95 transition">
+            <span>🚪</span> লগআউট করুন
+          </button>
+        </div>
+      </div>
+
       <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
-        <span>🛒 কার্ট</span>
+        <span>🛒</span>
         <span id="cartCountBadge" class="bg-[#7040E8] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
       </button>
     </div>
@@ -57,7 +81,7 @@
 
   <!-- ==================== TAB 1: HOME ==================== -->
   <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
-    <!-- Level 3 Progress Bar Card (Active in Level 2) -->
+    <!-- Level 3 Mission Tracker -->
     <div id="level3ProgressCard" class="hidden bg-white p-4 rounded-[20px] border border-amber-200 shadow-sm space-y-2.5">
       <div class="flex justify-between items-center">
         <span class="text-[10px] font-black uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">
@@ -69,7 +93,7 @@
       <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
         <div id="level3ProgressBar" class="bg-gradient-to-r from-amber-400 to-[#7040E8] h-full w-0 transition-all duration-500"></div>
       </div>
-      <p class="text-[10px] text-slate-500 leading-tight">এই ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি (৳০)!</p>
+      <p class="text-[10px] text-slate-500 leading-tight">পরবর্তী ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি (৳০)!</p>
     </div>
 
     <!-- Hero Banner -->
@@ -77,8 +101,8 @@
       <div class="flex items-center gap-2 mb-2">
         <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">EXCLUSIVE FUNNEL</span>
       </div>
-      <h2 class="text-lg font-black leading-snug tracking-tight">গেম খেলুন, শপিং করুন,<br/>আনলক করুন ভিআইপি রিওয়ার্ড!</h2>
-      <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">প্রতিটি সফল ডেলিভারিতে খুলে যাবে আকর্ষণীয় মেগা অফার।</p>
+      <h2 class="text-lg font-black leading-snug tracking-tight">গেম খেলুন, শপিং করুন,<br/>আনলক করুন ভিআইপি সুবিধা!</h2>
+      <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">প্রতিটি ডেলিভারি আপনাকে নিয়ে যাবে উচ্চতর লেভেল ও বড় ডিসকাউন্টে।</p>
       <div class="mt-4 flex gap-2">
         <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow active:scale-95 transition">
           🎮 গেমিং অ্যারেনা
@@ -90,11 +114,14 @@
     </div>
 
     <!-- Live Customer Info Ticker -->
-    <div class="bg-white px-3.5 py-2.5 rounded-[14px] border border-slate-100 flex items-center gap-2 text-[11px] shadow-sm">
-      <span class="text-base">👤</span>
-      <p class="text-slate-600 truncate">
-        কাস্টমার: <span class="font-bold text-[#7040E8]" id="displayCustomerName">অতিথি</span> (<span id="displayCustomerPhone" class="font-bold text-slate-800">০১৭...</span>)
-      </p>
+    <div class="bg-white px-3.5 py-2.5 rounded-[14px] border border-slate-100 flex items-center justify-between text-[11px] shadow-sm">
+      <div class="flex items-center gap-2 truncate">
+        <span class="text-base">👤</span>
+        <p class="text-slate-600 truncate">
+          স্বাগতম, <span class="font-bold text-[#7040E8]" id="displayCustomerName">অতিথি</span>
+        </p>
+      </div>
+      <span id="displayCustomerPhone" class="text-[10px] font-bold text-slate-400">০১৭...</span>
     </div>
 
     <!-- Products Preview -->
@@ -113,14 +140,14 @@
   <!-- ==================== TAB 2: GAMES ==================== -->
   <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     
-    <!-- LEVEL 3: ULTIMATE ELITE CLUB (৩টি অর্ডার সম্পন্ন হলে) -->
+    <!-- LEVEL 3: ULTIMATE ELITE CLUB -->
     <div id="level3Section" class="hidden bg-gradient-to-br from-[#1b0933] via-[#35105a] to-[#7040E8] text-white p-5 rounded-[24px] shadow-2xl diamond-glow border border-purple-400/50 text-center space-y-3">
       <span class="text-[10px] font-black uppercase bg-white text-[#7040E8] px-3 py-1 rounded-full shadow">
         💎 LEVEL 3: LEGENDARY ELITE
       </span>
       <h3 class="text-lg font-black text-amber-300">অভিনন্দন! আপনি এলিট ক্লাবে পৌঁছেছেন</h3>
       <p class="text-xs text-purple-100 leading-relaxed">
-        আপনি সফলভাবে ৩টি ডেলিভারি সম্পন্ন করেছেন। এখন প্রতিটি অর্ডারে আজীবন পাবেন ৩০% ফ্ল্যাট ছাড় ও প্রায়োরিটি ডেলিভারি!
+        ৩টি সফল ডেলিভারি সম্পন্ন করার জন্য আপনি প্রতিটি অর্ডারে আজীবন পাবেন ৩০% ফ্ল্যাট ছাড়!
       </p>
       <div class="p-3 bg-white/10 rounded-[16px] border border-white/20">
         <span class="text-[10px] text-purple-200 block">আপনার পার্সোনাল এলিট ভাউচার:</span>
@@ -128,17 +155,16 @@
       </div>
     </div>
 
-    <!-- LEVEL 2: VIP GOLDEN VAULT (১ম ডেলিভারির পর আনলক) -->
+    <!-- LEVEL 2: VIP GOLDEN VAULT -->
     <div id="vipGameSection" class="hidden bg-gradient-to-b from-[#21113F] to-[#3a1d6e] text-white p-5 rounded-[24px] shadow-xl border-2 border-amber-400/60 relative overflow-hidden">
       <div class="text-center">
         <span class="text-[10px] font-black uppercase bg-gradient-to-r from-amber-400 to-yellow-300 text-black px-3 py-1 rounded-full shadow">
           👑 LEVEL 2: GOLDEN VAULT
         </span>
         <h3 class="text-base font-black mt-2">মেগা পার্সেন্টেজ ডিসকাউন্ট আনলকড!</h3>
-        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সিন্দুক ট্যাপ করে বড় ছাড় গ্রহণ করুন</p>
+        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সিন্দুক ট্যাপ করে বড় ছাড় উন্মোচন করুন</p>
       </div>
 
-      <!-- 3 Gold Vault Chests -->
       <div id="vaultChestsContainer" class="grid grid-cols-3 gap-2.5 my-4 text-center">
         <button onclick="openVipVault(1)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🪙</button>
         <button onclick="openVipVault(2)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🏆</button>
@@ -247,7 +273,7 @@
     <div class="flex justify-between items-center">
       <div>
         <h2 class="text-lg font-black text-[#21113F]">অ্যাডমিন ও ডেলিভারি কন্ট্রোল 🛠️</h2>
-        <p class="text-xs text-slate-500">ডেলিভারি সফল করে গ্রাহকের লেভেল আপগ্রেড করুন</p>
+        <p class="text-xs text-slate-500">ডেলিভারি কনফার্ম করে গ্রাহকের লেভেল আপগ্রেড করুন</p>
       </div>
       <button onclick="clearAllData()" class="text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">রিসেট</button>
     </div>
@@ -255,11 +281,11 @@
     <!-- Admin Stats -->
     <div class="grid grid-cols-2 gap-2">
       <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট কাস্টমার</span>
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট নিবন্ধিত ইউজার</span>
         <span id="adminTotalLeads" class="text-base font-black text-[#7040E8]">০</span>
       </div>
       <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট অর্ডার</span>
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট অর্ডার সংখ্যা</span>
         <span id="adminTotalOrders" class="text-base font-black text-slate-800">০</span>
       </div>
     </div>
@@ -317,8 +343,8 @@
       }
     });
 
-    // 1. Mandatory Gate Submission
-    function submitLeadAndUnlock() {
+    // 1. Mandatory Gate / Login Handler
+    function handleLoginOrRegister() {
       const name = document.getElementById('gateName').value.trim();
       const phone = document.getElementById('gatePhone').value.trim();
 
@@ -327,14 +353,16 @@
         return alert('সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (যেমন: 017XXXXXXXX)।');
       }
 
+      // Check if user already exists in database
       const existing = leadsStore.find(l => l.phone === phone);
       if (existing) {
         activeCustomer = existing;
+        alert(`স্বাগতম ফিরে আসার জন্য, ${activeCustomer.name}! আপনার সংরক্ষিত অ্যাকাউন্ট লোড করা হয়েছে।`);
       } else {
         activeCustomer = { 
           name, 
           phone, 
-          tier: 1, // Tier 1, 2, 3
+          tier: 1, 
           hasSpun: false, 
           spinReward: 'N/A', 
           code: 'N/A',
@@ -345,6 +373,7 @@
         };
         leadsStore.unshift(activeCustomer);
         localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+        alert(`ধন্যবাদ ${name}! আপনার নতুন অ্যাকাউন্ট তৈরি হয়েছে ও ১টি ফ্রি স্পিন আনলক হয়েছে।`);
       }
 
       localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
@@ -353,19 +382,46 @@
       syncGameAndTierStates();
 
       if (!activeCustomer.hasSpun) {
-        alert(`স্বাগতম ${name}! আপনার ১ম স্পিন আনলক হয়েছে। চলুন লাকি স্পিন করি!`);
         switchTab('games');
       }
     }
 
+    // 2. User Logout Action
+    function performUserLogout() {
+      if (confirm('আপনি কি এই অ্যাকাউন্ট থেকে লগআউট করতে চান?')) {
+        // Save current user state before logout
+        saveCustomerState();
+        
+        // Remove active session
+        localStorage.removeItem('playora_active_user');
+        activeCustomer = null;
+        cart = [];
+        appliedVoucher = { code: null, rate: 0 };
+        updateCartBadge();
+
+        toggleProfileDropdown();
+        document.getElementById('welcomeGateModal').classList.remove('hidden');
+        document.getElementById('gateName').value = '';
+        document.getElementById('gatePhone').value = '';
+        switchTab('home');
+      }
+    }
+
+    function toggleProfileDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
     function updateCustomerUI() {
       if (!activeCustomer) return;
+      document.getElementById('headerUserName').innerText = activeCustomer.name;
       document.getElementById('displayCustomerName').innerText = activeCustomer.name;
       document.getElementById('displayCustomerPhone').innerText = activeCustomer.phone;
+      document.getElementById('dropdownUserPhone').innerText = activeCustomer.phone;
       document.getElementById('userTierBadge').innerText = `LVL ${activeCustomer.tier}`;
     }
 
-    // 2. Tier Logic Engine (Level 1 -> Level 2 -> Level 3)
+    // 3. Tier & Game State Engine
     function syncGameAndTierStates() {
       if (!activeCustomer) return;
 
@@ -386,9 +442,15 @@
           document.getElementById('rewardCodeText').innerText = activeCustomer.code;
           document.getElementById('rewardBox').classList.remove('hidden');
         }
+      } else {
+        spinBtn.disabled = false;
+        spinBtn.innerText = 'স্পিন করুন 🎯';
+        spinBtn.classList.replace('bg-slate-300', 'bg-[#7040E8]');
+        spinBtn.classList.replace('text-slate-600', 'text-white');
+        document.getElementById('rewardBox').classList.add('hidden');
       }
 
-      // লেভেল ২ কনফিগারেশন (১ম ডেলিভারির পর)
+      // লেভেল ২ কনফিগারেশন
       if (activeCustomer.tier >= 2) {
         vipSection.classList.remove('hidden');
 
@@ -399,7 +461,6 @@
           document.getElementById('vipRewardCode').innerText = activeCustomer.vipReward.code;
         }
 
-        // লেভেল ৩ প্রগ্রেস ট্র্যাকার (৩টি ডেলিভারি টার্গেট)
         if (activeCustomer.tier === 2) {
           progressCard.classList.remove('hidden');
           const needed = Math.max(0, 3 - activeCustomer.deliveredOrdersCount);
@@ -416,7 +477,7 @@
         progressCard.classList.add('hidden');
       }
 
-      // লেভেল ৩ কনফিগারেশন (৩টি সফল ডেলিভারির পর)
+      // লেভেল ৩ কনফিগারেশন
       if (activeCustomer.tier >= 3) {
         level3Section.classList.remove('hidden');
         progressCard.classList.add('hidden');
@@ -427,7 +488,7 @@
       updateCustomerUI();
     }
 
-    // 3. Level 1 Spin
+    // 4. Level 1 Spin
     function executeLeadSpin() {
       if (!activeCustomer || activeCustomer.hasSpun) return;
 
@@ -457,7 +518,7 @@
       }, 4500);
     }
 
-    // 4. Level 2 Vault (শুধুমাত্র বড় ছাড়, কোনো ফ্রি ডেলিভারি নয়)
+    // 5. Level 2 Vault (শুধুমাত্র বড় ছাড়)
     function openVipVault(chestNum) {
       if (!activeCustomer || activeCustomer.tier < 2) return;
       if (activeCustomer.hasOpenedVipVault) return alert('আপনি ইতিমধ্যে লেভেল ২ ভল্ট খুলেছেন!');
@@ -480,7 +541,7 @@
       alert(`👑 অভিনন্দন ${activeCustomer.name}!\nআপনি জিতেছেন: ${selected.title}\nপরের ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি!`);
     }
 
-    // 5. Checkout Process & Free Delivery Deductions
+    // 6. Checkout Process
     function processOrderCheckout() {
       if (cart.length === 0) return alert('কার্ট খালি!');
       if (!activeCustomer) return;
@@ -488,7 +549,6 @@
       const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
       const disc = Math.round((sub * appliedVoucher.rate) / 100);
       
-      // ফ্রি ডেলিভারি ক্যালকুলেশন
       let deliveryFee = 60;
       let usedFreeDelivery = false;
       if (activeCustomer.freeDeliveriesRemaining > 0) {
@@ -519,7 +579,7 @@
       updateAdminView();
     }
 
-    // 6. Admin Delivery Confirmation (Trigger Tier 2 & Tier 3)
+    // 7. Admin Delivery Confirmation
     function markOrderAsDelivered(orderId) {
       const order = ordersStore.find(o => o.orderId === orderId);
       if (!order) return;
@@ -528,35 +588,40 @@
       localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
 
       // কাস্টমার টায়ার ক্যালকুলেশন
-      if (activeCustomer && activeCustomer.phone === order.customerPhone) {
-        
-        // ১ম ডেলিভারি: লেভেল ২ আনলক + ৩টি ফ্রি ডেলিভারি প্রদান
-        if (activeCustomer.tier === 1) {
-          activeCustomer.tier = 2;
-          activeCustomer.freeDeliveriesRemaining = 3;
-          activeCustomer.deliveredOrdersCount = 0;
-          alert(`✅ ১ম ডেলিভারি সফল! গ্রাহক (${activeCustomer.name}) LEVEL 2-তে উত্তীর্ণ হয়েছেন এবং ৩টি ফ্রি ডেলিভারি পেয়েছেন!`);
-        } 
-        // লেভেল ২-তে থাকা অবস্থায় ডেলিভারি ট্র্যাকিং
-        else if (activeCustomer.tier === 2) {
-          activeCustomer.deliveredOrdersCount += 1;
-          if (activeCustomer.freeDeliveriesRemaining > 0) {
-            activeCustomer.freeDeliveriesRemaining -= 1;
-          }
+      let targetCustomer = (activeCustomer && activeCustomer.phone === order.customerPhone) 
+        ? activeCustomer 
+        : leadsStore.find(l => l.phone === order.customerPhone);
 
-          // ৩টি ডেলিভারি সম্পন্ন হলে -> LEVEL 3
-          if (activeCustomer.deliveredOrdersCount >= 3) {
-            activeCustomer.tier = 3;
-            alert(`🏆 অসাধারণ! গ্রাহক ৩টি ডেলিভারি সম্পন্ন করে LEVEL 3: ELITE ক্লাবে প্রবেশ করেছেন!`);
-          } else {
-            alert(`📦 ডেলিভারি সফল! লেভেল ৩-এর জন্য বাকি: ${3 - activeCustomer.deliveredOrdersCount}টি ডেলিভারি।`);
+      if (targetCustomer) {
+        if (targetCustomer.tier === 1) {
+          targetCustomer.tier = 2;
+          targetCustomer.freeDeliveriesRemaining = 3;
+          targetCustomer.deliveredOrdersCount = 0;
+        } else if (targetCustomer.tier === 2) {
+          targetCustomer.deliveredOrdersCount += 1;
+          if (targetCustomer.freeDeliveriesRemaining > 0) {
+            targetCustomer.freeDeliveriesRemaining -= 1;
+          }
+          if (targetCustomer.deliveredOrdersCount >= 3) {
+            targetCustomer.tier = 3;
           }
         }
 
-        saveCustomerState();
-        syncGameAndTierStates();
+        // Save to leads store
+        const idx = leadsStore.findIndex(l => l.phone === targetCustomer.phone);
+        if (idx !== -1) {
+          leadsStore[idx] = targetCustomer;
+          localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+        }
+
+        if (activeCustomer && activeCustomer.phone === targetCustomer.phone) {
+          activeCustomer = targetCustomer;
+          localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
+          syncGameAndTierStates();
+        }
       }
 
+      alert(`✅ অর্ডার ${orderId} সফলভাবে DELIVERED চিহ্নিত হয়েছে!`);
       updateAdminView();
     }
 
@@ -649,6 +714,7 @@
     }
 
     function saveCustomerState() {
+      if (!activeCustomer) return;
       localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
       const idx = leadsStore.findIndex(l => l.phone === activeCustomer.phone);
       if (idx !== -1) {
@@ -744,4 +810,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
