@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA - VIP Gamified E-Commerce</title>
+  <title>PLAYORA - Tiered VIP Retention Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -11,6 +11,7 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .gold-glow { box-shadow: 0 0 25px -3px rgba(255, 201, 77, 0.45); }
+    .diamond-glow { box-shadow: 0 0 25px -3px rgba(112, 64, 232, 0.5); }
   </style>
 </head>
 <body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
@@ -19,13 +20,9 @@
   <div id="welcomeGateModal" class="fixed inset-0 bg-[#21113F]/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-xs p-6 rounded-[24px] shadow-2xl space-y-4 border border-purple-100">
       <div class="text-center">
-        <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">
-          🎁
-        </div>
+        <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">🎁</div>
         <h3 class="text-lg font-black text-slate-800">প্লেয়োরাতে স্বাগতম!</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-          স্পিন ভাউচার আনলক করতে আপনার নাম ও মোবাইল নম্বর প্রদান করুন।
-        </p>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">ডিসকাউন্ট স্পিন আনলক করতে নাম ও মোবাইল নম্বর প্রদান করুন।</p>
       </div>
 
       <div class="space-y-3 pt-1">
@@ -48,7 +45,7 @@
   <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-sm">
     <div class="flex items-center gap-2">
       <span onclick="switchTab('home')" class="text-xl font-black text-[#7040E8] tracking-tight cursor-pointer">PLAYORA</span>
-      <span id="userStatusTag" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2.5 py-0.5 rounded-full border border-purple-100 truncate max-w-[90px]">অতিথি</span>
+      <span id="userTierBadge" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2.5 py-0.5 rounded-full border border-purple-100 uppercase">LVL 1</span>
     </div>
     <div class="flex items-center gap-2">
       <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
@@ -60,39 +57,34 @@
 
   <!-- ==================== TAB 1: HOME ==================== -->
   <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
-    <!-- VIP Post-Delivery Alert Banner (Hidden by default) -->
-    <div id="vipDeliveryAlertBanner" onclick="switchTab('games')" class="hidden bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-[#21113F] p-3.5 rounded-[18px] shadow-lg gold-glow cursor-pointer animate-pulse">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <span class="text-2xl">👑</span>
-          <div>
-            <span class="text-[9px] font-black uppercase bg-[#21113F] text-amber-300 px-2 py-0.5 rounded-full">VIP UNLOCKED</span>
-            <h4 class="text-xs font-black mt-0.5">ডেলিভারি সফল! মেগা ভল্ট আনলক হয়েছে</h4>
-          </div>
-        </div>
-        <span class="text-xs font-black bg-white/90 px-2.5 py-1 rounded-[10px]">খেলুন →</span>
+    <!-- Level 3 Progress Bar Card (Active in Level 2) -->
+    <div id="level3ProgressCard" class="hidden bg-white p-4 rounded-[20px] border border-amber-200 shadow-sm space-y-2.5">
+      <div class="flex justify-between items-center">
+        <span class="text-[10px] font-black uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">
+          🚀 LEVEL 3 মিশন
+        </span>
+        <span id="freeDeliveriesLeftText" class="text-[11px] font-black text-[#17A66B]">৩টি ফ্রি ডেলিভারি বাকি</span>
       </div>
+      <h4 class="text-xs font-black text-slate-800">আর <span id="ordersNeededCount" class="text-[#7040E8]">৩টি</span> সফল ডেলিভারিতে আনলক হবে LEVEL 3!</h4>
+      <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+        <div id="level3ProgressBar" class="bg-gradient-to-r from-amber-400 to-[#7040E8] h-full w-0 transition-all duration-500"></div>
+      </div>
+      <p class="text-[10px] text-slate-500 leading-tight">এই ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি (৳০)!</p>
     </div>
 
     <!-- Hero Banner -->
     <div class="relative overflow-hidden bg-gradient-to-br from-[#7040E8] via-[#4d23bb] to-[#21113F] text-white p-5 rounded-[20px] shadow-lg">
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">
-          EXCLUSIVE COMMERCE
-        </span>
+        <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">EXCLUSIVE FUNNEL</span>
       </div>
-      <h2 class="text-lg font-black leading-snug tracking-tight">
-        স্পিন করে জিতে নিন<br/>নিশ্চিত ডিসকাউন্ট ভাউচার!
-      </h2>
-      <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">
-        প্রতি অর্ডারে সর্বোচ্চ ২৫% পর্যন্ত ভিআইপি রিওয়ার্ড সুবিধা।
-      </p>
+      <h2 class="text-lg font-black leading-snug tracking-tight">গেম খেলুন, শপিং করুন,<br/>আনলক করুন ভিআইপি রিওয়ার্ড!</h2>
+      <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">প্রতিটি সফল ডেলিভারিতে খুলে যাবে আকর্ষণীয় মেগা অফার।</p>
       <div class="mt-4 flex gap-2">
         <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow active:scale-95 transition">
-          🎮 গেমিং জোন
+          🎮 গেমিং অ্যারেনা
         </button>
         <button onclick="switchTab('shop')" class="bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs font-bold px-3.5 py-2.5 rounded-[12px] active:scale-95 transition">
-          শপ ঘুরে দেখুন
+          শপ কালেকশন
         </button>
       </div>
     </div>
@@ -101,7 +93,7 @@
     <div class="bg-white px-3.5 py-2.5 rounded-[14px] border border-slate-100 flex items-center gap-2 text-[11px] shadow-sm">
       <span class="text-base">👤</span>
       <p class="text-slate-600 truncate">
-        কাস্টমার: <span class="font-bold text-[#7040E8]" id="displayCustomerName">অতিথি</span> (<span id="displayCustomerPhone" class="font-bold text-slate-800">অপেক্ষমাণ</span>)
+        কাস্টমার: <span class="font-bold text-[#7040E8]" id="displayCustomerName">অতিথি</span> (<span id="displayCustomerPhone" class="font-bold text-slate-800">০১৭...</span>)
       </p>
     </div>
 
@@ -121,41 +113,44 @@
   <!-- ==================== TAB 2: GAMES ==================== -->
   <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
     
-    <!-- LEVEL 2: VIP SECRET VAULT (ডেলিভারির পর প্রদর্শিত হবে) -->
+    <!-- LEVEL 3: ULTIMATE ELITE CLUB (৩টি অর্ডার সম্পন্ন হলে) -->
+    <div id="level3Section" class="hidden bg-gradient-to-br from-[#1b0933] via-[#35105a] to-[#7040E8] text-white p-5 rounded-[24px] shadow-2xl diamond-glow border border-purple-400/50 text-center space-y-3">
+      <span class="text-[10px] font-black uppercase bg-white text-[#7040E8] px-3 py-1 rounded-full shadow">
+        💎 LEVEL 3: LEGENDARY ELITE
+      </span>
+      <h3 class="text-lg font-black text-amber-300">অভিনন্দন! আপনি এলিট ক্লাবে পৌঁছেছেন</h3>
+      <p class="text-xs text-purple-100 leading-relaxed">
+        আপনি সফলভাবে ৩টি ডেলিভারি সম্পন্ন করেছেন। এখন প্রতিটি অর্ডারে আজীবন পাবেন ৩০% ফ্ল্যাট ছাড় ও প্রায়োরিটি ডেলিভারি!
+      </p>
+      <div class="p-3 bg-white/10 rounded-[16px] border border-white/20">
+        <span class="text-[10px] text-purple-200 block">আপনার পার্সোনাল এলিট ভাউচার:</span>
+        <b class="text-base text-amber-300 tracking-wider">ELITE-LIFETIME30</b>
+      </div>
+    </div>
+
+    <!-- LEVEL 2: VIP GOLDEN VAULT (১ম ডেলিভারির পর আনলক) -->
     <div id="vipGameSection" class="hidden bg-gradient-to-b from-[#21113F] to-[#3a1d6e] text-white p-5 rounded-[24px] shadow-xl border-2 border-amber-400/60 relative overflow-hidden">
-      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
       <div class="text-center">
         <span class="text-[10px] font-black uppercase bg-gradient-to-r from-amber-400 to-yellow-300 text-black px-3 py-1 rounded-full shadow">
-          👑 LEVEL 2: VIP VAULT
+          👑 LEVEL 2: GOLDEN VAULT
         </span>
-        <h3 class="text-base font-black mt-2">পার্সেল রিসিভ করায় মেগা রিওয়ার্ড!</h3>
-        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সোনার সিন্দুক ট্যাপ করে বড় অফার আনলক করুন</p>
-      </div>
-
-      <!-- Urgency Timer -->
-      <div class="mt-3 bg-black/30 border border-amber-400/30 py-1.5 px-3 rounded-full text-center text-[10px] font-bold text-amber-300">
-        ⏳ অফারের মেয়াদ বাকি: <span id="vipTimer" class="font-mono font-black text-white">47:59:45</span>
+        <h3 class="text-base font-black mt-2">মেগা পার্সেন্টেজ ডিসকাউন্ট আনলকড!</h3>
+        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সিন্দুক ট্যাপ করে বড় ছাড় গ্রহণ করুন</p>
       </div>
 
       <!-- 3 Gold Vault Chests -->
       <div id="vaultChestsContainer" class="grid grid-cols-3 gap-2.5 my-4 text-center">
-        <button onclick="openVipVault(1)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
-          🪙
-        </button>
-        <button onclick="openVipVault(2)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
-          🏆
-        </button>
-        <button onclick="openVipVault(3)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition hover:border-amber-300">
-          👑
-        </button>
+        <button onclick="openVipVault(1)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🪙</button>
+        <button onclick="openVipVault(2)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🏆</button>
+        <button onclick="openVipVault(3)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">👑</button>
       </div>
 
       <div id="vipRewardResultBox" class="hidden p-3.5 bg-amber-400 text-[#21113F] rounded-[16px] text-center font-black">
-        <span class="text-xs block">🎉 মেগা ভিআইপি রিওয়ার্ড আনলকড!</span>
+        <span class="text-xs block">🎉 লেভেল ২ রিওয়ার্ড উন্মোচিত!</span>
         <p id="vipRewardTitle" class="text-base mt-0.5"></p>
         <div class="bg-black text-amber-300 py-1 px-3 rounded-lg text-xs font-mono tracking-wider mt-1.5 inline-block" id="vipRewardCode"></div>
         <button onclick="applyVipAndShop()" class="mt-2.5 w-full py-2 bg-[#21113F] text-white text-[11px] font-black rounded-[10px]">
-          পরবর্তী অর্ডারে ব্যবহার করুন →
+          ছাড় নিয়ে শপিং করুন →
         </button>
       </div>
     </div>
@@ -164,7 +159,7 @@
     <div id="standardSpinSection" class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative">
       <div class="flex justify-between items-center mb-1">
         <span class="text-[10px] font-bold text-slate-400 uppercase">LEVEL 1: প্রথম অর্ডার স্পিন</span>
-        <span id="spinBadgeStatus" class="text-[9px] bg-purple-50 text-[#7040E8] font-bold px-2 py-0.5 rounded-full">১টি ফ্রি স্পিন</span>
+        <span id="spinBadgeStatus" class="text-[9px] bg-purple-50 text-[#7040E8] font-bold px-2 py-0.5 rounded-full">১টি স্পিন</span>
       </div>
       <h3 class="text-sm font-black text-slate-800">🎡 লাকি হুইল স্পিন</h3>
       <p class="text-[11px] text-slate-500 mb-2">চাকা ঘুরিয়ে আনলক করুন আপনার প্রথম ডিসকাউন্ট</p>
@@ -252,7 +247,7 @@
     <div class="flex justify-between items-center">
       <div>
         <h2 class="text-lg font-black text-[#21113F]">অ্যাডমিন ও ডেলিভারি কন্ট্রোল 🛠️</h2>
-        <p class="text-xs text-slate-500">ডেলিভারি সফল করে কাস্টমারের VIP গেম আনলক করুন</p>
+        <p class="text-xs text-slate-500">ডেলিভারি সফল করে গ্রাহকের লেভেল আপগ্রেড করুন</p>
       </div>
       <button onclick="clearAllData()" class="text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">রিসেট</button>
     </div>
@@ -269,9 +264,8 @@
       </div>
     </div>
 
-    <!-- Customer Orders & Delivery Actions -->
     <div class="space-y-2">
-      <h3 class="text-xs font-black text-slate-800">কাস্টমার অর্ডার ও VIP অ্যাক্টিভেশন</h3>
+      <h3 class="text-xs font-black text-slate-800">কাস্টমার অর্ডার ও ডেলিভারি হ্যান্ডলিং</h3>
       <div id="adminOrdersList" class="space-y-2.5"></div>
     </div>
   </main>
@@ -296,7 +290,7 @@
   </nav>
 
   <script>
-    // System State Architecture
+    // System Data Store Architecture
     let activeCustomer = JSON.parse(localStorage.getItem('playora_active_user')) || null;
     let leadsStore = JSON.parse(localStorage.getItem('playora_leads_crm')) || [];
     let ordersStore = JSON.parse(localStorage.getItem('playora_orders_db')) || [];
@@ -319,11 +313,11 @@
       } else {
         document.getElementById('welcomeGateModal').classList.add('hidden');
         updateCustomerUI();
-        syncGameStates();
+        syncGameAndTierStates();
       }
     });
 
-    // 1. Mandatory Gate Check
+    // 1. Mandatory Gate Submission
     function submitLeadAndUnlock() {
       const name = document.getElementById('gateName').value.trim();
       const phone = document.getElementById('gatePhone').value.trim();
@@ -340,12 +334,14 @@
         activeCustomer = { 
           name, 
           phone, 
+          tier: 1, // Tier 1, 2, 3
           hasSpun: false, 
           spinReward: 'N/A', 
           code: 'N/A',
-          isVipUnlocked: false,
           hasOpenedVipVault: false,
-          vipReward: null
+          vipReward: null,
+          freeDeliveriesRemaining: 0,
+          deliveredOrdersCount: 0
         };
         leadsStore.unshift(activeCustomer);
         localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
@@ -354,7 +350,7 @@
       localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
       document.getElementById('welcomeGateModal').classList.add('hidden');
       updateCustomerUI();
-      syncGameStates();
+      syncGameAndTierStates();
 
       if (!activeCustomer.hasSpun) {
         alert(`স্বাগতম ${name}! আপনার ১ম স্পিন আনলক হয়েছে। চলুন লাকি স্পিন করি!`);
@@ -364,21 +360,21 @@
 
     function updateCustomerUI() {
       if (!activeCustomer) return;
-      document.getElementById('userStatusTag').innerText = activeCustomer.name;
       document.getElementById('displayCustomerName').innerText = activeCustomer.name;
       document.getElementById('displayCustomerPhone').innerText = activeCustomer.phone;
+      document.getElementById('userTierBadge').innerText = `LVL ${activeCustomer.tier}`;
     }
 
-    // 2. State Engine Sync (Single-Spin & VIP Locks)
-    function syncGameStates() {
+    // 2. Tier Logic Engine (Level 1 -> Level 2 -> Level 3)
+    function syncGameAndTierStates() {
       if (!activeCustomer) return;
 
       const spinBtn = document.getElementById('spinBtn');
-      const standardSection = document.getElementById('standardSpinSection');
       const vipSection = document.getElementById('vipGameSection');
-      const vipAlertBanner = document.getElementById('vipDeliveryAlertBanner');
+      const level3Section = document.getElementById('level3Section');
+      const progressCard = document.getElementById('level3ProgressCard');
 
-      // লেভেল ১ স্পিন লক চেক
+      // লেভেল ১ স্পিন লক
       if (activeCustomer.hasSpun) {
         spinBtn.disabled = true;
         spinBtn.innerText = '🔒 আপনি ১ম স্পিন সম্পন্ন করেছেন';
@@ -392,10 +388,9 @@
         }
       }
 
-      // লেভেল ২ ভিআইপি মেগা ভল্ট চেক (ডেলিভারির পর)
-      if (activeCustomer.isVipUnlocked) {
+      // লেভেল ২ কনফিগারেশন (১ম ডেলিভারির পর)
+      if (activeCustomer.tier >= 2) {
         vipSection.classList.remove('hidden');
-        vipAlertBanner.classList.remove('hidden');
 
         if (activeCustomer.hasOpenedVipVault && activeCustomer.vipReward) {
           document.getElementById('vaultChestsContainer').classList.add('hidden');
@@ -403,16 +398,38 @@
           document.getElementById('vipRewardTitle').innerText = activeCustomer.vipReward.title;
           document.getElementById('vipRewardCode').innerText = activeCustomer.vipReward.code;
         }
+
+        // লেভেল ৩ প্রগ্রেস ট্র্যাকার (৩টি ডেলিভারি টার্গেট)
+        if (activeCustomer.tier === 2) {
+          progressCard.classList.remove('hidden');
+          const needed = Math.max(0, 3 - activeCustomer.deliveredOrdersCount);
+          document.getElementById('ordersNeededCount').innerText = `${needed}টি`;
+          document.getElementById('freeDeliveriesLeftText').innerText = `${activeCustomer.freeDeliveriesRemaining}টি ফ্রি ডেলিভারি বাকি`;
+          
+          const progressPercent = Math.min(100, Math.round((activeCustomer.deliveredOrdersCount / 3) * 100));
+          document.getElementById('level3ProgressBar').style.width = `${progressPercent}%`;
+        } else {
+          progressCard.classList.add('hidden');
+        }
       } else {
         vipSection.classList.add('hidden');
-        vipAlertBanner.classList.add('hidden');
+        progressCard.classList.add('hidden');
       }
+
+      // লেভেল ৩ কনফিগারেশন (৩টি সফল ডেলিভারির পর)
+      if (activeCustomer.tier >= 3) {
+        level3Section.classList.remove('hidden');
+        progressCard.classList.add('hidden');
+      } else {
+        level3Section.classList.add('hidden');
+      }
+
+      updateCustomerUI();
     }
 
-    // 3. Level 1 Spin Execution
+    // 3. Level 1 Spin
     function executeLeadSpin() {
-      if (!activeCustomer) return;
-      if (activeCustomer.hasSpun) return alert('আপনি ইতিমধ্যে ১ম স্পিন ব্যবহার করেছেন!');
+      if (!activeCustomer || activeCustomer.hasSpun) return;
 
       const btn = document.getElementById('spinBtn');
       const wheel = document.getElementById('wheel');
@@ -424,8 +441,7 @@
 
       const outcomes = [
         { label: '১৫% ডিসকাউন্ট', code: 'PLAY-WIN15', rate: 15 },
-        { label: '১০% বিশেষ ছাড়', code: 'PLAY-WIN10', rate: 10 },
-        { label: 'ফ্রি ডেলিভারি', code: 'FREE-DELIVERY', rate: 5 }
+        { label: '১০% বিশেষ ছাড়', code: 'PLAY-WIN10', rate: 10 }
       ];
       const picked = outcomes[Math.floor(Math.random() * outcomes.length)];
 
@@ -436,57 +452,66 @@
         appliedVoucher = { code: picked.code, rate: picked.rate };
 
         saveCustomerState();
-        syncGameStates();
+        syncGameAndTierStates();
         updateAdminView();
       }, 4500);
     }
 
-    // 4. Level 2 VIP Vault Open (Mega Rewards)
+    // 4. Level 2 Vault (শুধুমাত্র বড় ছাড়, কোনো ফ্রি ডেলিভারি নয়)
     function openVipVault(chestNum) {
-      if (!activeCustomer || !activeCustomer.isVipUnlocked) return;
-      if (activeCustomer.hasOpenedVipVault) return alert('আপনি অলরেডি আপনার ভিআইপি রিওয়ার্ড আনলক করেছেন!');
+      if (!activeCustomer || activeCustomer.tier < 2) return;
+      if (activeCustomer.hasOpenedVipVault) return alert('আপনি ইতিমধ্যে লেভেল ২ ভল্ট খুলেছেন!');
 
-      const vipPool = [
-        { title: '২৫% মেগা ভিআইপি ছাড় (পরবর্তী অর্ডারে)', code: 'VIP-MEGA25', rate: 25 },
-        { title: '৳৩০০ ফ্ল্যাট ক্যাশব্যাক ছাড়', code: 'VIP-CASH300', rate: 20 },
-        { title: '২০% ছাড় + ফ্রি হোম ডেলিভারি', code: 'VIP-SUPER20', rate: 20 }
+      const discountPool = [
+        { title: '২৫% মেগা ছাড় ভাউচার', code: 'SAVE-MEGA25', rate: 25 },
+        { title: '২০% সুপার সেভার ছাড়', code: 'SAVE-SUPER20', rate: 20 },
+        { title: '৳৩০০ ফ্ল্যাট ছাড় ভাউচার', code: 'SAVE-FLAT300', rate: 22 }
       ];
-      const selected = vipPool[chestNum - 1] || vipPool[0];
+      const selected = discountPool[chestNum - 1] || discountPool[0];
 
       activeCustomer.hasOpenedVipVault = true;
       activeCustomer.vipReward = selected;
       appliedVoucher = { code: selected.code, rate: selected.rate };
 
       saveCustomerState();
-      syncGameStates();
+      syncGameAndTierStates();
       updateAdminView();
 
-      alert(`👑 অভিনন্দন ${activeCustomer.name}!\nআপনি জিতেছেন: ${selected.title}\nভাউচার কোড: ${selected.code}`);
+      alert(`👑 অভিনন্দন ${activeCustomer.name}!\nআপনি জিতেছেন: ${selected.title}\nপরের ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি!`);
     }
 
-    // 5. Checkout & Order Placement
+    // 5. Checkout Process & Free Delivery Deductions
     function processOrderCheckout() {
       if (cart.length === 0) return alert('কার্ট খালি!');
       if (!activeCustomer) return;
 
       const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
       const disc = Math.round((sub * appliedVoucher.rate) / 100);
-      const finalAmount = Math.max(0, sub - disc) + 60;
+      
+      // ফ্রি ডেলিভারি ক্যালকুলেশন
+      let deliveryFee = 60;
+      let usedFreeDelivery = false;
+      if (activeCustomer.freeDeliveriesRemaining > 0) {
+        deliveryFee = 0;
+        usedFreeDelivery = true;
+      }
+
+      const finalAmount = Math.max(0, sub - disc) + deliveryFee;
 
       const newOrder = {
         orderId: `PL-${Date.now().toString().slice(-5)}`,
         customerName: activeCustomer.name,
         customerPhone: activeCustomer.phone,
         total: finalAmount,
-        status: 'PENDING', // PENDING -> DELIVERED
-        date: new Date().toLocaleTimeString(),
-        itemsCount: cart.length
+        status: 'PENDING',
+        usedFreeDelivery: usedFreeDelivery,
+        date: new Date().toLocaleTimeString()
       };
 
       ordersStore.unshift(newOrder);
       localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
 
-      alert(`🎉 অর্ডার সফল!\nঅর্ডার আইডি: ${newOrder.orderId}\nডেলিভারি সম্পন্ন হলে আপনার জন্য VIP স্পেশাল গেম আনলক হবে!`);
+      alert(`🎉 অর্ডার সফল!\nঅর্ডার আইডি: ${newOrder.orderId}\nমোট বিল: ৳${finalAmount} ${deliveryFee === 0 ? '(ফ্রি ডেলিভারি)' : ''}`);
       
       cart = [];
       updateCartBadge();
@@ -494,7 +519,7 @@
       updateAdminView();
     }
 
-    // 6. Admin Delivery Confirmation Trigger (Unlock Level 2)
+    // 6. Admin Delivery Confirmation (Trigger Tier 2 & Tier 3)
     function markOrderAsDelivered(orderId) {
       const order = ordersStore.find(o => o.orderId === orderId);
       if (!order) return;
@@ -502,22 +527,81 @@
       order.status = 'DELIVERED';
       localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
 
-      // যদি বর্তমানে ব্রাউজ করা কাস্টমারই এই অর্ডারের মালিক হন
+      // কাস্টমার টায়ার ক্যালকুলেশন
       if (activeCustomer && activeCustomer.phone === order.customerPhone) {
-        activeCustomer.isVipUnlocked = true;
-        saveCustomerState();
-        syncGameStates();
-      } else {
-        // সিআরএম-এর লিড আপডেট
-        const lead = leadsStore.find(l => l.phone === order.customerPhone);
-        if (lead) {
-          lead.isVipUnlocked = true;
-          localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
+        
+        // ১ম ডেলিভারি: লেভেল ২ আনলক + ৩টি ফ্রি ডেলিভারি প্রদান
+        if (activeCustomer.tier === 1) {
+          activeCustomer.tier = 2;
+          activeCustomer.freeDeliveriesRemaining = 3;
+          activeCustomer.deliveredOrdersCount = 0;
+          alert(`✅ ১ম ডেলিভারি সফল! গ্রাহক (${activeCustomer.name}) LEVEL 2-তে উত্তীর্ণ হয়েছেন এবং ৩টি ফ্রি ডেলিভারি পেয়েছেন!`);
+        } 
+        // লেভেল ২-তে থাকা অবস্থায় ডেলিভারি ট্র্যাকিং
+        else if (activeCustomer.tier === 2) {
+          activeCustomer.deliveredOrdersCount += 1;
+          if (activeCustomer.freeDeliveriesRemaining > 0) {
+            activeCustomer.freeDeliveriesRemaining -= 1;
+          }
+
+          // ৩টি ডেলিভারি সম্পন্ন হলে -> LEVEL 3
+          if (activeCustomer.deliveredOrdersCount >= 3) {
+            activeCustomer.tier = 3;
+            alert(`🏆 অসাধারণ! গ্রাহক ৩টি ডেলিভারি সম্পন্ন করে LEVEL 3: ELITE ক্লাবে প্রবেশ করেছেন!`);
+          } else {
+            alert(`📦 ডেলিভারি সফল! লেভেল ৩-এর জন্য বাকি: ${3 - activeCustomer.deliveredOrdersCount}টি ডেলিভারি।`);
+          }
         }
+
+        saveCustomerState();
+        syncGameAndTierStates();
       }
 
-      alert(`✅ অর্ডার ${orderId} সফলভাবে DELIVERED চিহ্নিত হয়েছে!\nগ্রাহক (${order.customerName}) এর জন্য VIP Secret Vault গেমটি উন্মুক্ত করা হয়েছে।`);
       updateAdminView();
+    }
+
+    // Dynamic Cart Calculations
+    function calculateTotals() {
+      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+      const disc = Math.round((sub * appliedVoucher.rate) / 100);
+      
+      let del = sub > 0 ? 60 : 0;
+      if (activeCustomer && activeCustomer.freeDeliveriesRemaining > 0 && sub > 0) {
+        del = 0;
+      }
+
+      const tot = Math.max(0, sub - disc) + del;
+
+      document.getElementById('summarySubtotal').innerText = `৳${sub}`;
+      document.getElementById('summaryDiscount').innerText = `-৳${disc}`;
+      document.getElementById('summaryDelivery').innerText = del === 0 && sub > 0 ? '৳০ (ফ্রি)' : `৳${del}`;
+      document.getElementById('summaryTotal').innerText = `৳${tot}`;
+    }
+
+    function applyAndGoShop() {
+      document.getElementById('voucherInput').value = appliedVoucher.code;
+      switchTab('shop');
+    }
+
+    function applyVipAndShop() {
+      if (activeCustomer && activeCustomer.vipReward) {
+        appliedVoucher = { code: activeCustomer.vipReward.code, rate: activeCustomer.vipReward.rate };
+        document.getElementById('voucherInput').value = activeCustomer.vipReward.code;
+        switchTab('shop');
+      }
+    }
+
+    function applyVoucher() {
+      const code = document.getElementById('voucherInput').value.trim().toUpperCase();
+      if (appliedVoucher.code && code === appliedVoucher.code) {
+        alert('ভাউচার সফলভাবে সক্রিয় হয়েছে!');
+      } else if (code === 'ELITE-LIFETIME30' && activeCustomer.tier >= 3) {
+        appliedVoucher = { code: 'ELITE-LIFETIME30', rate: 30 };
+        alert('৩০% এলিট ভাউচার সক্রিয় হয়েছে!');
+      } else {
+        alert('ভাউচার কোড সঠিক নয়!');
+      }
+      calculateTotals();
     }
 
     function updateAdminView() {
@@ -526,7 +610,7 @@
 
       const container = document.getElementById('adminOrdersList');
       if (ordersStore.length === 0) {
-        container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400 bg-white rounded-xl border">কোনো পেন্ডিং অর্ডার নেই</div>';
+        container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400 bg-white rounded-xl border">কোনো অর্ডার নেই</div>';
         return;
       }
 
@@ -534,7 +618,7 @@
         <div class="bg-white p-3 rounded-[16px] border border-slate-100 shadow-sm space-y-2">
           <div class="flex justify-between items-start">
             <div>
-              <span class="text-[9px] font-bold text-slate-400">আইডি: ${order.orderId}</span>
+              <span class="text-[9px] font-bold text-slate-400">অর্ডার: ${order.orderId}</span>
               <h4 class="text-xs font-black text-slate-800">${order.customerName}</h4>
               <p class="text-[11px] font-bold text-[#7040E8]">${order.customerPhone}</p>
             </div>
@@ -556,7 +640,7 @@
               </button>
             ` : `
               <span class="flex-1 text-center text-emerald-600 text-[10px] font-bold py-1.5">
-                ✓ VIP অ্যাক্টিভেটেড
+                ✓ ডেলিভার্ড
               </span>
             `}
           </div>
@@ -580,7 +664,6 @@
       }
     }
 
-    // Helper functions
     function switchTab(name) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(el => {
@@ -599,7 +682,7 @@
 
       if (name === 'cart') renderCart();
       if (name === 'admin') updateAdminView();
-      if (name === 'games') syncGameStates();
+      if (name === 'games') syncGameAndTierStates();
     }
 
     function renderCatalog() {
@@ -659,41 +742,6 @@
       }
       calculateTotals();
     }
-
-    function calculateTotals() {
-      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
-      const disc = Math.round((sub * appliedVoucher.rate) / 100);
-      const del = sub > 0 ? 60 : 0;
-      const tot = Math.max(0, sub - disc) + del;
-
-      document.getElementById('summarySubtotal').innerText = `৳${sub}`;
-      document.getElementById('summaryDiscount').innerText = `-৳${disc}`;
-      document.getElementById('summaryDelivery').innerText = `৳${del}`;
-      document.getElementById('summaryTotal').innerText = `৳${tot}`;
-    }
-
-    function applyAndGoShop() {
-      document.getElementById('voucherInput').value = appliedVoucher.code;
-      switchTab('shop');
-    }
-
-    function applyVipAndShop() {
-      if (activeCustomer && activeCustomer.vipReward) {
-        appliedVoucher = { code: activeCustomer.vipReward.code, rate: activeCustomer.vipReward.rate };
-        document.getElementById('voucherInput').value = activeCustomer.vipReward.code;
-        switchTab('shop');
-      }
-    }
-
-    function applyVoucher() {
-      const code = document.getElementById('voucherInput').value.trim().toUpperCase();
-      if (appliedVoucher.code && code === appliedVoucher.code) {
-        alert('ভাউচার সফলভাবে সক্রিয় হয়েছে!');
-      } else {
-        alert('ভাউচার কোড সঠিক নয়!');
-      }
-      calculateTotals();
-    }
   </script>
 </body>
-        </html>
+</html>
