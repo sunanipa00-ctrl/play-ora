@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FABRI-STYLE | Premium Clothing Brand</title>
+  <title>Customer Dashboard - Fabrilife</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -11,307 +11,292 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-[#F8F9FA] text-[#1A1A1A] pb-24 select-none">
+<body class="bg-[#F4F5F7] text-[#1A1A1A] pb-24 select-none">
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-black text-white text-[10px] py-1.5 px-4 text-center font-bold tracking-wider uppercase">
-    ⚡ সারাদেশে ক্যাশ অন ডেলিভারি | ৩টি কিনলে ফ্রি শিপিং!
-  </div>
-
-  <!-- Header -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-xs">
-    <div class="flex items-center gap-2.5">
-      <button class="text-xl">☰</button>
-      <span class="text-xl font-black tracking-tighter text-slate-900">FABRI<span class="text-[#E02424]">LIFE</span></span>
+  <!-- Top App Header -->
+  <header class="bg-white border-b border-slate-200 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-xs">
+    <div class="flex items-center gap-2">
+      <span class="text-lg font-black tracking-tight text-slate-900">কাস্টমার <span class="text-[#E02424]">প্যানেল</span></span>
     </div>
-    <div class="flex items-center gap-3">
-      <button class="text-lg">🔍</button>
-      <button onclick="toggleCartDrawer()" class="relative text-xl">
-        🛒
-        <span id="cartCountBadge" class="absolute -top-1 -right-1.5 bg-[#E02424] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
+    <div class="flex items-center gap-2">
+      <button onclick="logoutCustomer()" class="text-[11px] font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-1 rounded-full active:scale-95 transition">
+        লগআউট ✕
       </button>
     </div>
   </header>
 
-  <main class="max-w-md mx-auto space-y-4">
-    <!-- Category Story Bubbles (Fabrilife Signature Style) -->
-    <div class="bg-white py-3 px-4 border-b border-slate-100 flex gap-4 overflow-x-auto no-scrollbar">
-      <div class="flex flex-col items-center gap-1 shrink-0">
-        <div class="w-14 h-14 rounded-full p-0.5 border-2 border-[#E02424]">
-          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200&q=80" class="w-full h-full object-cover rounded-full" />
+  <main class="max-w-md mx-auto p-4 space-y-4">
+
+    <!-- 1. CUSTOMER IDENTITY CARD (Fabrilife Profile Header) -->
+    <div class="bg-white p-4 rounded-[20px] border border-slate-200 shadow-sm flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center text-lg font-black shadow-inner">
+          <span id="userAvatarLetter">R</span>
         </div>
-        <span class="text-[11px] font-bold">টি-শার্ট</span>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h3 id="panelCustName" class="text-sm font-black text-slate-900">রিয়াজ মোর্শেদ</h3>
+            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-1.5 py-0.5 rounded">ভেরিফাইড</span>
+          </div>
+          <p id="panelCustPhone" class="text-[11px] text-slate-500 font-medium mt-0.5">০১৭XXXXXXXX</p>
+        </div>
       </div>
-      <div class="flex flex-col items-center gap-1 shrink-0">
-        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
-          <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200&q=80" class="w-full h-full object-cover rounded-full" />
-        </div>
-        <span class="text-[11px] font-bold">শার্ট</span>
-      </div>
-      <div class="flex flex-col items-center gap-1 shrink-0">
-        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
-          <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=200&q=80" class="w-full h-full object-cover rounded-full" />
-        </div>
-        <span class="text-[11px] font-bold">হুডি</span>
-      </div>
-      <div class="flex flex-col items-center gap-1 shrink-0">
-        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
-          <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=200&q=80" class="w-full h-full object-cover rounded-full" />
-        </div>
-        <span class="text-[11px] font-bold">পলো</span>
-      </div>
-      <div class="flex flex-col items-center gap-1 shrink-0">
-        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
-          <img src="https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?w=200&q=80" class="w-full h-full object-cover rounded-full" />
-        </div>
-        <span class="text-[11px] font-bold">প্যান্ট</span>
+      <div class="text-right">
+        <span class="text-[9px] font-bold text-slate-400 block uppercase">মেম্বারশিপ</span>
+        <span class="text-xs font-black text-[#E02424]">VIP Gold</span>
       </div>
     </div>
 
-    <!-- Editorial Fashion Hero Banner -->
-    <div class="px-4">
-      <div class="relative overflow-hidden rounded-[18px] bg-slate-900 text-white aspect-[16/9] flex items-center p-6 shadow-md">
-        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-60" />
-        <div class="relative z-10 space-y-1">
-          <span class="bg-white text-black text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Summer '26 Drop</span>
-          <h2 class="text-xl font-black leading-tight tracking-tight">PREMIUM COMBED<br/>COTTON TEES</h2>
-          <p class="text-xs text-slate-200">১৮০ GSM ১০০% অর্গানিক কটন</p>
-          <button class="mt-2 bg-[#E02424] text-white text-xs font-bold px-4 py-2 rounded-[8px]">কালেকশন দেখুন →</button>
+    <!-- 2. FABRI-WALLET & QUICK STATS METRICS -->
+    <div class="grid grid-cols-3 gap-2">
+      <div class="bg-white p-3 rounded-[16px] border border-slate-200 shadow-2xs text-center">
+        <span class="text-[9px] text-slate-400 font-bold block uppercase">স্টোর ক্রেডিট</span>
+        <span class="text-xs font-black text-[#E02424] mt-0.5 block">৳২৫০</span>
+      </div>
+      <div class="bg-white p-3 rounded-[16px] border border-slate-200 shadow-2xs text-center">
+        <span class="text-[9px] text-slate-400 font-bold block uppercase">মোট অর্ডার</span>
+        <span id="metricOrdersCount" class="text-xs font-black text-slate-800 mt-0.5 block">৩টি</span>
+      </div>
+      <div class="bg-white p-3 rounded-[16px] border border-slate-200 shadow-2xs text-center">
+        <span class="text-[9px] text-slate-400 font-bold block uppercase">সেভড অ্যাড্রেস</span>
+        <span class="text-xs font-black text-slate-800 mt-0.5 block">২টি</span>
+      </div>
+    </div>
+
+    <!-- 3. CUSTOMER PANEL NAVIGATION TABS -->
+    <div class="flex gap-2 border-b border-slate-200 pb-2 overflow-x-auto no-scrollbar">
+      <button onclick="switchPanelTab('orders')" id="tab-btn-orders" class="tab-pill bg-black text-white text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap shadow-xs">
+        📦 আমার অর্ডারসমূহ
+      </button>
+      <button onclick="switchPanelTab('addresses')" id="tab-btn-addresses" class="tab-pill bg-white text-slate-600 border border-slate-200 text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap">
+        📍 ঠিকানা খাতা (Address)
+      </button>
+      <button onclick="switchPanelTab('exchange')" id="tab-btn-exchange" class="tab-pill bg-white text-slate-600 border border-slate-200 text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap">
+        🔄 রিটার্ন / এক্সচেঞ্জ
+      </button>
+      <button onclick="switchPanelTab('settings')" id="tab-btn-settings" class="tab-pill bg-white text-slate-600 border border-slate-200 text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap">
+        ⚙️ সাইজ ও প্রোফাইল
+      </button>
+    </div>
+
+    <!-- ==================== SUB-PANEL 1: ORDERS & TRACKING ==================== -->
+    <div id="subpanel-orders" class="panel-screen space-y-3">
+      
+      <!-- Order 1 (In-Transit with Stepper) -->
+      <div class="bg-white p-4 rounded-[20px] border border-slate-200 shadow-sm space-y-3">
+        <div class="flex justify-between items-start border-b border-slate-100 pb-2.5">
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold block">অর্ডার আইডি: #FL-982145</span>
+            <span class="text-[11px] text-slate-600">তারিখ: ০৩ সেপ্টেম্বর, ২০২৬</span>
+          </div>
+          <span class="text-[10px] font-black bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full">
+            শিপমেন্টে রয়েছে
+          </span>
+        </div>
+
+        <!-- Product Preview in Order -->
+        <div class="flex gap-3 items-center">
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200&q=80" class="w-12 h-14 object-cover rounded-lg bg-slate-100 border" />
+          <div class="flex-1">
+            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Retro Heavyweight Cotton Tee</h4>
+            <span class="text-[10px] text-slate-500">সাইজ: L | পরিমাণ: ১টি</span>
+            <span class="text-xs font-black text-slate-900 block mt-0.5">৳৫২০ (ক্যাশ অন ডেলিভারি)</span>
+          </div>
+        </div>
+
+        <!-- Live Visual Stepper (Fabrilife Signature) -->
+        <div class="bg-slate-50 p-3 rounded-[14px] space-y-2 border border-slate-100">
+          <span class="text-[10px] font-bold text-slate-500 block">লাইভ পার্সেল ট্র্যাকিং (Steadfast / Pathao):</span>
+          <div class="flex items-center justify-between text-center relative">
+            <div class="flex-1 flex flex-col items-center z-10">
+              <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[9px] flex items-center justify-center font-bold">✓</span>
+              <span class="text-[9px] font-bold mt-1 text-slate-700">কনফার্মড</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center z-10">
+              <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[9px] flex items-center justify-center font-bold">✓</span>
+              <span class="text-[9px] font-bold mt-1 text-slate-700">প্যাকড</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center z-10">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white text-[9px] flex items-center justify-center font-bold animate-pulse">🚚</span>
+              <span class="text-[9px] font-bold mt-1 text-blue-700">অন দ্য ওয়ে</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center z-10">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-400 text-[9px] flex items-center justify-center font-bold">○</span>
+              <span class="text-[9px] font-bold mt-1 text-slate-400">ডেলিভারি</span>
+            </div>
+          </div>
+          <div class="text-[9px] text-blue-800 bg-blue-100/60 p-2 rounded-lg text-center mt-1">
+            রাইডার আপনার পার্সেল নিয়ে বের হয়েছে। প্রত্যাশিত ডেলিভারি: আজ সন্ধ্যার মধ্যে।
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button onclick="alert('ইনভয়েস ডাউনলোড করা হচ্ছে (PDF)...')" class="flex-1 py-2 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-[8px] active:scale-95 transition">
+            📄 ইনভয়েস
+          </button>
+          <a href="tel:09677666888" class="flex-1 text-center py-2 bg-slate-900 text-white text-[11px] font-bold rounded-[8px] active:scale-95 transition">
+            📞 রাইডার সাপোর্ট
+          </a>
+        </div>
+      </div>
+
+      <!-- Order 2 (Delivered Item with Review / Reorder) -->
+      <div class="bg-white p-4 rounded-[20px] border border-slate-200 shadow-sm space-y-3">
+        <div class="flex justify-between items-start border-b border-slate-100 pb-2">
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold block">অর্ডার আইডি: #FL-873112</span>
+            <span class="text-[11px] text-slate-600">তারিখ: ১৫ আগস্ট, ২০২৬</span>
+          </div>
+          <span class="text-[10px] font-black bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">
+            ডেলিভারি সম্পন্ন
+          </span>
+        </div>
+        <div class="flex gap-3 items-center">
+          <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=200&q=80" class="w-12 h-14 object-cover rounded-lg bg-slate-100 border" />
+          <div class="flex-1">
+            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Double PK Cotton Designer Polo</h4>
+            <span class="text-[10px] text-slate-500">সাইজ: XL | পরিশোধিত: ৳৯৯০</span>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="switchPanelTab('exchange')" class="flex-1 py-2 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-[8px]">
+            🔄 সাইজ এক্সচেঞ্জ
+          </button>
+          <button onclick="alert('পণ্যটি পুনরায় কার্টে যুক্ত করা হয়েছে!')" class="flex-1 py-2 bg-[#E02424] text-white text-[11px] font-bold rounded-[8px]">
+            আবার কিনুন (Reorder)
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Product Filter Bar -->
-    <div class="px-4 flex justify-between items-center">
-      <div>
-        <h3 class="text-sm font-black uppercase tracking-wide">নতুন আগমনী কালেকশন</h3>
-        <p class="text-[11px] text-slate-500">প্রিমিয়াম কোয়ালিটি ফ্যাশন ওয়্যার</p>
+    <!-- ==================== SUB-PANEL 2: SAVED ADDRESSES ==================== -->
+    <div id="subpanel-addresses" class="panel-screen hidden space-y-3">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-black text-slate-800 uppercase">সংরক্ষিত ডেলিভারি ঠিকানা</span>
+        <button onclick="openAddressModal()" class="text-xs font-bold text-[#E02424]">+ নতুন ঠিকানা</button>
       </div>
-      <button class="text-xs font-bold text-[#E02424] border border-[#E02424]/30 px-3 py-1 rounded-full">সব দেখুন ›</button>
+
+      <!-- Address 1 (Default) -->
+      <div class="bg-white p-4 rounded-[18px] border-2 border-black space-y-1.5 shadow-sm relative">
+        <span class="text-[9px] font-black bg-black text-white px-2 py-0.5 rounded uppercase">বাসা (ডিফল্ট)</span>
+        <h4 class="text-xs font-bold text-slate-900 mt-1">রিয়াজ মোর্শেদ — ০১৭XXXXXXXX</h4>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          বাড়ি #৪৫, রোড #০৭, ব্লক-সি, বনানী, ঢাকা-১২১৩
+        </p>
+        <div class="pt-2 flex gap-3 text-[11px] font-bold border-t border-slate-100 mt-2">
+          <button class="text-slate-800">এডিট করুন</button>
+          <span class="text-slate-300">|</span>
+          <button class="text-red-500">মুছে ফেলুন</button>
+        </div>
+      </div>
+
+      <!-- Address 2 (Office) -->
+      <div class="bg-white p-4 rounded-[18px] border border-slate-200 space-y-1.5 shadow-sm">
+        <span class="text-[9px] font-black bg-slate-100 text-slate-700 px-2 py-0.5 rounded uppercase">অফিস</span>
+        <h4 class="text-xs font-bold text-slate-900 mt-1">রিয়াজ মোর্শেদ — ০১৮XXXXXXXX</h4>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          লেভেল ৪, সফটওয়্যার টেকনোলজি পার্ক, কাওরান বাজার, ঢাকা-১২১৫
+        </p>
+        <div class="pt-2 flex gap-3 text-[11px] font-bold border-t border-slate-100 mt-2">
+          <button class="text-slate-800">ডিফল্ট করুন</button>
+          <span class="text-slate-300">|</span>
+          <button class="text-slate-800">এডিট</button>
+        </div>
+      </div>
     </div>
 
-    <!-- 2-Column Clean Fashion Product Grid -->
-    <div id="productGrid" class="px-4 grid grid-cols-2 gap-3">
-      <!-- Injected via JS -->
+    <!-- ==================== SUB-PANEL 3: RETURN & EXCHANGE ==================== -->
+    <div id="subpanel-exchange" class="panel-screen hidden space-y-3">
+      <div class="bg-white p-4 rounded-[20px] border border-slate-200 shadow-sm space-y-3">
+        <div>
+          <h4 class="text-xs font-black text-slate-900 uppercase">সহজ ৭ দিনের রিটার্ন / সাইজ এক্সচেঞ্জ</h4>
+          <p class="text-[11px] text-slate-500 mt-0.5">সাইজ না মিললে বা ত্রুটি থাকলে কোনো ঝামেলা ছাড়া এক্সচেঞ্জ করুন।</p>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">অর্ডার নির্বাচন করুন:</label>
+            <select class="w-full p-2.5 border border-slate-200 rounded-[10px] bg-slate-50 font-bold focus:outline-none">
+              <option>#FL-873112 - Polo Shirt (XL)</option>
+              <option>#FL-982145 - Cotton Tee (L)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">এক্সচেঞ্জের কারণ:</label>
+            <select class="w-full p-2.5 border border-slate-200 rounded-[10px] bg-slate-50 font-bold focus:outline-none">
+              <option>সাইজ ছোট হচ্ছে (বড় সাইজ প্রয়োজন)</option>
+              <option>সাইজ বড় হচ্ছে (ছোট সাইজ প্রয়োজন)</option>
+              <option>কালার বা ফেব্রিকে সমস্যা</option>
+              <option>ভুল পণ্য পেয়েছি</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">প্রত্যাশিত নতুন সাইজ:</label>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 border border-slate-300 rounded-lg font-bold">M</button>
+              <button class="px-3 py-1.5 border border-slate-300 rounded-lg font-bold">L</button>
+              <button class="px-3 py-1.5 border-2 border-black bg-slate-50 font-black">XXL</button>
+            </div>
+          </div>
+          <button onclick="alert('আপনার এক্সচেঞ্জ রিকোয়েস্ট জমা হয়েছে! আমাদের কুরিয়ার প্রতিনিধি নতুন সাইজ নিয়ে আপনার ঠিকানায় যাবে এবং পুরোনোটি নিয়ে আসবে।')" class="w-full mt-2 py-3 bg-[#E02424] text-white text-xs font-black rounded-[12px] active:scale-95 transition">
+            এক্সচেঞ্জ রিকোয়েস্ট জমা দিন ➔
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SUB-PANEL 4: SIZE & PROFILE SETTINGS ==================== -->
+    <div id="subpanel-settings" class="panel-screen hidden space-y-3">
+      <div class="bg-white p-4 rounded-[20px] border border-slate-200 shadow-sm space-y-3">
+        <h4 class="text-xs font-black text-slate-900 uppercase">স্মার্ট সাইজ প্রিফারেন্স (My Fit)</h4>
+        <p class="text-[11px] text-slate-500">আপনার সাধারণ সাইজ সিলেক্ট করে রাখলে কেনাকাটার সময় সেটি স্বয়ংক্রিয়ভাবে নির্বাচিত থাকবে।</p>
+        
+        <div class="space-y-2">
+          <label class="block text-[11px] font-bold text-slate-700">টি-শার্ট ও পোলো ফিট সাইজ:</label>
+          <div class="grid grid-cols-4 gap-2">
+            <button class="py-2 border border-slate-200 rounded-lg text-xs font-bold">M</button>
+            <button class="py-2 border-2 border-black bg-slate-50 rounded-lg text-xs font-black">L</button>
+            <button class="py-2 border border-slate-200 rounded-lg text-xs font-bold">XL</button>
+            <button class="py-2 border border-slate-200 rounded-lg text-xs font-bold">XXL</button>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100 space-y-2">
+          <label class="block text-[11px] font-bold text-slate-700">প্রোফাইল নাম ও তথ্য:</label>
+          <input type="text" value="রিয়াজ মোর্শেদ" class="w-full text-xs p-2.5 border border-slate-200 rounded-lg font-bold" />
+          <input type="email" placeholder="ইমেইল অ্যাড্রেস (ঐচ্ছিক)" class="w-full text-xs p-2.5 border border-slate-200 rounded-lg" />
+          <button onclick="alert('প্রোফাইল সফলভাবে আপডেট হয়েছে!')" class="w-full py-2.5 bg-black text-white text-xs font-bold rounded-lg mt-1">
+            সেভ করুন
+          </button>
+        </div>
+      </div>
     </div>
   </main>
 
-  <!-- Product Detail & Variant Selector Modal -->
-  <div id="productModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-end justify-center">
-    <div class="bg-white w-full max-w-md rounded-t-[24px] p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar">
-      <div class="flex justify-between items-start">
-        <div class="flex gap-3">
-          <img id="modalImg" class="w-16 h-20 object-cover rounded-lg bg-slate-100" />
-          <div>
-            <h3 id="modalTitle" class="text-xs font-black line-clamp-2"></h3>
-            <div class="flex items-center gap-2 mt-1">
-              <span id="modalPrice" class="text-sm font-black text-[#E02424]"></span>
-              <span id="modalOrigPrice" class="text-xs text-slate-400 line-through"></span>
-            </div>
-            <span class="text-[10px] text-emerald-600 font-bold">ইন স্টক (রেডি ডেলিভারি)</span>
-          </div>
-        </div>
-        <button onclick="closeProductModal()" class="text-slate-400 text-lg font-bold">✕</button>
-      </div>
-
-      <!-- Color Selector -->
-      <div>
-        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">কালার সিলেক্ট করুন:</label>
-        <div class="flex gap-2">
-          <button class="px-3 py-1.5 border-2 border-black rounded-lg text-xs font-bold">জেট ব্ল্যাক</button>
-          <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-600">অলিভ গ্রিন</button>
-          <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-600">নেভি ব্লু</button>
-        </div>
-      </div>
-
-      <!-- Size Selector -->
-      <div>
-        <div class="flex justify-between items-center mb-1.5">
-          <label class="text-[11px] font-bold text-slate-700">সাইজ সিলেক্ট করুন:</label>
-          <span class="text-[10px] text-[#E02424] font-bold underline cursor-pointer">সাইজ চার্ট</span>
-        </div>
-        <div class="grid grid-cols-4 gap-2">
-          <button onclick="selectSize(this)" class="size-btn py-2 border-2 border-black bg-slate-50 text-xs font-black rounded-[8px]">M</button>
-          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">L</button>
-          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">XL</button>
-          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">XXL</button>
-        </div>
-      </div>
-
-      <!-- Add to Cart / Buy Now Action -->
-      <div class="flex gap-2 pt-2">
-        <button onclick="addToCartFromModal()" class="flex-1 py-3 bg-black text-white text-xs font-black rounded-[12px] active:scale-95 transition">
-          কার্টে যোগ করুন
-        </button>
-        <button onclick="instantBuyNow()" class="flex-1 py-3 bg-[#E02424] text-white text-xs font-black rounded-[12px] active:scale-95 transition">
-          সরাসরি অর্ডার করুন
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cart Drawer -->
-  <div id="cartDrawer" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end">
-    <div class="bg-white w-full max-w-xs h-full p-4 flex flex-col justify-between">
-      <div>
-        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-          <h3 class="text-sm font-black">আপনার শপিং ব্যাগ</h3>
-          <button onclick="toggleCartDrawer()" class="text-lg">✕</button>
-        </div>
-        <div id="cartList" class="divide-y divide-slate-100 overflow-y-auto max-h-[65vh] py-2"></div>
-      </div>
-
-      <div class="border-t border-slate-100 pt-3 space-y-2">
-        <div class="flex justify-between text-xs font-bold">
-          <span>সাবটোটাল</span>
-          <span id="cartSubtotal">৳০</span>
-        </div>
-        <button onclick="alert('ক্যাশ অন ডেলিভারি চেকআউট পেজে পাঠানো হচ্ছে...')" class="w-full py-3 bg-[#E02424] text-white text-xs font-black rounded-[10px] shadow active:scale-95">
-          চেকআউট সম্পন্ন করুন →
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const FABRI_PRODUCTS = [
-      {
-        id: 101,
-        name: 'Retro Typography Heavyweight T-Shirt',
-        category: 'Graphic Tees',
-        price: 520,
-        originalPrice: 650,
-        badge: 'TRENDING',
-        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&q=80'
-      },
-      {
-        id: 102,
-        name: 'Drop Shoulder Minimalist Oversized Tee',
-        category: 'Oversized',
-        price: 590,
-        originalPrice: 750,
-        badge: 'NEW',
-        image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&q=80'
-      },
-      {
-        id: 103,
-        name: 'Classic Oxford Button-Down Formal Shirt',
-        category: 'Formal Wear',
-        price: 1150,
-        originalPrice: 1400,
-        badge: 'POPULAR',
-        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80'
-      },
-      {
-        id: 104,
-        name: 'Premium Combed Ribbed Polo Shirt',
-        category: 'Polo',
-        price: 780,
-        originalPrice: 950,
-        badge: 'EXCLUSIVE',
-        image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80'
-      }
-    ];
-
-    let cart = [];
-    let selectedModalProduct = null;
-
-    function renderProducts() {
-      const container = document.getElementById('productGrid');
-      container.innerHTML = FABRI_PRODUCTS.map(p => `
-        <div class="bg-white rounded-[14px] border border-slate-100 overflow-hidden flex flex-col justify-between shadow-2xs">
-          <div class="relative aspect-[3/4] bg-slate-100 cursor-pointer" onclick="openProductModal(${p.id})">
-            <img src="${p.image}" class="w-full h-full object-cover" />
-            <span class="absolute top-2 left-2 bg-black text-white text-[8px] font-black px-2 py-0.5 rounded tracking-wide">
-              ${p.badge}
-            </span>
-          </div>
-          <div class="p-2.5 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[9px] text-slate-400 font-bold uppercase">${p.category}</span>
-              <h4 class="text-xs font-bold text-slate-900 line-clamp-2 mt-0.5 leading-snug cursor-pointer" onclick="openProductModal(${p.id})">${p.name}</h4>
-            </div>
-            <div class="mt-2.5 pt-2 border-t border-slate-50 flex items-center justify-between">
-              <div>
-                <span class="text-xs font-black text-[#1A1A1A]">৳${p.price}</span>
-                <span class="text-[10px] text-slate-400 line-through block">৳${p.originalPrice}</span>
-              </div>
-              <button onclick="openProductModal(${p.id})" class="px-2.5 py-1.5 bg-black text-white text-[10px] font-bold rounded-[6px] active:scale-90 transition">
-                + সাইজ
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function openProductModal(id) {
-      selectedModalProduct = FABRI_PRODUCTS.find(p => p.id === id);
-      document.getElementById('modalImg').src = selectedModalProduct.image;
-      document.getElementById('modalTitle').innerText = selectedModalProduct.name;
-      document.getElementById('modalPrice').innerText = `৳${selectedModalProduct.price}`;
-      document.getElementById('modalOrigPrice').innerText = `৳${selectedModalProduct.originalPrice}`;
-      document.getElementById('productModal').classList.remove('hidden');
-    }
-
-    function closeProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-    }
-
-    function selectSize(btn) {
-      document.querySelectorAll('.size-btn').forEach(b => {
-        b.classList.remove('border-black', 'border-2', 'bg-slate-50', 'font-black');
-        b.classList.add('border-slate-200', 'font-bold');
+    function switchPanelTab(tabName) {
+      document.querySelectorAll('.panel-screen').forEach(screen => screen.classList.add('hidden'));
+      document.querySelectorAll('.tab-pill').forEach(btn => {
+        btn.classList.remove('bg-black', 'text-white', 'shadow-xs');
+        btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
       });
-      btn.classList.add('border-black', 'border-2', 'bg-slate-50', 'font-black');
-      btn.classList.remove('border-slate-200', 'font-bold');
+
+      document.getElementById(`subpanel-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      activeBtn.classList.add('bg-black', 'text-white', 'shadow-xs');
+      activeBtn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
     }
 
-    function addToCartFromModal() {
-      if (!selectedModalProduct) return;
-      const existing = cart.find(i => i.id === selectedModalProduct.id);
-      if (existing) existing.qty += 1;
-      else cart.push({ ...selectedModalProduct, qty: 1, size: 'M' });
-
-      updateCartUI();
-      closeProductModal();
-      toggleCartDrawer();
+    function openAddressModal() {
+      const newAddress = prompt('নতুন ডেলিভারি ঠিকানা লিখুন (যেমন: বাড়ি #১০, মিরপুর, ঢাকা):');
+      if (newAddress) alert('নতুন ঠিকানা সফলভাবে যুক্ত হয়েছে!');
     }
 
-    function instantBuyNow() {
-      addToCartFromModal();
-      alert('সরাসরি ক্যাশ অন ডেলিভারি চেকআউট পেজে রিডাইরেক্ট করা হচ্ছে...');
-    }
-
-    function toggleCartDrawer() {
-      document.getElementById('cartDrawer').classList.toggle('hidden');
-    }
-
-    function updateCartUI() {
-      const count = cart.reduce((acc, i) => acc + i.qty, 0);
-      document.getElementById('cartCountBadge').innerText = count;
-
-      const list = document.getElementById('cartList');
-      if (cart.length === 0) {
-        list.innerHTML = '<div class="text-center py-10 text-xs text-slate-400">ব্যাগ খালি</div>';
-      } else {
-        list.innerHTML = cart.map(i => `
-          <div class="py-2.5 flex items-center justify-between gap-2">
-            <img src="${i.image}" class="w-12 h-14 object-cover rounded bg-slate-100" />
-            <div class="flex-1">
-              <h5 class="text-[11px] font-bold line-clamp-1">${i.name}</h5>
-              <span class="text-[10px] text-slate-500">সাইজ: ${i.size} | ৳${i.price} × ${i.qty}</span>
-            </div>
-            <span class="text-xs font-black">৳${i.price * i.qty}</span>
-          </div>
-        `).join('');
+    function logoutCustomer() {
+      if (confirm('আপনি কি কাস্টমার প্যানেল থেকে বের হতে চান?')) {
+        location.reload();
       }
-
-      const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
-      document.getElementById('cartSubtotal').innerText = `৳${subtotal}`;
     }
-
-    renderProducts();
   </script>
 </body>
-            </html>
+</html>
