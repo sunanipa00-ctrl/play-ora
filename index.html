@@ -3,811 +3,315 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYORA - VIP Gamified Commerce with Auth</title>
+  <title>FABRI-STYLE | Premium Clothing Brand</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .wheel { transition: transform 4.5s cubic-bezier(0.12, 0.8, 0.15, 1); }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .gold-glow { box-shadow: 0 0 25px -3px rgba(255, 201, 77, 0.45); }
-    .diamond-glow { box-shadow: 0 0 25px -3px rgba(112, 64, 232, 0.5); }
   </style>
 </head>
-<body class="bg-[#F6F7FB] text-[#21113F] pb-24 select-none">
+<body class="bg-[#F8F9FA] text-[#1A1A1A] pb-24 select-none">
 
-  <!-- ==================== MANDATORY WELCOME / LOGIN GATE ==================== -->
-  <div id="welcomeGateModal" class="fixed inset-0 bg-[#21113F]/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-xs p-6 rounded-[24px] shadow-2xl space-y-4 border border-purple-100">
-      <div class="text-center">
-        <div class="w-12 h-12 bg-purple-100 text-[#7040E8] rounded-full flex items-center justify-center mx-auto text-2xl mb-2">🔐</div>
-        <h3 class="text-lg font-black text-slate-800">লগইন বা রেজিস্ট্রেশন</h3>
-        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-          আপনার সংরক্ষিত লেভেল, ভাউচার ও ফ্রি ডেলিভারি পেতে লগইন করুন।
-        </p>
-      </div>
-
-      <div class="space-y-3 pt-1">
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">আপনার পূর্ণ নাম *</label>
-          <input id="gateName" type="text" placeholder="যেমন: রিয়াজ মোর্শেদ" class="w-full text-xs p-3 border border-slate-200 rounded-[12px] focus:outline-none focus:border-[#7040E8] bg-slate-50/50" />
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">১১ ডিজিটের মোবাইল নম্বর *</label>
-          <input id="gatePhone" type="tel" maxlength="11" placeholder="যেমন: 017XXXXXXXX" class="w-full text-xs p-3 border border-slate-200 rounded-[12px] focus:outline-none focus:border-[#7040E8] bg-slate-50/50 font-bold" />
-        </div>
-        <button onclick="handleLoginOrRegister()" class="w-full py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[14px] shadow-lg shadow-purple-500/25 active:scale-95 transition">
-          প্রবেশ করুন ➔
-        </button>
-      </div>
-      <p class="text-[9px] text-center text-slate-400">নতুন হলে স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট ও স্পিন তৈরি হবে।</p>
-    </div>
+  <!-- Top Announcement Bar -->
+  <div class="bg-black text-white text-[10px] py-1.5 px-4 text-center font-bold tracking-wider uppercase">
+    ⚡ সারাদেশে ক্যাশ অন ডেলিভারি | ৩টি কিনলে ফ্রি শিপিং!
   </div>
 
   <!-- Header -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-sm">
-    <div class="flex items-center gap-2">
-      <span onclick="switchTab('home')" class="text-xl font-black text-[#7040E8] tracking-tight cursor-pointer">PLAYORA</span>
-      <span id="userTierBadge" class="text-[9px] bg-purple-50 text-[#7040E8] font-black px-2 py-0.5 rounded-full border border-purple-100 uppercase">LVL 1</span>
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 sticky top-0 z-40 flex justify-between items-center shadow-xs">
+    <div class="flex items-center gap-2.5">
+      <button class="text-xl">☰</button>
+      <span class="text-xl font-black tracking-tighter text-slate-900">FABRI<span class="text-[#E02424]">LIFE</span></span>
     </div>
-
-    <!-- User Profile & Logout Action Area -->
-    <div class="flex items-center gap-2">
-      <div class="relative">
-        <button onclick="toggleProfileDropdown()" class="bg-slate-100 border border-slate-200 px-2.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition">
-          <span class="text-sm">👤</span>
-          <span id="headerUserName" class="truncate max-w-[70px] text-[11px]">অতিথি</span>
-          <span class="text-[9px] text-slate-400">▼</span>
-        </button>
-
-        <!-- Dropdown Card -->
-        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-[16px] shadow-xl border border-slate-100 p-2.5 z-50 space-y-2">
-          <div class="border-b border-slate-100 pb-2">
-            <span class="text-[9px] text-slate-400 block uppercase font-bold">লগইন অ্যাকাউন্ট</span>
-            <p id="dropdownUserPhone" class="text-xs font-black text-slate-800 truncate">০১৭...</p>
-          </div>
-          <button onclick="performUserLogout()" class="w-full py-2 bg-red-50 text-red-600 rounded-[10px] text-xs font-black flex items-center justify-center gap-1 active:scale-95 transition">
-            <span>🚪</span> লগআউট করুন
-          </button>
-        </div>
-      </div>
-
-      <button onclick="switchTab('cart')" class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shadow-sm">
-        <span>🛒</span>
-        <span id="cartCountBadge" class="bg-[#7040E8] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
+    <div class="flex items-center gap-3">
+      <button class="text-lg">🔍</button>
+      <button onclick="toggleCartDrawer()" class="relative text-xl">
+        🛒
+        <span id="cartCountBadge" class="absolute -top-1 -right-1.5 bg-[#E02424] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
       </button>
     </div>
   </header>
 
-  <!-- ==================== TAB 1: HOME ==================== -->
-  <main id="tab-home" class="tab-content p-4 max-w-sm mx-auto space-y-4">
-    <!-- Level 3 Mission Tracker -->
-    <div id="level3ProgressCard" class="hidden bg-white p-4 rounded-[20px] border border-amber-200 shadow-sm space-y-2.5">
-      <div class="flex justify-between items-center">
-        <span class="text-[10px] font-black uppercase bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">
-          🚀 LEVEL 3 মিশন
-        </span>
-        <span id="freeDeliveriesLeftText" class="text-[11px] font-black text-[#17A66B]">৩টি ফ্রি ডেলিভারি বাকি</span>
-      </div>
-      <h4 class="text-xs font-black text-slate-800">আর <span id="ordersNeededCount" class="text-[#7040E8]">৩টি</span> সফল ডেলিভারিতে আনলক হবে LEVEL 3!</h4>
-      <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-        <div id="level3ProgressBar" class="bg-gradient-to-r from-amber-400 to-[#7040E8] h-full w-0 transition-all duration-500"></div>
-      </div>
-      <p class="text-[10px] text-slate-500 leading-tight">পরবর্তী ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি (৳০)!</p>
-    </div>
-
-    <!-- Hero Banner -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-[#7040E8] via-[#4d23bb] to-[#21113F] text-white p-5 rounded-[20px] shadow-lg">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="text-[10px] font-black uppercase bg-[#FFC94D] text-[#21113F] px-2.5 py-0.5 rounded-full tracking-wider">EXCLUSIVE FUNNEL</span>
-      </div>
-      <h2 class="text-lg font-black leading-snug tracking-tight">গেম খেলুন, শপিং করুন,<br/>আনলক করুন ভিআইপি সুবিধা!</h2>
-      <p class="text-xs text-purple-100/80 mt-1.5 leading-relaxed">প্রতিটি ডেলিভারি আপনাকে নিয়ে যাবে উচ্চতর লেভেল ও বড় ডিসকাউন্টে।</p>
-      <div class="mt-4 flex gap-2">
-        <button onclick="switchTab('games')" class="bg-[#FFC94D] text-[#21113F] text-xs font-black px-4 py-2.5 rounded-[12px] shadow active:scale-95 transition">
-          🎮 গেমিং অ্যারেনা
-        </button>
-        <button onclick="switchTab('shop')" class="bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs font-bold px-3.5 py-2.5 rounded-[12px] active:scale-95 transition">
-          শপ কালেকশন
-        </button>
-      </div>
-    </div>
-
-    <!-- Live Customer Info Ticker -->
-    <div class="bg-white px-3.5 py-2.5 rounded-[14px] border border-slate-100 flex items-center justify-between text-[11px] shadow-sm">
-      <div class="flex items-center gap-2 truncate">
-        <span class="text-base">👤</span>
-        <p class="text-slate-600 truncate">
-          স্বাগতম, <span class="font-bold text-[#7040E8]" id="displayCustomerName">অতিথি</span>
-        </p>
-      </div>
-      <span id="displayCustomerPhone" class="text-[10px] font-bold text-slate-400">০১৭...</span>
-    </div>
-
-    <!-- Products Preview -->
-    <div>
-      <div class="flex justify-between items-center mb-2.5">
-        <div>
-          <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider">হট ডিল কালেকশন</h3>
-          <p class="text-[10px] text-slate-400">ভাউচার কোড অ্যাপ্লাই করে সাশ্রয় করুন</p>
+  <main class="max-w-md mx-auto space-y-4">
+    <!-- Category Story Bubbles (Fabrilife Signature Style) -->
+    <div class="bg-white py-3 px-4 border-b border-slate-100 flex gap-4 overflow-x-auto no-scrollbar">
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div class="w-14 h-14 rounded-full p-0.5 border-2 border-[#E02424]">
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200&q=80" class="w-full h-full object-cover rounded-full" />
         </div>
-        <button onclick="switchTab('shop')" class="text-xs font-black text-[#7040E8]">সবগুলো ›</button>
+        <span class="text-[11px] font-bold">টি-শার্ট</span>
       </div>
-      <div id="homeProductsList" class="grid grid-cols-2 gap-2.5"></div>
-    </div>
-  </main>
-
-  <!-- ==================== TAB 2: GAMES ==================== -->
-  <main id="tab-games" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    
-    <!-- LEVEL 3: ULTIMATE ELITE CLUB -->
-    <div id="level3Section" class="hidden bg-gradient-to-br from-[#1b0933] via-[#35105a] to-[#7040E8] text-white p-5 rounded-[24px] shadow-2xl diamond-glow border border-purple-400/50 text-center space-y-3">
-      <span class="text-[10px] font-black uppercase bg-white text-[#7040E8] px-3 py-1 rounded-full shadow">
-        💎 LEVEL 3: LEGENDARY ELITE
-      </span>
-      <h3 class="text-lg font-black text-amber-300">অভিনন্দন! আপনি এলিট ক্লাবে পৌঁছেছেন</h3>
-      <p class="text-xs text-purple-100 leading-relaxed">
-        ৩টি সফল ডেলিভারি সম্পন্ন করার জন্য আপনি প্রতিটি অর্ডারে আজীবন পাবেন ৩০% ফ্ল্যাট ছাড়!
-      </p>
-      <div class="p-3 bg-white/10 rounded-[16px] border border-white/20">
-        <span class="text-[10px] text-purple-200 block">আপনার পার্সোনাল এলিট ভাউচার:</span>
-        <b class="text-base text-amber-300 tracking-wider">ELITE-LIFETIME30</b>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
+          <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200&q=80" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <span class="text-[11px] font-bold">শার্ট</span>
       </div>
-    </div>
-
-    <!-- LEVEL 2: VIP GOLDEN VAULT -->
-    <div id="vipGameSection" class="hidden bg-gradient-to-b from-[#21113F] to-[#3a1d6e] text-white p-5 rounded-[24px] shadow-xl border-2 border-amber-400/60 relative overflow-hidden">
-      <div class="text-center">
-        <span class="text-[10px] font-black uppercase bg-gradient-to-r from-amber-400 to-yellow-300 text-black px-3 py-1 rounded-full shadow">
-          👑 LEVEL 2: GOLDEN VAULT
-        </span>
-        <h3 class="text-base font-black mt-2">মেগা পার্সেন্টেজ ডিসকাউন্ট আনলকড!</h3>
-        <p class="text-[11px] text-purple-200 mt-0.5">যেকোনো ১টি সিন্দুক ট্যাপ করে বড় ছাড় উন্মোচন করুন</p>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
+          <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=200&q=80" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <span class="text-[11px] font-bold">হুডি</span>
       </div>
-
-      <div id="vaultChestsContainer" class="grid grid-cols-3 gap-2.5 my-4 text-center">
-        <button onclick="openVipVault(1)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🪙</button>
-        <button onclick="openVipVault(2)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">🏆</button>
-        <button onclick="openVipVault(3)" class="p-4 bg-gradient-to-b from-amber-200/20 to-amber-500/10 rounded-[16px] border border-amber-300/40 text-3xl active:scale-90 transition">👑</button>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
+          <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=200&q=80" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <span class="text-[11px] font-bold">পলো</span>
       </div>
-
-      <div id="vipRewardResultBox" class="hidden p-3.5 bg-amber-400 text-[#21113F] rounded-[16px] text-center font-black">
-        <span class="text-xs block">🎉 লেভেল ২ রিওয়ার্ড উন্মোচিত!</span>
-        <p id="vipRewardTitle" class="text-base mt-0.5"></p>
-        <div class="bg-black text-amber-300 py-1 px-3 rounded-lg text-xs font-mono tracking-wider mt-1.5 inline-block" id="vipRewardCode"></div>
-        <button onclick="applyVipAndShop()" class="mt-2.5 w-full py-2 bg-[#21113F] text-white text-[11px] font-black rounded-[10px]">
-          ছাড় নিয়ে শপিং করুন →
-        </button>
+      <div class="flex flex-col items-center gap-1 shrink-0">
+        <div class="w-14 h-14 rounded-full p-0.5 border border-slate-200">
+          <img src="https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?w=200&q=80" class="w-full h-full object-cover rounded-full" />
+        </div>
+        <span class="text-[11px] font-bold">প্যান্ট</span>
       </div>
     </div>
 
-    <!-- LEVEL 1: STANDARD SPIN WHEEL -->
-    <div id="standardSpinSection" class="bg-white p-4 rounded-[20px] border border-slate-100 shadow-sm text-center relative">
-      <div class="flex justify-between items-center mb-1">
-        <span class="text-[10px] font-bold text-slate-400 uppercase">LEVEL 1: প্রথম অর্ডার স্পিন</span>
-        <span id="spinBadgeStatus" class="text-[9px] bg-purple-50 text-[#7040E8] font-bold px-2 py-0.5 rounded-full">১টি স্পিন</span>
-      </div>
-      <h3 class="text-sm font-black text-slate-800">🎡 লাকি হুইল স্পিন</h3>
-      <p class="text-[11px] text-slate-500 mb-2">চাকা ঘুরিয়ে আনলক করুন আপনার প্রথম ডিসকাউন্ট</p>
-
-      <div class="relative w-52 h-52 mx-auto flex items-center justify-center my-2">
-        <div class="absolute -top-3 z-20 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-[#21113F] drop-shadow"></div>
-        <div id="wheel" class="wheel w-full h-full rounded-full border-4 border-[#21113F] overflow-hidden relative shadow-md bg-slate-50">
-          <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
-            <path d="M 50 50 L 100 50 A 50 50 0 0 1 65.45 97.55 Z" fill="#7040E8"></path>
-            <path d="M 50 50 L 65.45 97.55 A 50 50 0 0 1 9.55 79.39 Z" fill="#21113F"></path>
-            <path d="M 50 50 L 9.55 79.39 A 50 50 0 0 1 9.55 20.61 Z" fill="#FFC94D"></path>
-            <path d="M 50 50 L 9.55 20.61 A 50 50 0 0 1 65.45 2.45 Z" fill="#17A66B"></path>
-            <path d="M 50 50 L 65.45 2.45 A 50 50 0 0 1 100 50 Z" fill="#9333EA"></path>
-          </svg>
+    <!-- Editorial Fashion Hero Banner -->
+    <div class="px-4">
+      <div class="relative overflow-hidden rounded-[18px] bg-slate-900 text-white aspect-[16/9] flex items-center p-6 shadow-md">
+        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+        <div class="relative z-10 space-y-1">
+          <span class="bg-white text-black text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Summer '26 Drop</span>
+          <h2 class="text-xl font-black leading-tight tracking-tight">PREMIUM COMBED<br/>COTTON TEES</h2>
+          <p class="text-xs text-slate-200">১৮০ GSM ১০০% অর্গানিক কটন</p>
+          <button class="mt-2 bg-[#E02424] text-white text-xs font-bold px-4 py-2 rounded-[8px]">কালেকশন দেখুন →</button>
         </div>
       </div>
-
-      <button id="spinBtn" onclick="executeLeadSpin()" class="w-full mt-3 py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[12px] active:scale-95 shadow-md shadow-purple-500/20 transition disabled:opacity-50 disabled:cursor-not-allowed">
-        স্পিন করুন 🎯
-      </button>
-
-      <div id="rewardBox" class="hidden mt-3 p-3.5 bg-amber-50 border border-dashed border-[#FFC94D] rounded-[14px]">
-        <span id="rewardTitle" class="text-xs font-black text-[#17A66B] block"></span>
-        <p class="text-xs font-black text-slate-800 mt-1">ভাউচার কোড: <b id="rewardCodeText" class="text-[#7040E8] bg-white px-2 py-0.5 rounded border border-slate-200"></b></p>
-        <button onclick="applyAndGoShop()" class="mt-2 text-[11px] bg-[#17A66B] text-white px-3.5 py-1.5 rounded-[8px] font-bold shadow-sm">
-          ভাউচার নিয়ে কেনাকাটা করুন →
-        </button>
-      </div>
-    </div>
-  </main>
-
-  <!-- ==================== TAB 3: SHOP ==================== -->
-  <main id="tab-shop" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    <div>
-      <h2 class="text-lg font-black text-[#21113F]">শপ ক্যাটালগ 🛍️</h2>
-      <p class="text-xs text-slate-500">পণ্য নির্বাচন করে কার্টে যুক্ত করুন</p>
-    </div>
-    <div id="shopProductsList" class="grid grid-cols-2 gap-2.5"></div>
-  </main>
-
-  <!-- ==================== TAB 4: CART & CHECKOUT ==================== -->
-  <main id="tab-cart" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    <div>
-      <h2 class="text-lg font-black text-[#21113F]">শপিং কার্ট 🛒</h2>
-      <p class="text-xs text-slate-500">সংরক্ষিত পণ্য ও ডিসকাউন্ট ভাউচার</p>
     </div>
 
-    <div id="cartItemsContainer" class="space-y-2"></div>
-
-    <div class="bg-white p-3.5 rounded-[16px] border border-slate-100 shadow-sm space-y-1.5">
-      <label class="block text-[11px] font-bold text-slate-700">🎁 ডিসকাউন্ট ভাউচার কোড</label>
-      <div class="flex gap-2">
-        <input id="voucherInput" type="text" placeholder="ভাউচার কোড দিন" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-[10px] uppercase font-bold focus:outline-none focus:border-[#7040E8]" />
-        <button onclick="applyVoucher()" class="bg-[#21113F] text-white text-xs px-4 py-2 rounded-[10px] font-bold">প্রয়োগ</button>
-      </div>
-    </div>
-
-    <!-- Summary -->
-    <div class="bg-white p-4 rounded-[18px] border border-slate-100 space-y-2 text-xs shadow-sm">
-      <div class="flex justify-between text-slate-600">
-        <span>সাবটোটাল</span>
-        <span id="summarySubtotal" class="font-bold">৳০</span>
-      </div>
-      <div class="flex justify-between text-[#17A66B] font-bold">
-        <span>ভাউচার ডিসকাউন্ট</span>
-        <span id="summaryDiscount">-৳০</span>
-      </div>
-      <div class="flex justify-between text-slate-600">
-        <span>ডেলিভারি চার্জ</span>
-        <span id="summaryDelivery" class="font-bold">৳৬০</span>
-      </div>
-      <div class="border-t border-slate-100 pt-2 flex justify-between font-black text-sm text-[#21113F]">
-        <span>সর্বমোট বিল</span>
-        <span id="summaryTotal" class="text-[#7040E8] text-base">৳০</span>
-      </div>
-
-      <button onclick="processOrderCheckout()" class="w-full mt-3 py-3.5 bg-[#7040E8] text-white text-xs font-black rounded-[12px] shadow active:scale-95 transition">
-        ক্যাশ অন ডেলিভারিতে অর্ডার নিশ্চিত করুন
-      </button>
-    </div>
-  </main>
-
-  <!-- ==================== TAB 5: ADMIN CRM & DELIVERY DISPATCH ==================== -->
-  <main id="tab-admin" class="tab-content hidden p-4 max-w-sm mx-auto space-y-4">
-    <div class="flex justify-between items-center">
+    <!-- Product Filter Bar -->
+    <div class="px-4 flex justify-between items-center">
       <div>
-        <h2 class="text-lg font-black text-[#21113F]">অ্যাডমিন ও ডেলিভারি কন্ট্রোল 🛠️</h2>
-        <p class="text-xs text-slate-500">ডেলিভারি কনফার্ম করে গ্রাহকের লেভেল আপগ্রেড করুন</p>
+        <h3 class="text-sm font-black uppercase tracking-wide">নতুন আগমনী কালেকশন</h3>
+        <p class="text-[11px] text-slate-500">প্রিমিয়াম কোয়ালিটি ফ্যাশন ওয়্যার</p>
       </div>
-      <button onclick="clearAllData()" class="text-[10px] text-red-500 font-bold bg-red-50 px-2 py-1 rounded">রিসেট</button>
+      <button class="text-xs font-bold text-[#E02424] border border-[#E02424]/30 px-3 py-1 rounded-full">সব দেখুন ›</button>
     </div>
 
-    <!-- Admin Stats -->
-    <div class="grid grid-cols-2 gap-2">
-      <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট নিবন্ধিত ইউজার</span>
-        <span id="adminTotalLeads" class="text-base font-black text-[#7040E8]">০</span>
-      </div>
-      <div class="bg-white p-3 rounded-[14px] border border-slate-100 shadow-sm">
-        <span class="text-[9px] font-bold text-slate-400 block uppercase">মোট অর্ডার সংখ্যা</span>
-        <span id="adminTotalOrders" class="text-base font-black text-slate-800">০</span>
-      </div>
-    </div>
-
-    <div class="space-y-2">
-      <h3 class="text-xs font-black text-slate-800">কাস্টমার অর্ডার ও ডেলিভারি হ্যান্ডলিং</h3>
-      <div id="adminOrdersList" class="space-y-2.5"></div>
+    <!-- 2-Column Clean Fashion Product Grid -->
+    <div id="productGrid" class="px-4 grid grid-cols-2 gap-3">
+      <!-- Injected via JS -->
     </div>
   </main>
 
-  <!-- Bottom Nav -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-2 py-2 flex justify-around shadow-lg z-30">
-    <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center text-[#7040E8] font-bold text-[10px]">
-      <span class="text-lg">🏠</span>হোম
-    </button>
-    <button onclick="switchTab('games')" id="nav-games" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
-      <span class="text-lg">🎮</span>গেমস
-    </button>
-    <button onclick="switchTab('shop')" id="nav-shop" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
-      <span class="text-lg">🛍️</span>শপ
-    </button>
-    <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
-      <span class="text-lg">🛒</span>কার্ট
-    </button>
-    <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex flex-col items-center text-slate-400 text-[10px]">
-      <span class="text-lg">🛠️</span>অ্যাডমিন
-    </button>
-  </nav>
+  <!-- Product Detail & Variant Selector Modal -->
+  <div id="productModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-end justify-center">
+    <div class="bg-white w-full max-w-md rounded-t-[24px] p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar">
+      <div class="flex justify-between items-start">
+        <div class="flex gap-3">
+          <img id="modalImg" class="w-16 h-20 object-cover rounded-lg bg-slate-100" />
+          <div>
+            <h3 id="modalTitle" class="text-xs font-black line-clamp-2"></h3>
+            <div class="flex items-center gap-2 mt-1">
+              <span id="modalPrice" class="text-sm font-black text-[#E02424]"></span>
+              <span id="modalOrigPrice" class="text-xs text-slate-400 line-through"></span>
+            </div>
+            <span class="text-[10px] text-emerald-600 font-bold">ইন স্টক (রেডি ডেলিভারি)</span>
+          </div>
+        </div>
+        <button onclick="closeProductModal()" class="text-slate-400 text-lg font-bold">✕</button>
+      </div>
+
+      <!-- Color Selector -->
+      <div>
+        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">কালার সিলেক্ট করুন:</label>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 border-2 border-black rounded-lg text-xs font-bold">জেট ব্ল্যাক</button>
+          <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-600">অলিভ গ্রিন</button>
+          <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs text-slate-600">নেভি ব্লু</button>
+        </div>
+      </div>
+
+      <!-- Size Selector -->
+      <div>
+        <div class="flex justify-between items-center mb-1.5">
+          <label class="text-[11px] font-bold text-slate-700">সাইজ সিলেক্ট করুন:</label>
+          <span class="text-[10px] text-[#E02424] font-bold underline cursor-pointer">সাইজ চার্ট</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2">
+          <button onclick="selectSize(this)" class="size-btn py-2 border-2 border-black bg-slate-50 text-xs font-black rounded-[8px]">M</button>
+          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">L</button>
+          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">XL</button>
+          <button onclick="selectSize(this)" class="size-btn py-2 border border-slate-200 text-xs font-bold rounded-[8px]">XXL</button>
+        </div>
+      </div>
+
+      <!-- Add to Cart / Buy Now Action -->
+      <div class="flex gap-2 pt-2">
+        <button onclick="addToCartFromModal()" class="flex-1 py-3 bg-black text-white text-xs font-black rounded-[12px] active:scale-95 transition">
+          কার্টে যোগ করুন
+        </button>
+        <button onclick="instantBuyNow()" class="flex-1 py-3 bg-[#E02424] text-white text-xs font-black rounded-[12px] active:scale-95 transition">
+          সরাসরি অর্ডার করুন
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end">
+    <div class="bg-white w-full max-w-xs h-full p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+          <h3 class="text-sm font-black">আপনার শপিং ব্যাগ</h3>
+          <button onclick="toggleCartDrawer()" class="text-lg">✕</button>
+        </div>
+        <div id="cartList" class="divide-y divide-slate-100 overflow-y-auto max-h-[65vh] py-2"></div>
+      </div>
+
+      <div class="border-t border-slate-100 pt-3 space-y-2">
+        <div class="flex justify-between text-xs font-bold">
+          <span>সাবটোটাল</span>
+          <span id="cartSubtotal">৳০</span>
+        </div>
+        <button onclick="alert('ক্যাশ অন ডেলিভারি চেকআউট পেজে পাঠানো হচ্ছে...')" class="w-full py-3 bg-[#E02424] text-white text-xs font-black rounded-[10px] shadow active:scale-95">
+          চেকআউট সম্পন্ন করুন →
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // System Data Store Architecture
-    let activeCustomer = JSON.parse(localStorage.getItem('playora_active_user')) || null;
-    let leadsStore = JSON.parse(localStorage.getItem('playora_leads_crm')) || [];
-    let ordersStore = JSON.parse(localStorage.getItem('playora_orders_db')) || [];
-
-    let products = [
-      { id: 1, name: 'SoundCore ANC Wireless Headphone', price: 2650, originalPrice: 3200, tag: 'HOT', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80' },
-      { id: 2, name: 'Ultra AMOLED Smart Watch', price: 3490, originalPrice: 4500, tag: 'TREND', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80' },
-      { id: 3, name: 'Tactical Resistant Backpack', price: 1750, originalPrice: 2200, tag: 'PRO', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80' },
-      { id: 4, name: 'Mechanical Gaming Keyboard', price: 2190, originalPrice: 2800, tag: 'RGB', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80' }
+    const FABRI_PRODUCTS = [
+      {
+        id: 101,
+        name: 'Retro Typography Heavyweight T-Shirt',
+        category: 'Graphic Tees',
+        price: 520,
+        originalPrice: 650,
+        badge: 'TRENDING',
+        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&q=80'
+      },
+      {
+        id: 102,
+        name: 'Drop Shoulder Minimalist Oversized Tee',
+        category: 'Oversized',
+        price: 590,
+        originalPrice: 750,
+        badge: 'NEW',
+        image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&q=80'
+      },
+      {
+        id: 103,
+        name: 'Classic Oxford Button-Down Formal Shirt',
+        category: 'Formal Wear',
+        price: 1150,
+        originalPrice: 1400,
+        badge: 'POPULAR',
+        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80'
+      },
+      {
+        id: 104,
+        name: 'Premium Combed Ribbed Polo Shirt',
+        category: 'Polo',
+        price: 780,
+        originalPrice: 950,
+        badge: 'EXCLUSIVE',
+        image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80'
+      }
     ];
 
     let cart = [];
-    let appliedVoucher = { code: null, rate: 0 };
-    let deg = 0;
+    let selectedModalProduct = null;
 
-    window.addEventListener('DOMContentLoaded', () => {
-      renderCatalog();
-      if (!activeCustomer) {
-        document.getElementById('welcomeGateModal').classList.remove('hidden');
-      } else {
-        document.getElementById('welcomeGateModal').classList.add('hidden');
-        updateCustomerUI();
-        syncGameAndTierStates();
-      }
-    });
-
-    // 1. Mandatory Gate / Login Handler
-    function handleLoginOrRegister() {
-      const name = document.getElementById('gateName').value.trim();
-      const phone = document.getElementById('gatePhone').value.trim();
-
-      if (!name) return alert('অনুগ্রহ করে আপনার নাম লিখুন।');
-      if (phone.length !== 11 || !phone.startsWith('01')) {
-        return alert('সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (যেমন: 017XXXXXXXX)।');
-      }
-
-      // Check if user already exists in database
-      const existing = leadsStore.find(l => l.phone === phone);
-      if (existing) {
-        activeCustomer = existing;
-        alert(`স্বাগতম ফিরে আসার জন্য, ${activeCustomer.name}! আপনার সংরক্ষিত অ্যাকাউন্ট লোড করা হয়েছে।`);
-      } else {
-        activeCustomer = { 
-          name, 
-          phone, 
-          tier: 1, 
-          hasSpun: false, 
-          spinReward: 'N/A', 
-          code: 'N/A',
-          hasOpenedVipVault: false,
-          vipReward: null,
-          freeDeliveriesRemaining: 0,
-          deliveredOrdersCount: 0
-        };
-        leadsStore.unshift(activeCustomer);
-        localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
-        alert(`ধন্যবাদ ${name}! আপনার নতুন অ্যাকাউন্ট তৈরি হয়েছে ও ১টি ফ্রি স্পিন আনলক হয়েছে।`);
-      }
-
-      localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
-      document.getElementById('welcomeGateModal').classList.add('hidden');
-      updateCustomerUI();
-      syncGameAndTierStates();
-
-      if (!activeCustomer.hasSpun) {
-        switchTab('games');
-      }
-    }
-
-    // 2. User Logout Action
-    function performUserLogout() {
-      if (confirm('আপনি কি এই অ্যাকাউন্ট থেকে লগআউট করতে চান?')) {
-        // Save current user state before logout
-        saveCustomerState();
-        
-        // Remove active session
-        localStorage.removeItem('playora_active_user');
-        activeCustomer = null;
-        cart = [];
-        appliedVoucher = { code: null, rate: 0 };
-        updateCartBadge();
-
-        toggleProfileDropdown();
-        document.getElementById('welcomeGateModal').classList.remove('hidden');
-        document.getElementById('gateName').value = '';
-        document.getElementById('gatePhone').value = '';
-        switchTab('home');
-      }
-    }
-
-    function toggleProfileDropdown() {
-      const dropdown = document.getElementById('profileDropdown');
-      dropdown.classList.toggle('hidden');
-    }
-
-    function updateCustomerUI() {
-      if (!activeCustomer) return;
-      document.getElementById('headerUserName').innerText = activeCustomer.name;
-      document.getElementById('displayCustomerName').innerText = activeCustomer.name;
-      document.getElementById('displayCustomerPhone').innerText = activeCustomer.phone;
-      document.getElementById('dropdownUserPhone').innerText = activeCustomer.phone;
-      document.getElementById('userTierBadge').innerText = `LVL ${activeCustomer.tier}`;
-    }
-
-    // 3. Tier & Game State Engine
-    function syncGameAndTierStates() {
-      if (!activeCustomer) return;
-
-      const spinBtn = document.getElementById('spinBtn');
-      const vipSection = document.getElementById('vipGameSection');
-      const level3Section = document.getElementById('level3Section');
-      const progressCard = document.getElementById('level3ProgressCard');
-
-      // লেভেল ১ স্পিন লক
-      if (activeCustomer.hasSpun) {
-        spinBtn.disabled = true;
-        spinBtn.innerText = '🔒 আপনি ১ম স্পিন সম্পন্ন করেছেন';
-        spinBtn.classList.replace('bg-[#7040E8]', 'bg-slate-300');
-        spinBtn.classList.replace('text-white', 'text-slate-600');
-
-        if (activeCustomer.code !== 'N/A') {
-          document.getElementById('rewardTitle').innerText = `🎉 প্রথম অর্ডারের ভাউচার: ${activeCustomer.spinReward}`;
-          document.getElementById('rewardCodeText').innerText = activeCustomer.code;
-          document.getElementById('rewardBox').classList.remove('hidden');
-        }
-      } else {
-        spinBtn.disabled = false;
-        spinBtn.innerText = 'স্পিন করুন 🎯';
-        spinBtn.classList.replace('bg-slate-300', 'bg-[#7040E8]');
-        spinBtn.classList.replace('text-slate-600', 'text-white');
-        document.getElementById('rewardBox').classList.add('hidden');
-      }
-
-      // লেভেল ২ কনফিগারেশন
-      if (activeCustomer.tier >= 2) {
-        vipSection.classList.remove('hidden');
-
-        if (activeCustomer.hasOpenedVipVault && activeCustomer.vipReward) {
-          document.getElementById('vaultChestsContainer').classList.add('hidden');
-          document.getElementById('vipRewardResultBox').classList.remove('hidden');
-          document.getElementById('vipRewardTitle').innerText = activeCustomer.vipReward.title;
-          document.getElementById('vipRewardCode').innerText = activeCustomer.vipReward.code;
-        }
-
-        if (activeCustomer.tier === 2) {
-          progressCard.classList.remove('hidden');
-          const needed = Math.max(0, 3 - activeCustomer.deliveredOrdersCount);
-          document.getElementById('ordersNeededCount').innerText = `${needed}টি`;
-          document.getElementById('freeDeliveriesLeftText').innerText = `${activeCustomer.freeDeliveriesRemaining}টি ফ্রি ডেলিভারি বাকি`;
-          
-          const progressPercent = Math.min(100, Math.round((activeCustomer.deliveredOrdersCount / 3) * 100));
-          document.getElementById('level3ProgressBar').style.width = `${progressPercent}%`;
-        } else {
-          progressCard.classList.add('hidden');
-        }
-      } else {
-        vipSection.classList.add('hidden');
-        progressCard.classList.add('hidden');
-      }
-
-      // লেভেল ৩ কনফিগারেশন
-      if (activeCustomer.tier >= 3) {
-        level3Section.classList.remove('hidden');
-        progressCard.classList.add('hidden');
-      } else {
-        level3Section.classList.add('hidden');
-      }
-
-      updateCustomerUI();
-    }
-
-    // 4. Level 1 Spin
-    function executeLeadSpin() {
-      if (!activeCustomer || activeCustomer.hasSpun) return;
-
-      const btn = document.getElementById('spinBtn');
-      const wheel = document.getElementById('wheel');
-      btn.disabled = true;
-      btn.innerText = 'স্পিন হচ্ছে...';
-
-      deg += 1800 + Math.floor(Math.random() * 360);
-      wheel.style.transform = `rotate(${deg}deg)`;
-
-      const outcomes = [
-        { label: '১৫% ডিসকাউন্ট', code: 'PLAY-WIN15', rate: 15 },
-        { label: '১০% বিশেষ ছাড়', code: 'PLAY-WIN10', rate: 10 }
-      ];
-      const picked = outcomes[Math.floor(Math.random() * outcomes.length)];
-
-      setTimeout(() => {
-        activeCustomer.hasSpun = true;
-        activeCustomer.spinReward = picked.label;
-        activeCustomer.code = picked.code;
-        appliedVoucher = { code: picked.code, rate: picked.rate };
-
-        saveCustomerState();
-        syncGameAndTierStates();
-        updateAdminView();
-      }, 4500);
-    }
-
-    // 5. Level 2 Vault (শুধুমাত্র বড় ছাড়)
-    function openVipVault(chestNum) {
-      if (!activeCustomer || activeCustomer.tier < 2) return;
-      if (activeCustomer.hasOpenedVipVault) return alert('আপনি ইতিমধ্যে লেভেল ২ ভল্ট খুলেছেন!');
-
-      const discountPool = [
-        { title: '২৫% মেগা ছাড় ভাউচার', code: 'SAVE-MEGA25', rate: 25 },
-        { title: '২০% সুপার সেভার ছাড়', code: 'SAVE-SUPER20', rate: 20 },
-        { title: '৳৩০০ ফ্ল্যাট ছাড় ভাউচার', code: 'SAVE-FLAT300', rate: 22 }
-      ];
-      const selected = discountPool[chestNum - 1] || discountPool[0];
-
-      activeCustomer.hasOpenedVipVault = true;
-      activeCustomer.vipReward = selected;
-      appliedVoucher = { code: selected.code, rate: selected.rate };
-
-      saveCustomerState();
-      syncGameAndTierStates();
-      updateAdminView();
-
-      alert(`👑 অভিনন্দন ${activeCustomer.name}!\nআপনি জিতেছেন: ${selected.title}\nপরের ৩টি অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি!`);
-    }
-
-    // 6. Checkout Process
-    function processOrderCheckout() {
-      if (cart.length === 0) return alert('কার্ট খালি!');
-      if (!activeCustomer) return;
-
-      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
-      const disc = Math.round((sub * appliedVoucher.rate) / 100);
-      
-      let deliveryFee = 60;
-      let usedFreeDelivery = false;
-      if (activeCustomer.freeDeliveriesRemaining > 0) {
-        deliveryFee = 0;
-        usedFreeDelivery = true;
-      }
-
-      const finalAmount = Math.max(0, sub - disc) + deliveryFee;
-
-      const newOrder = {
-        orderId: `PL-${Date.now().toString().slice(-5)}`,
-        customerName: activeCustomer.name,
-        customerPhone: activeCustomer.phone,
-        total: finalAmount,
-        status: 'PENDING',
-        usedFreeDelivery: usedFreeDelivery,
-        date: new Date().toLocaleTimeString()
-      };
-
-      ordersStore.unshift(newOrder);
-      localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
-
-      alert(`🎉 অর্ডার সফল!\nঅর্ডার আইডি: ${newOrder.orderId}\nমোট বিল: ৳${finalAmount} ${deliveryFee === 0 ? '(ফ্রি ডেলিভারি)' : ''}`);
-      
-      cart = [];
-      updateCartBadge();
-      switchTab('home');
-      updateAdminView();
-    }
-
-    // 7. Admin Delivery Confirmation
-    function markOrderAsDelivered(orderId) {
-      const order = ordersStore.find(o => o.orderId === orderId);
-      if (!order) return;
-
-      order.status = 'DELIVERED';
-      localStorage.setItem('playora_orders_db', JSON.stringify(ordersStore));
-
-      // কাস্টমার টায়ার ক্যালকুলেশন
-      let targetCustomer = (activeCustomer && activeCustomer.phone === order.customerPhone) 
-        ? activeCustomer 
-        : leadsStore.find(l => l.phone === order.customerPhone);
-
-      if (targetCustomer) {
-        if (targetCustomer.tier === 1) {
-          targetCustomer.tier = 2;
-          targetCustomer.freeDeliveriesRemaining = 3;
-          targetCustomer.deliveredOrdersCount = 0;
-        } else if (targetCustomer.tier === 2) {
-          targetCustomer.deliveredOrdersCount += 1;
-          if (targetCustomer.freeDeliveriesRemaining > 0) {
-            targetCustomer.freeDeliveriesRemaining -= 1;
-          }
-          if (targetCustomer.deliveredOrdersCount >= 3) {
-            targetCustomer.tier = 3;
-          }
-        }
-
-        // Save to leads store
-        const idx = leadsStore.findIndex(l => l.phone === targetCustomer.phone);
-        if (idx !== -1) {
-          leadsStore[idx] = targetCustomer;
-          localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
-        }
-
-        if (activeCustomer && activeCustomer.phone === targetCustomer.phone) {
-          activeCustomer = targetCustomer;
-          localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
-          syncGameAndTierStates();
-        }
-      }
-
-      alert(`✅ অর্ডার ${orderId} সফলভাবে DELIVERED চিহ্নিত হয়েছে!`);
-      updateAdminView();
-    }
-
-    // Dynamic Cart Calculations
-    function calculateTotals() {
-      const sub = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
-      const disc = Math.round((sub * appliedVoucher.rate) / 100);
-      
-      let del = sub > 0 ? 60 : 0;
-      if (activeCustomer && activeCustomer.freeDeliveriesRemaining > 0 && sub > 0) {
-        del = 0;
-      }
-
-      const tot = Math.max(0, sub - disc) + del;
-
-      document.getElementById('summarySubtotal').innerText = `৳${sub}`;
-      document.getElementById('summaryDiscount').innerText = `-৳${disc}`;
-      document.getElementById('summaryDelivery').innerText = del === 0 && sub > 0 ? '৳০ (ফ্রি)' : `৳${del}`;
-      document.getElementById('summaryTotal').innerText = `৳${tot}`;
-    }
-
-    function applyAndGoShop() {
-      document.getElementById('voucherInput').value = appliedVoucher.code;
-      switchTab('shop');
-    }
-
-    function applyVipAndShop() {
-      if (activeCustomer && activeCustomer.vipReward) {
-        appliedVoucher = { code: activeCustomer.vipReward.code, rate: activeCustomer.vipReward.rate };
-        document.getElementById('voucherInput').value = activeCustomer.vipReward.code;
-        switchTab('shop');
-      }
-    }
-
-    function applyVoucher() {
-      const code = document.getElementById('voucherInput').value.trim().toUpperCase();
-      if (appliedVoucher.code && code === appliedVoucher.code) {
-        alert('ভাউচার সফলভাবে সক্রিয় হয়েছে!');
-      } else if (code === 'ELITE-LIFETIME30' && activeCustomer.tier >= 3) {
-        appliedVoucher = { code: 'ELITE-LIFETIME30', rate: 30 };
-        alert('৩০% এলিট ভাউচার সক্রিয় হয়েছে!');
-      } else {
-        alert('ভাউচার কোড সঠিক নয়!');
-      }
-      calculateTotals();
-    }
-
-    function updateAdminView() {
-      document.getElementById('adminTotalLeads').innerText = leadsStore.length;
-      document.getElementById('adminTotalOrders').innerText = ordersStore.length;
-
-      const container = document.getElementById('adminOrdersList');
-      if (ordersStore.length === 0) {
-        container.innerHTML = '<div class="text-center py-6 text-xs text-slate-400 bg-white rounded-xl border">কোনো অর্ডার নেই</div>';
-        return;
-      }
-
-      container.innerHTML = ordersStore.map(order => `
-        <div class="bg-white p-3 rounded-[16px] border border-slate-100 shadow-sm space-y-2">
-          <div class="flex justify-between items-start">
-            <div>
-              <span class="text-[9px] font-bold text-slate-400">অর্ডার: ${order.orderId}</span>
-              <h4 class="text-xs font-black text-slate-800">${order.customerName}</h4>
-              <p class="text-[11px] font-bold text-[#7040E8]">${order.customerPhone}</p>
-            </div>
-            <div class="text-right">
-              <span class="text-xs font-black text-slate-800 block">৳${order.total}</span>
-              <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${order.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
-                ${order.status}
-              </span>
-            </div>
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = FABRI_PRODUCTS.map(p => `
+        <div class="bg-white rounded-[14px] border border-slate-100 overflow-hidden flex flex-col justify-between shadow-2xs">
+          <div class="relative aspect-[3/4] bg-slate-100 cursor-pointer" onclick="openProductModal(${p.id})">
+            <img src="${p.image}" class="w-full h-full object-cover" />
+            <span class="absolute top-2 left-2 bg-black text-white text-[8px] font-black px-2 py-0.5 rounded tracking-wide">
+              ${p.badge}
+            </span>
           </div>
-
-          <div class="flex gap-2 pt-1 border-t border-slate-50">
-            <a href="tel:${order.customerPhone}" class="flex-1 text-center bg-slate-100 text-slate-700 text-[10px] font-bold py-1.5 rounded-[8px]">
-              📞 কল করুন
-            </a>
-            ${order.status !== 'DELIVERED' ? `
-              <button onclick="markOrderAsDelivered('${order.orderId}')" class="flex-1 bg-[#17A66B] text-white text-[10px] font-black py-1.5 rounded-[8px] shadow-sm active:scale-95 transition">
-                📦 ডেলিভারি সফল করুন
+          <div class="p-2.5 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[9px] text-slate-400 font-bold uppercase">${p.category}</span>
+              <h4 class="text-xs font-bold text-slate-900 line-clamp-2 mt-0.5 leading-snug cursor-pointer" onclick="openProductModal(${p.id})">${p.name}</h4>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-slate-50 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-black text-[#1A1A1A]">৳${p.price}</span>
+                <span class="text-[10px] text-slate-400 line-through block">৳${p.originalPrice}</span>
+              </div>
+              <button onclick="openProductModal(${p.id})" class="px-2.5 py-1.5 bg-black text-white text-[10px] font-bold rounded-[6px] active:scale-90 transition">
+                + সাইজ
               </button>
-            ` : `
-              <span class="flex-1 text-center text-emerald-600 text-[10px] font-bold py-1.5">
-                ✓ ডেলিভার্ড
-              </span>
-            `}
+            </div>
           </div>
         </div>
       `).join('');
     }
 
-    function saveCustomerState() {
-      if (!activeCustomer) return;
-      localStorage.setItem('playora_active_user', JSON.stringify(activeCustomer));
-      const idx = leadsStore.findIndex(l => l.phone === activeCustomer.phone);
-      if (idx !== -1) {
-        leadsStore[idx] = activeCustomer;
-        localStorage.setItem('playora_leads_crm', JSON.stringify(leadsStore));
-      }
+    function openProductModal(id) {
+      selectedModalProduct = FABRI_PRODUCTS.find(p => p.id === id);
+      document.getElementById('modalImg').src = selectedModalProduct.image;
+      document.getElementById('modalTitle').innerText = selectedModalProduct.name;
+      document.getElementById('modalPrice').innerText = `৳${selectedModalProduct.price}`;
+      document.getElementById('modalOrigPrice').innerText = `৳${selectedModalProduct.originalPrice}`;
+      document.getElementById('productModal').classList.remove('hidden');
     }
 
-    function clearAllData() {
-      if (confirm('সকল ডাটা মুছে রিসেট করতে চান?')) {
-        localStorage.clear();
-        location.reload();
-      }
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
     }
 
-    function switchTab(name) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.nav-btn').forEach(el => {
-        el.classList.remove('text-[#7040E8]', 'font-bold');
-        el.classList.add('text-slate-400');
+    function selectSize(btn) {
+      document.querySelectorAll('.size-btn').forEach(b => {
+        b.classList.remove('border-black', 'border-2', 'bg-slate-50', 'font-black');
+        b.classList.add('border-slate-200', 'font-bold');
       });
-
-      const tab = document.getElementById(`tab-${name}`);
-      if (tab) tab.classList.remove('hidden');
-
-      const nav = document.getElementById(`nav-${name}`);
-      if (nav) {
-        nav.classList.add('text-[#7040E8]', 'font-bold');
-        nav.classList.remove('text-slate-400');
-      }
-
-      if (name === 'cart') renderCart();
-      if (name === 'admin') updateAdminView();
-      if (name === 'games') syncGameAndTierStates();
+      btn.classList.add('border-black', 'border-2', 'bg-slate-50', 'font-black');
+      btn.classList.remove('border-slate-200', 'font-bold');
     }
 
-    function renderCatalog() {
-      const template = (p) => `
-        <div class="bg-white p-2.5 rounded-[18px] border border-slate-100 shadow-sm flex flex-col justify-between">
-          <div class="relative overflow-hidden rounded-[12px] bg-slate-100 aspect-square">
-            <img src="${p.image}" class="w-full h-full object-cover" />
-            <span class="absolute top-1.5 left-1.5 bg-[#7040E8] text-white text-[9px] font-black px-2 py-0.5 rounded-full">${p.tag}</span>
-          </div>
-          <div class="mt-2 flex-1 flex flex-col justify-between">
-            <h4 class="text-xs font-bold text-slate-800 line-clamp-2 leading-snug">${p.name}</h4>
-            <div class="mt-2 pt-2 border-t border-slate-50 flex items-center justify-between">
-              <div>
-                <span class="text-xs font-black text-[#21113F]">৳${p.price}</span>
-                <span class="text-[9px] text-slate-400 line-through block">৳${p.originalPrice}</span>
-              </div>
-              <button onclick="addToCart(${p.id})" class="px-2.5 py-1.5 bg-[#7040E8] text-white text-[10px] font-bold rounded-[8px] active:scale-90 transition">+ কার্ট</button>
-            </div>
-          </div>
-        </div>
-      `;
-      document.getElementById('homeProductsList').innerHTML = products.slice(0, 2).map(template).join('');
-      document.getElementById('shopProductsList').innerHTML = products.map(template).join('');
-    }
-
-    function addToCart(id) {
-      const prod = products.find(p => p.id === id);
-      const existing = cart.find(i => i.id === id);
+    function addToCartFromModal() {
+      if (!selectedModalProduct) return;
+      const existing = cart.find(i => i.id === selectedModalProduct.id);
       if (existing) existing.qty += 1;
-      else cart.push({ ...prod, qty: 1 });
-      updateCartBadge();
-      alert(`"${prod.name}" কার্টে যুক্ত হয়েছে!`);
+      else cart.push({ ...selectedModalProduct, qty: 1, size: 'M' });
+
+      updateCartUI();
+      closeProductModal();
+      toggleCartDrawer();
     }
 
-    function updateCartBadge() {
-      const count = cart.reduce((acc, c) => acc + c.qty, 0);
+    function instantBuyNow() {
+      addToCartFromModal();
+      alert('সরাসরি ক্যাশ অন ডেলিভারি চেকআউট পেজে রিডাইরেক্ট করা হচ্ছে...');
+    }
+
+    function toggleCartDrawer() {
+      document.getElementById('cartDrawer').classList.toggle('hidden');
+    }
+
+    function updateCartUI() {
+      const count = cart.reduce((acc, i) => acc + i.qty, 0);
       document.getElementById('cartCountBadge').innerText = count;
-    }
 
-    function renderCart() {
-      const cont = document.getElementById('cartItemsContainer');
+      const list = document.getElementById('cartList');
       if (cart.length === 0) {
-        cont.innerHTML = '<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-[14px] border border-slate-100">কার্ট খালি।</div>';
+        list.innerHTML = '<div class="text-center py-10 text-xs text-slate-400">ব্যাগ খালি</div>';
       } else {
-        cont.innerHTML = cart.map(i => `
-          <div class="bg-white p-3 rounded-[12px] border border-slate-100 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <img src="${i.image}" class="w-10 h-10 object-cover rounded-lg" />
-              <div>
-                <h4 class="text-xs font-bold line-clamp-1 max-w-[170px]">${i.name}</h4>
-                <span class="text-[11px] text-slate-500">৳${i.price} × ${i.qty}</span>
-              </div>
+        list.innerHTML = cart.map(i => `
+          <div class="py-2.5 flex items-center justify-between gap-2">
+            <img src="${i.image}" class="w-12 h-14 object-cover rounded bg-slate-100" />
+            <div class="flex-1">
+              <h5 class="text-[11px] font-bold line-clamp-1">${i.name}</h5>
+              <span class="text-[10px] text-slate-500">সাইজ: ${i.size} | ৳${i.price} × ${i.qty}</span>
             </div>
             <span class="text-xs font-black">৳${i.price * i.qty}</span>
           </div>
         `).join('');
       }
-      calculateTotals();
+
+      const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+      document.getElementById('cartSubtotal').innerText = `৳${subtotal}`;
     }
+
+    renderProducts();
   </script>
 </body>
-  </html>
+            </html>
