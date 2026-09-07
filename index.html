@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fabrilife Home & Menu</title>
+  <title>Fabrilife</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -13,15 +13,14 @@
 </head>
 <body class="bg-[#F8F9FA] text-[#1A1A1A] pb-20 select-none">
 
-  <!-- ==================== TOP ANNOUNCEMENT ==================== -->
+  <!-- Top Announcement -->
   <div class="bg-black text-white text-[10.5px] py-2 px-4 text-center font-bold tracking-wide">
     ⚡ সারাদেশে ক্যাশ অন ডেলিভারি | ৩টি অর্ডারে ডেলিভারি ফ্রি!
   </div>
 
-  <!-- ==================== MAIN HEADER ==================== -->
+  <!-- Main Header -->
   <header class="bg-white sticky top-0 z-30 border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-xs">
     <div class="flex items-center gap-3">
-      <!-- ক্লিক করলেই ড্রয়ার খুলবে -->
       <button onclick="openDrawer()" class="text-2xl text-slate-900 active:scale-95 transition">☰</button>
       <span class="text-xl font-black tracking-tight text-slate-900">FABRI<span class="text-[#E02424]">LIFE</span></span>
     </div>
@@ -35,7 +34,7 @@
     </div>
   </header>
 
-  <!-- ==================== FULL HOME PAGE CONTENT ==================== -->
+  <!-- Main Page Content -->
   <main class="max-w-md mx-auto space-y-4 pt-2">
     
     <!-- Category Bubbles -->
@@ -119,12 +118,12 @@
     </div>
   </main>
 
-  <!-- ==================== SIDE DRAWER (SCREENSHOT MATCH) ==================== -->
+  <!-- ==================== SIDE DRAWER (UPDATED) ==================== -->
   <div id="drawerOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity">
     <div id="drawerContainer" class="bg-white w-[82%] max-w-xs h-full shadow-2xl flex flex-col justify-between overflow-y-auto no-scrollbar -translate-x-full transition-transform duration-300 ease-out">
       
       <div>
-        <!-- 1. Black Top Header (Welcome to Fabrilife + Close Button) -->
+        <!-- Top Black Header -->
         <div class="bg-black text-white px-4 py-3.5 flex justify-between items-center">
           <span class="text-[15px] font-semibold tracking-wide">Welcome to Fabrilife</span>
           <button onclick="closeDrawer()" class="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs active:scale-90 transition">
@@ -132,7 +131,7 @@
           </button>
         </div>
 
-        <!-- 2. Login / Register Pill Switcher -->
+        <!-- Login / Register Switcher -->
         <div class="bg-black px-4 pb-4.5 pt-1">
           <div class="grid grid-cols-2 gap-2">
             <button onclick="alert('Login পেজ')" class="py-2 bg-white text-black text-xs font-bold rounded-lg shadow-sm active:scale-95 transition text-center">
@@ -144,7 +143,7 @@
           </div>
         </div>
 
-        <!-- 3. Primary Navigation List -->
+        <!-- Primary Navigation List -->
         <div class="py-2 px-2 divide-y divide-slate-100">
           <div class="space-y-0.5 pb-2">
             <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
@@ -152,66 +151,29 @@
               <span>Home</span>
             </a>
             <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-slate-600">⊞</span>
-              <span>Shop All</span>
+              <span class="text-base text-slate-600">🛍️</span>
+              <span>All Products</span>
             </a>
             <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-[#10B981]">★</span>
-              <span>New Arrivals</span>
-            </a>
-            <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-[#0284C7] hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base">🚚</span>
-              <span>Free Delivery</span>
+              <span class="text-base text-slate-600">🛒</span>
+              <span>Cart</span>
             </a>
             <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-slate-600">🔥</span>
-              <span>Top Selling</span>
+              <span class="text-base text-amber-500">⭐</span>
+              <span>Reviews</span>
             </a>
           </div>
 
-          <!-- 4. Categories Section -->
-          <div class="pt-3 pb-2">
-            <span class="block px-3 text-[11px] font-semibold text-slate-400 tracking-wider uppercase mb-1">
-              CATEGORIES
-            </span>
-            <div class="space-y-0.5">
-              <a href="#" onclick="closeDrawer()" class="flex items-center justify-between px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <div class="flex items-center gap-3.5">
-                  <span class="text-base text-slate-600">🧍‍♂️</span>
-                  <span>Men's Collection</span>
-                </div>
-                <span class="text-slate-400 text-sm font-bold">›</span>
-              </a>
-              <a href="#" onclick="closeDrawer()" class="flex items-center justify-between px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <div class="flex items-center gap-3.5">
-                  <span class="text-base text-slate-600">🧍‍♀️</span>
-                  <span>Women's Collection</span>
-                </div>
-                <span class="text-slate-400 text-sm font-bold">›</span>
-              </a>
-              <a href="#" onclick="closeDrawer()" class="flex items-center justify-between px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <div class="flex items-center gap-3.5">
-                  <span class="text-base text-slate-600">🧒</span>
-                  <span>Kids Collection</span>
-                </div>
-                <span class="text-slate-400 text-sm font-bold">›</span>
-              </a>
-              <a href="#" onclick="closeDrawer()" class="flex items-center justify-between px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <div class="flex items-center gap-3.5">
-                  <span class="text-base text-slate-600">🎓</span>
-                  <span>Teens Collection</span>
-                </div>
-                <span class="text-slate-400 text-sm font-bold">›</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- 5. My Account Section -->
+          <!-- My Account Section -->
           <div class="pt-3 pb-4">
             <span class="block px-3 text-[11px] font-semibold text-slate-400 tracking-wider uppercase mb-1">
               MY ACCOUNT
             </span>
             <div class="space-y-0.5">
+              <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
+                <span class="text-base text-slate-500">👤</span>
+                <span>My Profile</span>
+              </a>
               <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
                 <span class="text-base text-slate-500">🤍</span>
                 <span>My Wishlist</span>
@@ -247,4 +209,4 @@
     });
   </script>
 </body>
-            </html>
+  </html>
