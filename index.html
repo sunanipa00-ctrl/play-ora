@@ -22,20 +22,20 @@
   <header class="bg-white sticky top-0 z-30 border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-xs">
     <div class="flex items-center gap-3">
       <button onclick="openDrawer()" class="text-2xl text-slate-900 active:scale-95 transition">☰</button>
-      <span class="text-xl font-black tracking-tight text-slate-900">FABRI<span class="text-[#E02424]">LIFE</span></span>
+      <span onclick="goBackToHome()" class="text-xl font-black tracking-tight text-slate-900 cursor-pointer">FABRI<span class="text-[#E02424]">LIFE</span></span>
     </div>
     <div class="flex items-center gap-3 text-lg text-slate-700">
       <button>🔍</button>
       <button>🤍</button>
-      <button class="relative">
+      <button onclick="toggleCartDrawer()" class="relative">
         <span>🛒</span>
-        <span class="absolute -top-1 -right-1 bg-[#E02424] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
+        <span id="headerCartBadge" class="absolute -top-1 -right-1 bg-[#E02424] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Page Content -->
-  <main class="max-w-md mx-auto space-y-4 pt-2">
+  <!-- ==================== VIEW 1: HOME PAGE ==================== -->
+  <main id="view-home" class="max-w-md mx-auto space-y-4 pt-2">
     
     <!-- Category Bubbles -->
     <div class="bg-white py-3 px-4 border-b border-slate-100 flex gap-4 overflow-x-auto no-scrollbar">
@@ -81,127 +81,328 @@
     <div class="px-4 space-y-2">
       <div class="flex justify-between items-center">
         <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider">হট ডিল কালেকশন</h3>
-        <span class="text-[10px] font-bold text-[#E02424]">সবগুলো দেখুন ›</span>
+        <span class="text-[10px] font-bold text-[#E02424] cursor-pointer">সবগুলো দেখুন ›</span>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <!-- Product 1 -->
-        <div class="bg-white rounded-[14px] border border-slate-200 overflow-hidden flex flex-col justify-between shadow-2xs">
-          <div class="aspect-[3/4] bg-slate-100 relative">
-            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&q=80" class="w-full h-full object-cover" />
-            <span class="absolute top-2 left-2 bg-black text-white text-[8px] font-black px-1.5 py-0.5 rounded">NEW</span>
-          </div>
-          <div class="p-2.5 space-y-1">
-            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Retro Typography Tee</h4>
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-black text-slate-900">৳৫২০</span>
-              <button class="text-[10px] bg-black text-white px-2 py-1 rounded font-bold">+ কার্ট</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="bg-white rounded-[14px] border border-slate-200 overflow-hidden flex flex-col justify-between shadow-2xs">
-          <div class="aspect-[3/4] bg-slate-100 relative">
-            <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80" class="w-full h-full object-cover" />
-            <span class="absolute top-2 left-2 bg-[#E02424] text-white text-[8px] font-black px-1.5 py-0.5 rounded">HOT</span>
-          </div>
-          <div class="p-2.5 space-y-1">
-            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Classic Solid Polo</h4>
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-black text-slate-900">৳৯৯০</span>
-              <button class="text-[10px] bg-black text-white px-2 py-1 rounded font-bold">+ কার্ট</button>
-            </div>
-          </div>
-        </div>
+      <div id="productsContainer" class="grid grid-cols-2 gap-3">
+        <!-- Injected via JS -->
       </div>
     </div>
   </main>
 
-  <!-- ==================== SIDE DRAWER (UPDATED) ==================== -->
+  <!-- ==================== VIEW 2: PRODUCT DETAIL VIEW (ভিতরে ঢোকার পেজ) ==================== -->
+  <main id="view-product-detail" class="hidden max-w-md mx-auto p-4 space-y-4">
+    <!-- Back to Home Bar -->
+    <button onclick="goBackToHome()" class="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-2xs active:scale-95 transition">
+      <span>←</span> পেছনের পেজে ফিরুন
+    </button>
+
+    <!-- Product Showcase Image -->
+    <div class="bg-white rounded-[20px] overflow-hidden border border-slate-200 aspect-[3/4] relative shadow-sm">
+      <img id="detailMainImg" src="" class="w-full h-full object-cover" />
+      <span id="detailBadge" class="absolute top-3 left-3 bg-black text-white text-[9px] font-black px-2 py-0.5 rounded tracking-wider"></span>
+    </div>
+
+    <!-- Title & Pricing -->
+    <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-2 shadow-xs">
+      <span id="detailCategory" class="text-[10px] font-black uppercase text-slate-400"></span>
+      <h1 id="detailTitle" class="text-base font-black text-slate-900 leading-snug"></h1>
+      
+      <div class="flex items-center gap-2.5 pt-1">
+        <span id="detailPrice" class="text-xl font-black text-[#E02424]"></span>
+        <span id="detailOrigPrice" class="text-xs text-slate-400 line-through"></span>
+        <span class="text-[10px] bg-red-50 text-[#E02424] font-bold px-2 py-0.5 rounded">২০% ছাড়</span>
+      </div>
+
+      <div class="text-[11px] text-emerald-700 bg-emerald-50 p-2 rounded-[10px] font-bold flex items-center gap-1.5 mt-2">
+        <span>✓</span> ইন-স্টক (সারাদেশে ৩-৫ দিনে ক্যাশ অন ডেলিভারি)
+      </div>
+    </div>
+
+    <!-- Size Selector -->
+    <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-2 shadow-xs">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-bold text-slate-800">সাইজ নির্বাচন করুন:</span>
+        <span onclick="alert('সাইজ চার্ট:\nM: বুক ৩৮, দৈর্ঘ্য ২৮\nL: বুক ৪০, দৈর্ঘ্য ২৯\nXL: বুক ৪২, দৈর্ঘ্য ৩০\nXXL: বুক ৪৪, দৈর্ঘ্য ৩১')" class="text-[10px] text-[#E02424] font-bold underline cursor-pointer">সাইজ গাইড</span>
+      </div>
+      <div class="grid grid-cols-4 gap-2">
+        <button onclick="selectProductSize(this)" class="p-size-btn py-2.5 border-2 border-black bg-slate-50 text-xs font-black rounded-[10px]">M</button>
+        <button onclick="selectProductSize(this)" class="p-size-btn py-2.5 border border-slate-200 text-xs font-bold rounded-[10px]">L</button>
+        <button onclick="selectProductSize(this)" class="p-size-btn py-2.5 border border-slate-200 text-xs font-bold rounded-[10px]">XL</button>
+        <button onclick="selectProductSize(this)" class="p-size-btn py-2.5 border border-slate-200 text-xs font-bold rounded-[10px]">XXL</button>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-1.5 shadow-xs text-xs text-slate-600 leading-relaxed">
+      <h4 class="font-black text-slate-900 text-xs uppercase">ফেব্রিক ও প্রোডাক্ট বিবরণ</h4>
+      <p>• ১৮০ GSM ১০০% প্রিমিয়াম কম্বড অর্গানিক কটন।</p>
+      <p>• অত্যন্ত আরামদায়ক ও নিখুঁত ফিনিশিং।</p>
+      <p>• কালার বা প্রিন্ট নষ্ট না হওয়ার শতভাগ নিশ্চয়তা।</p>
+    </div>
+
+    <!-- Bottom Sticky-like Action Bar -->
+    <div class="flex gap-2 pt-2">
+      <button onclick="addToCartFromDetail()" class="flex-1 py-3.5 bg-black text-white text-xs font-black rounded-[12px] active:scale-95 transition shadow-sm">
+        কার্টে যোগ করুন
+      </button>
+      <button onclick="buyNowFromDetail()" class="flex-1 py-3.5 bg-[#E02424] text-white text-xs font-black rounded-[12px] active:scale-95 transition shadow-md shadow-red-500/20">
+        সরাসরি অর্ডার করুন ➔
+      </button>
+    </div>
+  </main>
+
+  <!-- ==================== SIDE DRAWER (MENU) ==================== -->
   <div id="drawerOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity">
     <div id="drawerContainer" class="bg-white w-[82%] max-w-xs h-full shadow-2xl flex flex-col justify-between overflow-y-auto no-scrollbar -translate-x-full transition-transform duration-300 ease-out">
-      
       <div>
-        <!-- Top Black Header -->
         <div class="bg-black text-white px-4 py-3.5 flex justify-between items-center">
           <span class="text-[15px] font-semibold tracking-wide">Welcome to Fabrilife</span>
-          <button onclick="closeDrawer()" class="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs active:scale-90 transition">
-            ✕
-          </button>
+          <button onclick="closeDrawer()" class="w-7 h-7 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs active:scale-90 transition">✕</button>
         </div>
 
-        <!-- Login / Register Switcher -->
         <div class="bg-black px-4 pb-4.5 pt-1">
           <div class="grid grid-cols-2 gap-2">
-            <button onclick="alert('Login পেজ')" class="py-2 bg-white text-black text-xs font-bold rounded-lg shadow-sm active:scale-95 transition text-center">
-              Login
-            </button>
-            <button onclick="alert('Register পেজ')" class="py-2 bg-[#2B2B2B] text-white text-xs font-semibold rounded-lg active:scale-95 transition text-center border border-zinc-700/50">
-              Register
-            </button>
+            <button onclick="alert('Login')" class="py-2 bg-white text-black text-xs font-bold rounded-lg shadow-sm active:scale-95 transition text-center">Login</button>
+            <button onclick="alert('Register')" class="py-2 bg-[#2B2B2B] text-white text-xs font-semibold rounded-lg active:scale-95 transition text-center border border-zinc-700/50">Register</button>
           </div>
         </div>
 
-        <!-- Primary Navigation List -->
         <div class="py-2 px-2 divide-y divide-slate-100">
           <div class="space-y-0.5 pb-2">
-            <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-slate-600">🏠</span>
-              <span>Home</span>
+            <a href="#" onclick="goBackToHome(); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+              <span>🏠</span><span>Home</span>
             </a>
-            <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-slate-600">🛍️</span>
-              <span>All Products</span>
+            <a href="#" onclick="goBackToHome(); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+              <span>🛍️</span><span>All Products</span>
             </a>
-            <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-slate-600">🛒</span>
-              <span>Cart</span>
+            <a href="#" onclick="toggleCartDrawer(); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+              <span>🛒</span><span>Cart</span>
             </a>
-            <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-              <span class="text-base text-amber-500">⭐</span>
-              <span>Reviews</span>
+            <a href="#" onclick="alert('Reviews সেকশন'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+              <span class="text-amber-500">⭐</span><span>Reviews</span>
             </a>
           </div>
 
-          <!-- My Account Section -->
           <div class="pt-3 pb-4">
-            <span class="block px-3 text-[11px] font-semibold text-slate-400 tracking-wider uppercase mb-1">
-              MY ACCOUNT
-            </span>
+            <span class="block px-3 text-[11px] font-semibold text-slate-400 tracking-wider uppercase mb-1">MY ACCOUNT</span>
             <div class="space-y-0.5">
-              <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <span class="text-base text-slate-500">👤</span>
-                <span>My Profile</span>
+              <a href="#" onclick="alert('My Profile'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+                <span>👤</span><span>My Profile</span>
               </a>
-              <a href="#" onclick="closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg active:bg-slate-100">
-                <span class="text-base text-slate-500">🤍</span>
-                <span>My Wishlist</span>
+              <a href="#" onclick="alert('My Wishlist'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2.5 text-[13px] font-medium text-slate-700 hover:bg-slate-50 rounded-lg">
+                <span>🤍</span><span>My Wishlist</span>
               </a>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
+  <!-- ==================== CART DRAWER ==================== -->
+  <div id="cartDrawer" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end">
+    <div class="bg-white w-full max-w-xs h-full p-4 flex flex-col justify-between shadow-2xl">
+      <div>
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+          <h3 class="text-sm font-black">শপিং ব্যাগ 🛍️</h3>
+          <button onclick="toggleCartDrawer()" class="text-lg text-slate-400">✕</button>
+        </div>
+        <div id="cartItemsList" class="divide-y divide-slate-100 overflow-y-auto max-h-[60vh] py-2"></div>
+      </div>
+
+      <div class="border-t border-slate-100 pt-3 space-y-2">
+        <div class="flex justify-between text-xs font-bold">
+          <span>মোট বিল</span>
+          <span id="cartSubtotal" class="text-sm font-black text-[#E02424]">৳০</span>
+        </div>
+        <button onclick="checkoutOrder()" class="w-full py-3 bg-[#E02424] text-white text-xs font-black rounded-xl shadow-md active:scale-95 transition">
+          ক্যাশ অন ডেলিভারিতে অর্ডার করুন ➔
+        </button>
+      </div>
     </div>
   </div>
 
   <script>
+    // Real Product Database
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: 'Retro Typography Combed Tee',
+        category: 'T-SHIRT',
+        price: 520,
+        origPrice: 650,
+        badge: 'NEW',
+        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&q=80'
+      },
+      {
+        id: 2,
+        name: 'Classic Solid Black Polo',
+        category: 'POLO',
+        price: 990,
+        origPrice: 1250,
+        badge: 'HOT',
+        image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=700&q=80'
+      },
+      {
+        id: 3,
+        name: 'Drop-Shoulder Oversized Graphic Tee',
+        category: 'OVERSIZED',
+        price: 590,
+        origPrice: 750,
+        badge: 'TREND',
+        image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=700&q=80'
+      },
+      {
+        id: 4,
+        name: 'Festive Luxury Jacquard Panjabi',
+        category: 'PANJABI',
+        price: 2450,
+        origPrice: 2950,
+        badge: 'EXCLUSIVE',
+        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&q=80'
+      }
+    ];
+
+    let cart = [];
+    let currentDetailProduct = null;
+    let selectedDetailSize = 'M';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProductsGrid();
+    });
+
+    // Render Home Grid with clickable card
+    function renderProductsGrid() {
+      const container = document.getElementById('productsContainer');
+      container.innerHTML = PRODUCTS.map(p => `
+        <div class="bg-white rounded-[14px] border border-slate-200 overflow-hidden flex flex-col justify-between shadow-2xs hover:shadow-md transition">
+          <div onclick="openProductDetail(${p.id})" class="aspect-[3/4] bg-slate-100 relative cursor-pointer">
+            <img src="${p.image}" class="w-full h-full object-cover" />
+            <span class="absolute top-2 left-2 bg-black text-white text-[8px] font-black px-1.5 py-0.5 rounded">${p.badge}</span>
+          </div>
+          <div class="p-2.5 space-y-1">
+            <h4 onclick="openProductDetail(${p.id})" class="text-xs font-bold text-slate-900 line-clamp-1 cursor-pointer leading-snug">${p.name}</h4>
+            <div class="flex justify-between items-center pt-1">
+              <span class="text-xs font-black text-slate-900">৳${p.price}</span>
+              <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-black text-white px-2.5 py-1 rounded font-bold active:scale-90 transition">+ কার্ট</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Open dedicated Product Detail View
+    function openProductDetail(id) {
+      currentDetailProduct = PRODUCTS.find(p => p.id === id);
+      if (!currentDetailProduct) return;
+
+      document.getElementById('detailMainImg').src = currentDetailProduct.image;
+      document.getElementById('detailBadge').innerText = currentDetailProduct.badge;
+      document.getElementById('detailCategory').innerText = currentDetailProduct.category;
+      document.getElementById('detailTitle').innerText = currentDetailProduct.name;
+      document.getElementById('detailPrice').innerText = `৳${currentDetailProduct.price}`;
+      document.getElementById('detailOrigPrice').innerText = `৳${currentDetailProduct.origPrice}`;
+
+      document.getElementById('view-home').classList.add('hidden');
+      document.getElementById('view-product-detail').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBackToHome() {
+      document.getElementById('view-product-detail').classList.add('hidden');
+      document.getElementById('view-home').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectProductSize(btn) {
+      document.querySelectorAll('.p-size-btn').forEach(b => {
+        b.classList.remove('border-black', 'border-2', 'bg-slate-50', 'font-black');
+        b.classList.add('border-slate-200', 'font-bold');
+      });
+      btn.classList.add('border-black', 'border-2', 'bg-slate-50', 'font-black');
+      btn.classList.remove('border-slate-200', 'font-bold');
+      selectedDetailSize = btn.innerText;
+    }
+
+    function addToCartFromDetail() {
+      if (!currentDetailProduct) return;
+      cart.push({
+        ...currentDetailProduct,
+        size: selectedDetailSize,
+        qty: 1
+      });
+      updateCartUI();
+      alert(`"${currentDetailProduct.name}" (সাইজ: ${selectedDetailSize}) কার্টে যোগ হয়েছে!`);
+    }
+
+    function buyNowFromDetail() {
+      addToCartFromDetail();
+      toggleCartDrawer();
+    }
+
+    function quickAddToCart(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      cart.push({ ...p, size: 'M', qty: 1 });
+      updateCartUI();
+      alert(`"${p.name}" কার্টে যোগ হয়েছে!`);
+    }
+
+    function updateCartUI() {
+      document.getElementById('headerCartBadge').innerText = cart.length;
+      const list = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        list.innerHTML = '<div class="text-center py-8 text-xs text-slate-400">ব্যাগ খালি</div>';
+      } else {
+        list.innerHTML = cart.map((i, idx) => `
+          <div class="py-2.5 flex items-center justify-between gap-2">
+            <img src="${i.image}" class="w-10 h-12 object-cover rounded bg-slate-100" />
+            <div class="flex-1">
+              <h5 class="text-[11px] font-bold line-clamp-1">${i.name}</h5>
+              <span class="text-[10px] text-slate-500">সাইজ: ${i.size} | ৳${i.price}</span>
+            </div>
+            <button onclick="removeCart(${idx})" class="text-xs text-slate-400 p-1">✕</button>
+          </div>
+        `).join('');
+      }
+      const total = cart.reduce((acc, c) => acc + c.price, 0);
+      document.getElementById('cartSubtotal').innerText = `৳${total}`;
+    }
+
+    function removeCart(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    }
+
+    function checkoutOrder() {
+      if (cart.length === 0) return alert('কার্ট খালি!');
+      const phone = prompt('ক্যাশ অন ডেলিভারি নিশ্চিত করতে আপনার ১১ ডিজিটের মোবাইল নম্বর দিন:');
+      if (phone && phone.length === 11) {
+        alert('🎉 আপনার ক্যাশ অন ডেলিভারি অর্ডারটি গ্রহণ করা হয়েছে! প্রতিনিধি শীঘ্রই কল করবেন।');
+        cart = [];
+        updateCartUI();
+        toggleCartDrawer();
+      } else {
+        alert('সঠিক মোবাইল নম্বর দিন!');
+      }
+    }
+
+    function toggleCartDrawer() {
+      document.getElementById('cartDrawer').classList.toggle('hidden');
+    }
+
+    // Drawer Menu controls
     const overlay = document.getElementById('drawerOverlay');
     const drawer = document.getElementById('drawerContainer');
 
     function openDrawer() {
       overlay.classList.remove('hidden');
-      setTimeout(() => {
-        drawer.classList.remove('-translate-x-full');
-      }, 10);
+      setTimeout(() => drawer.classList.remove('-translate-x-full'), 10);
     }
 
     function closeDrawer() {
       drawer.classList.add('-translate-x-full');
-      setTimeout(() => {
-        overlay.classList.add('hidden');
-      }, 250);
+      setTimeout(() => overlay.classList.add('hidden'), 250);
     }
 
     overlay.addEventListener('click', (e) => {
