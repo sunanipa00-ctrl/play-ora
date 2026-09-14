@@ -9,9 +9,16 @@
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* গোল্ডেন গ্লো এবং ব্যাকগ্রাউন্ড ইফেক্ট */
+    .gold-glow-radial {
+      background: radial-gradient(circle at 75% 50%, rgba(251, 191, 36, 0.28) 0%, rgba(136, 19, 55, 0) 65%),
+                  linear-gradient(135deg, #1e0508 0%, #4c0519 50%, #1a0307 100%);
+    }
   </style>
 </head>
-<body class="bg-[#F8F9FA] text-[#1A1A1A] pb-20 select-none">
+<!-- ১. ওয়েবসাইট ব্যাকগ্রাউন্ড: সফট গ্রে (#F1F3F6) -->
+<body class="bg-[#F1F3F6] text-[#1A1A1A] pb-20 select-none">
 
   <!-- Top Announcement -->
   <div class="bg-black text-white text-[10.5px] py-2 px-4 text-center font-bold tracking-wide">
@@ -19,7 +26,7 @@
   </div>
 
   <!-- Main Header with Logo -->
-  <header class="bg-white sticky top-0 z-30 border-b border-slate-200 px-4 py-2.5 flex justify-between items-center shadow-xs">
+  <header class="bg-white sticky top-0 z-30 border-b border-slate-200/80 px-4 py-2.5 flex justify-between items-center shadow-xs">
     <div class="flex items-center gap-2.5">
       <button onclick="openDrawer()" class="text-2xl text-slate-900 active:scale-95 transition">☰</button>
       
@@ -50,21 +57,37 @@
   <!-- ==================== VIEW 1: HOME PAGE ==================== -->
   <main id="view-home" class="max-w-md mx-auto space-y-4 pt-3">
 
-    <!-- Official Brand Hero Banner -->
+    <!-- ২ ও ৩. প্রিমিয়াম ডিপ-রেড ও গোল্ডেন গ্লো ব্যানার + স্পষ্ট CTA বাটন -->
     <div class="px-4">
-      <div class="relative overflow-hidden rounded-[18px] bg-black shadow-lg border border-amber-400/20 aspect-[16/9]">
-        <!-- আপলোড করা banner.jpg ফাইলটি এখানে লোড হবে -->
-        <img 
-          src="banner.jpg" 
-          alt="Loot & Luxe - কেনাকাটা এখন আনন্দের খেলা" 
-          class="w-full h-full object-cover object-center"
-          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=1280&h=720&fit=crop&q=85';" 
-        />
+      <div class="relative overflow-hidden rounded-[22px] gold-glow-radial text-white aspect-[16/9] flex items-center p-5 shadow-lg border border-amber-500/30">
+        
+        <!-- গোল্ড শিমার সার্কেল ডেকোরেশন -->
+        <div class="absolute -right-8 -bottom-8 w-44 h-44 rounded-full bg-amber-400/15 blur-2xl pointer-events-none"></div>
+        <div class="absolute right-6 top-1/2 -translate-y-1/2 text-5xl opacity-85 select-none pointer-events-none drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+          🎁
+        </div>
+
+        <div class="relative z-10 max-w-[70%] space-y-2">
+          <span class="inline-block bg-amber-400/20 text-amber-300 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-amber-400/40">
+            সীমিত সময়ের মেগা ডিল
+          </span>
+          
+          <h2 class="text-base font-black leading-tight tracking-tight text-white drop-shadow">
+            Loot & Luxe — <br/>
+            <span class="text-amber-300 font-black">"শপিং এখন আনন্দের খেলা"</span>
+          </h2>
+          
+          <!-- ফোকাসড CTA বাটন -->
+          <button onclick="scrollToProducts()" class="mt-1 inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-black text-xs font-black px-4 py-2 rounded-xl shadow-md shadow-amber-500/20 active:scale-95 transition">
+            <span>অফারটি লুফে নিন</span>
+            <span>➔</span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Products Grid Section -->
-    <div class="px-4 space-y-2">
+    <!-- Products Grid Section (কার্ডগুলো সফট গ্রে ব্যাকগ্রাউন্ডের উপর পপ-আপ করবে) -->
+    <div id="catalogSection" class="px-4 space-y-2.5 pt-1">
       <div class="flex justify-between items-center">
         <h3 class="text-xs font-black uppercase text-slate-900 tracking-wider">হট ডিল কালেকশন</h3>
         <span class="text-[10px] font-bold text-[#E02424] cursor-pointer">সবগুলো দেখুন ›</span>
@@ -254,20 +277,24 @@
     function renderProductsGrid() {
       const container = document.getElementById('productsContainer');
       container.innerHTML = PRODUCTS.map(p => `
-        <div class="bg-white rounded-[14px] border border-slate-200 overflow-hidden flex flex-col justify-between shadow-2xs hover:shadow-md transition">
+        <div class="bg-white rounded-[16px] border border-slate-200/80 overflow-hidden flex flex-col justify-between shadow-sm hover:shadow-md transition">
           <div onclick="openProductDetail(${p.id})" class="aspect-[3/4] bg-slate-100 relative cursor-pointer">
             <img src="${p.image}" class="w-full h-full object-cover" />
             <span class="absolute top-2 left-2 bg-black text-white text-[8px] font-black px-1.5 py-0.5 rounded">${p.badge}</span>
           </div>
-          <div class="p-2.5 space-y-1">
+          <div class="p-3 space-y-1">
             <h4 onclick="openProductDetail(${p.id})" class="text-xs font-bold text-slate-900 line-clamp-1 cursor-pointer leading-snug">${p.name}</h4>
-            <div class="flex justify-between items-center pt-1">
+            <div class="flex justify-between items-center pt-1.5">
               <span class="text-xs font-black text-slate-900">৳${p.price}</span>
-              <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-black text-white px-2.5 py-1 rounded font-bold active:scale-90 transition">+ কার্ট</button>
+              <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-black text-white px-2.5 py-1 rounded font-bold active:scale-90 transition shadow-2xs">+ কার্ট</button>
             </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function scrollToProducts() {
+      document.getElementById('catalogSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     function openProductDetail(id) {
