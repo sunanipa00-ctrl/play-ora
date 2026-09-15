@@ -55,17 +55,26 @@
   <!-- ==================== VIEW 1: HOME PAGE ==================== -->
   <main id="view-home" class="max-w-md mx-auto space-y-4 pt-3">
 
-    <!-- Hero Banner -->
+    <!-- Hero Banner with Impulse Trigger -->
     <div class="px-4">
       <div class="relative overflow-hidden rounded-[22px] gold-glow-radial text-white aspect-[16/9] flex items-center p-5 shadow-lg border border-amber-500/30">
         <div class="absolute -right-8 -bottom-8 w-44 h-44 rounded-full bg-amber-400/15 blur-2xl pointer-events-none"></div>
-        <div class="absolute right-6 top-1/2 -translate-y-1/2 text-5xl opacity-85 select-none pointer-events-none drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
-          🎁
+        
+        <!-- ৪. ইমপালস ট্রিগার ভিজ্যুয়াল (লাক্সারি মেগা অফার কার্ড) -->
+        <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 to-amber-300 p-0.5 shadow-[0_0_20px_rgba(251,191,36,0.6)] animate-pulse">
+            <div class="w-full h-full bg-[#1a0307] rounded-full flex flex-col items-center justify-center text-center">
+              <span class="text-[8px] font-black text-amber-400 uppercase tracking-tighter">FLAT</span>
+              <span class="text-sm font-black text-white leading-none">২০%</span>
+              <span class="text-[7px] font-bold text-amber-300">ছাড়</span>
+            </div>
+          </div>
+          <span class="text-[9px] font-black text-amber-200 mt-1 drop-shadow">আজকের ডিল</span>
         </div>
 
-        <div class="relative z-10 max-w-[70%] space-y-2">
-          <span class="inline-block bg-amber-400/20 text-amber-300 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-amber-400/40">
-            সীমিত সময়ের মেগা ডিল
+        <div class="relative z-10 max-w-[65%] space-y-2">
+          <span class="inline-block bg-[#881337] text-amber-300 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-amber-400/50">
+            🔥 রয়্যাল লাক্সারি ড্রপ
           </span>
           
           <h2 class="text-base font-black leading-tight tracking-tight text-white drop-shadow">
@@ -73,7 +82,7 @@
             <span class="text-amber-300 font-black">"শপিং এখন আনন্দের খেলা"</span>
           </h2>
           
-          <button onclick="scrollToProducts()" class="mt-1 inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-black text-xs font-black px-4 py-2 rounded-xl shadow-md shadow-amber-500/20 active:scale-95 transition">
+          <button onclick="scrollToProducts()" class="mt-1 inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-black text-xs font-black px-4 py-2 rounded-xl shadow-md shadow-amber-500/25 active:scale-95 transition">
             <span>অফারটি লুফে নিন</span>
             <span>➔</span>
           </button>
@@ -102,11 +111,14 @@
 
     <div class="bg-white rounded-[20px] overflow-hidden border border-slate-200 aspect-[3/4] relative shadow-sm">
       <img id="detailMainImg" src="" class="w-full h-full object-cover" />
-      <span id="detailBadge" class="absolute top-3 left-3 bg-black text-white text-[9px] font-black px-2 py-0.5 rounded tracking-wider"></span>
+      <span id="detailBadge" class="absolute top-3 left-3 bg-[#7F1D1D] text-amber-300 border border-amber-400/50 text-[9px] font-black px-2 py-0.5 rounded tracking-wider shadow-sm"></span>
     </div>
 
     <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-2 shadow-xs">
-      <span id="detailCategory" class="text-[10px] font-black uppercase text-slate-400"></span>
+      <div class="flex justify-between items-center">
+        <span id="detailCategory" class="text-[10px] font-black uppercase text-slate-400"></span>
+        <span id="detailRating" class="text-[11px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full"></span>
+      </div>
       <h1 id="detailTitle" class="text-base font-black text-slate-900 leading-snug"></h1>
       
       <div class="flex items-center gap-2.5 pt-1">
@@ -120,7 +132,7 @@
       </div>
     </div>
 
-    <!-- Details/Specs -->
+    <!-- Specs -->
     <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-1.5 shadow-xs text-xs text-slate-600 leading-relaxed">
       <h4 class="font-black text-slate-900 text-xs uppercase">প্রোডাক্ট বিবরণ ও গ্যারান্টি</h4>
       <p id="detailDescItem">• প্রিমিয়াম কোয়ালিটি ও ১০০% অথেনটিক ম্যাটেরিয়াল।</p>
@@ -210,7 +222,7 @@
   </div>
 
   <script>
-    // আপনার নতুন ৪টি লাক্সারি প্রোডাক্ট ডেটাবেজ
+    // সামাজিক প্রমাণ ও রেটিং সহ চূড়ান্ত প্রোডাক্ট তালিকা
     const PRODUCTS = [
       {
         id: 1,
@@ -219,38 +231,51 @@
         price: 3450,
         origPrice: 4200,
         badge: 'EXCLUSIVE',
+        rating: '4.9',
+        reviews: 142,
         image: 'watch.jpg',
+        fallback: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80',
         desc: '• সুইস মুভমেন্ট স্টাইলিশ গোল্ডেন ডায়াল ও জেনুইন ক্রোকোডাইল লেদার বেল্ট।'
       },
       {
         id: 2,
-        name: 'Loot & Luxe Signature Pour Homme Perfume',
+        name: 'Loot & Luxe Amber Oud Pour Homme',
         category: 'FRAGRANCE',
         price: 2150,
         origPrice: 2690,
         badge: 'BESTSELLER',
+        rating: '4.8',
+        reviews: 98,
         image: 'perfume.jpg',
-        desc: '• লং-লাস্টিং উডি ও অ্যাম্বার অ্যারোমা, সারাদিনের আভিজাত্যের নিশ্চয়তা।'
+        // টেক্সট ছাড়া নিখুঁত লাক্সারি অ্যাম্বার পারফিউম শট
+        fallback: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=80',
+        desc: '• লং-লাস্টিং প্রিমিয়াম উডি ও ফ্রেঞ্চ অ্যাম্বার সুবাস, কোনো সিন্থেটিক গন্ধ নেই।'
       },
       {
         id: 3,
-        name: 'Loot & Luxe Classic Gold Aviator Sunglasses',
+        name: 'Loot & Luxe Classic Gold Aviator',
         category: 'EYEWEAR',
         price: 1650,
         origPrice: 1990,
         badge: 'TRENDING',
+        rating: '4.9',
+        reviews: 76,
         image: 'sunglass.jpg',
-        desc: '• UV400 পোলারাইজড গ্লাস ও মজবুত গোল্ডেন মেটাল ফ্রেম।'
+        fallback: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80',
+        desc: '• UV400 পোলারাইজড গ্লাস ও টেকসই গোল্ডেন মেটাল ফ্রেম।'
       },
       {
         id: 4,
-        name: 'Loot & Luxe VIP Deep Burgundy Leather Wallet',
+        name: 'Loot & Luxe VIP Burgundy Leather Wallet',
         category: 'ACCESSORIES',
         price: 1250,
         origPrice: 1550,
         badge: 'LIMITED',
+        rating: '4.7',
+        reviews: 115,
         image: 'wallet.jpg',
-        desc: '• ১০০% জেনুইন প্রিমিয়াম লেদার, স্লিম ডিজাইন এবং RFID প্রটেক্টেড।'
+        fallback: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80',
+        desc: '• ১০০% জেনুইন প্রিমিয়াম লেদার, স্লিম ডিজাইন এবং RFID সুরক্ষা প্রযুক্তি।'
       }
     ];
 
@@ -269,13 +294,24 @@
             <img 
               src="${p.image}" 
               class="w-full h-full object-cover hover:scale-105 transition duration-300"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80';"
+              onerror="this.onerror=null; this.src='${p.fallback}';"
             />
-            <span class="absolute top-2 left-2 bg-black text-amber-300 text-[8px] font-black px-1.5 py-0.5 rounded border border-amber-400/30">${p.badge}</span>
+            <!-- ২. সফট গোল্ড ও রয়্যাল রেড ব্যাজ -->
+            <span class="absolute top-2 left-2 bg-[#7F1D1D] text-amber-300 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded shadow-sm">
+              ${p.badge}
+            </span>
           </div>
           <div class="p-3 space-y-1">
             <h4 onclick="openProductDetail(${p.id})" class="text-xs font-bold text-slate-900 line-clamp-1 cursor-pointer leading-snug">${p.name}</h4>
-            <div class="flex justify-between items-center pt-1.5">
+            
+            <!-- ৩. সোশ্যাল প্রুফ ও স্টার রেটিং -->
+            <div class="flex items-center gap-1 text-[10px] text-amber-600 font-bold">
+              <span>★</span>
+              <span>${p.rating}</span>
+              <span class="text-slate-400 font-normal">(${p.reviews})</span>
+            </div>
+
+            <div class="flex justify-between items-center pt-1">
               <span class="text-xs font-black text-slate-900">৳${p.price}</span>
               <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-black text-white px-2.5 py-1 rounded font-bold active:scale-90 transition shadow-2xs">+ কার্ট</button>
             </div>
@@ -299,6 +335,7 @@
       document.getElementById('detailPrice').innerText = `৳${currentDetailProduct.price}`;
       document.getElementById('detailOrigPrice').innerText = `৳${currentDetailProduct.origPrice}`;
       document.getElementById('detailDescItem').innerText = currentDetailProduct.desc;
+      document.getElementById('detailRating').innerText = `★ ${currentDetailProduct.rating} (${currentDetailProduct.reviews} রিভিউ)`;
 
       document.getElementById('view-home').classList.add('hidden');
       document.getElementById('view-product-detail').classList.remove('hidden');
@@ -313,10 +350,7 @@
 
     function addToCartFromDetail() {
       if (!currentDetailProduct) return;
-      cart.push({
-        ...currentDetailProduct,
-        qty: 1
-      });
+      cart.push({ ...currentDetailProduct, qty: 1 });
       updateCartUI();
       alert(`"${currentDetailProduct.name}" কার্টে যোগ হয়েছে!`);
     }
@@ -341,7 +375,7 @@
       } else {
         list.innerHTML = cart.map((i, idx) => `
           <div class="py-2.5 flex items-center justify-between gap-2">
-            <img src="${i.image}" class="w-10 h-12 object-cover rounded bg-slate-100" />
+            <img src="${i.image}" class="w-10 h-12 object-cover rounded bg-slate-100" onerror="this.onerror=null; this.src='${i.fallback}';" />
             <div class="flex-1">
               <h5 class="text-[11px] font-bold line-clamp-1">${i.name}</h5>
               <span class="text-[10px] text-slate-500">৳${i.price}</span>
@@ -394,4 +428,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
