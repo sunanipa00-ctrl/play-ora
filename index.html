@@ -110,13 +110,13 @@
 
     <div class="bg-white rounded-[20px] overflow-hidden border border-slate-200 aspect-[3/4] relative shadow-sm">
       <img id="detailMainImg" src="" class="w-full h-full object-cover" />
-      <span id="detailBadge" class="absolute top-3 left-3 bg-[#7F1D1D] text-amber-300 border border-amber-400/50 text-[9px] font-black px-2 py-0.5 rounded tracking-wider shadow-sm"></span>
+      <span id="detailBadge" class="absolute top-3 left-3 bg-[#7F1D1D] text-[#FDE68A] border border-[#F59E0B]/60 text-[9px] font-black px-2.5 py-0.5 rounded tracking-wider shadow-sm"></span>
     </div>
 
     <div class="bg-white p-4 rounded-[20px] border border-slate-200 space-y-2 shadow-xs">
       <div class="flex justify-between items-center">
         <span id="detailCategory" class="text-[10px] font-black uppercase text-slate-400"></span>
-        <span id="detailRating" class="text-[11px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full"></span>
+        <span id="detailRating" class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full"></span>
       </div>
       <h1 id="detailTitle" class="text-base font-black text-slate-900 leading-snug"></h1>
       
@@ -126,8 +126,11 @@
         <span class="text-[10px] bg-red-50 text-[#E02424] font-bold px-2 py-0.5 rounded">২০% ছাড়</span>
       </div>
 
-      <div class="text-[11px] text-emerald-700 bg-emerald-50 p-2 rounded-[10px] font-bold flex items-center gap-1.5 mt-2">
-        <span>✓</span> ইন-স্টক (সারাদেশে ৩-৫ দিনে ক্যাশ অন ডেলিভারি)
+      <div class="flex items-center justify-between text-[11px] bg-red-50 text-[#991B1B] p-2.5 rounded-[10px] font-bold border border-red-100">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+          <span>🔥 মাত্র ৩টি স্টকে আছে — দ্রুত অর্ডার করুন!</span>
+        </span>
       </div>
     </div>
 
@@ -136,14 +139,14 @@
       <h4 class="font-black text-slate-900 text-xs uppercase">প্রোডাক্ট বিবরণ ও গ্যারান্টি</h4>
       <p id="detailDescItem">• প্রিমিয়াম কোয়ালিটি ও ১০০% অথেনটিক ম্যাটেরিয়াল।</p>
       <p>• নিখুঁত লাক্সারি ফিনিশিং এবং এক্সক্লুসিভ ব্র্যান্ডিং।</p>
-      <p>• ৭ দিনের রিটার্ন ও ক্যাশ অন ডেলিভারি নিশ্চয়তা।</p>
+      <p>• ৭ দিনের রিটার্ন ও সারাদেশে ক্যাশ অন ডেলিভারি নিশ্চয়তা।</p>
     </div>
 
     <div class="flex gap-2 pt-2">
       <button onclick="addToCartFromDetail()" class="flex-1 py-3.5 bg-black text-white text-xs font-black rounded-[12px] active:scale-95 transition shadow-sm">
         কার্টে যোগ করুন
       </button>
-      <button onclick="buyNowFromDetail()" class="flex-1 py-3.5 bg-gradient-to-r from-[#7F1D1D] to-[#991B1B] text-amber-300 border border-amber-400/40 text-xs font-black rounded-[12px] active:scale-95 transition shadow-md shadow-red-950/30">
+      <button onclick="buyNowFromDetail()" class="flex-1 py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] text-black text-xs font-black rounded-[12px] active:scale-95 transition shadow-md shadow-amber-500/20">
         সরাসরি অর্ডার করুন ➔
       </button>
     </div>
@@ -231,8 +234,9 @@
         badge: 'EXCLUSIVE',
         rating: '4.9',
         reviews: 142,
+        stockAlert: '🔥 মাত্র ৩টি স্টকে আছে',
         image: 'watch.jpg',
-        fallback: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80',
+        fallback: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=900&h=1200&fit=crop&q=85',
         desc: '• সুইস মুভমেন্ট স্টাইলিশ গোল্ডেন ডায়াল ও জেনুইন ক্রোকোডাইল লেদার বেল্ট।'
       },
       {
@@ -244,8 +248,9 @@
         badge: 'BESTSELLER',
         rating: '4.8',
         reviews: 98,
+        stockAlert: '🔥 মাত্র ২টি স্টকে আছে',
         image: 'perfume.jpg',
-        fallback: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=80',
+        fallback: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=900&h=1200&fit=crop&q=85',
         desc: '• লং-লাস্টিং প্রিমিয়াম উডি ও ফ্রেঞ্চ অ্যাম্বার সুবাস, কোনো সিন্থেটিক গন্ধ নেই।'
       },
       {
@@ -257,8 +262,9 @@
         badge: 'TRENDING',
         rating: '4.9',
         reviews: 76,
+        stockAlert: '🔥 মাত্র ৪টি স্টকে আছে',
         image: 'sunglass.jpg',
-        fallback: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80',
+        fallback: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&h=1200&fit=crop&q=85',
         desc: '• UV400 পোলারাইজড গ্লাস ও টেকসই গোল্ডেন মেটাল ফ্রেম।'
       },
       {
@@ -270,8 +276,9 @@
         badge: 'LIMITED',
         rating: '4.7',
         reviews: 115,
+        stockAlert: '🔥 মাত্র ৩টি স্টকে আছে',
         image: 'wallet.jpg',
-        fallback: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80',
+        fallback: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=900&h=1200&fit=crop&q=85',
         desc: '• ১০০% জেনুইন প্রিমিয়াম লেদার, স্লিম ডিজাইন এবং RFID সুরক্ষা প্রযুক্তি।'
       }
     ];
@@ -293,24 +300,29 @@
               class="w-full h-full object-cover hover:scale-105 transition duration-300"
               onerror="this.onerror=null; this.src='${p.fallback}';"
             />
-            <span class="absolute top-2 left-2 bg-[#7F1D1D] text-amber-300 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded shadow-sm">
+            <!-- Uniform Royal Red + Gold Border Badge -->
+            <span class="absolute top-2 left-2 bg-[#7F1D1D] text-[#FDE68A] border border-[#F59E0B]/60 text-[8px] font-black px-2 py-0.5 rounded shadow-sm">
               ${p.badge}
             </span>
           </div>
           <div class="p-3 space-y-1.5">
             <h4 onclick="openProductDetail(${p.id})" class="text-xs font-bold text-slate-900 line-clamp-1 cursor-pointer leading-snug">${p.name}</h4>
             
-            <div class="flex items-center gap-1 text-[10px] text-amber-600 font-bold">
-              <span>★</span>
-              <span>${p.rating}</span>
-              <span class="text-slate-400 font-normal">(${p.reviews})</span>
+            <!-- Social Proof & Urgency Trigger -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1 text-[10px] text-amber-700 font-bold">
+                <span>★</span>
+                <span>${p.rating}</span>
+                <span class="text-slate-400 font-normal">(${p.reviews})</span>
+              </div>
+              <span class="text-[9px] font-black text-red-600 tracking-tight">${p.stockAlert}</span>
             </div>
 
             <div class="flex justify-between items-center pt-1">
               <span class="text-xs font-black text-slate-900">৳${p.price}</span>
               
-              <!-- ডিপ বার্গান্ডি ফিল ও গোল্ডেন আউটলাইন "অর্ডার করুন" বাটন -->
-              <button onclick="instantOrderProduct(${p.id})" class="text-[10px] bg-[#65101a] hover:bg-[#7c1421] text-amber-300 border border-amber-400/60 px-2.5 py-1 rounded-lg font-black active:scale-90 transition shadow-xs">
+              <!-- High-Contrast Vibrant Gold/Amber Buy Now Button -->
+              <button onclick="instantOrderProduct(${p.id})" class="text-[10.5px] bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] hover:brightness-105 text-slate-950 font-black px-3 py-1 rounded-lg active:scale-95 transition shadow-sm">
                 অর্ডার করুন
               </button>
             </div>
