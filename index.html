@@ -60,7 +60,6 @@
       <div class="relative overflow-hidden rounded-[22px] gold-glow-radial text-white aspect-[16/9] flex items-center p-5 shadow-lg border border-amber-500/30">
         <div class="absolute -right-8 -bottom-8 w-44 h-44 rounded-full bg-amber-400/15 blur-2xl pointer-events-none"></div>
         
-        <!-- ৪. ইমপালস ট্রিগার ভিজ্যুয়াল (লাক্সারি মেগা অফার কার্ড) -->
         <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
           <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 to-amber-300 p-0.5 shadow-[0_0_20px_rgba(251,191,36,0.6)] animate-pulse">
             <div class="w-full h-full bg-[#1a0307] rounded-full flex flex-col items-center justify-center text-center">
@@ -144,7 +143,7 @@
       <button onclick="addToCartFromDetail()" class="flex-1 py-3.5 bg-black text-white text-xs font-black rounded-[12px] active:scale-95 transition shadow-sm">
         কার্টে যোগ করুন
       </button>
-      <button onclick="buyNowFromDetail()" class="flex-1 py-3.5 bg-[#E02424] text-white text-xs font-black rounded-[12px] active:scale-95 transition shadow-md shadow-red-500/20">
+      <button onclick="buyNowFromDetail()" class="flex-1 py-3.5 bg-gradient-to-r from-[#7F1D1D] to-[#991B1B] text-amber-300 border border-amber-400/40 text-xs font-black rounded-[12px] active:scale-95 transition shadow-md shadow-red-950/30">
         সরাসরি অর্ডার করুন ➔
       </button>
     </div>
@@ -222,7 +221,6 @@
   </div>
 
   <script>
-    // সামাজিক প্রমাণ ও রেটিং সহ চূড়ান্ত প্রোডাক্ট তালিকা
     const PRODUCTS = [
       {
         id: 1,
@@ -247,7 +245,6 @@
         rating: '4.8',
         reviews: 98,
         image: 'perfume.jpg',
-        // টেক্সট ছাড়া নিখুঁত লাক্সারি অ্যাম্বার পারফিউম শট
         fallback: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=80',
         desc: '• লং-লাস্টিং প্রিমিয়াম উডি ও ফ্রেঞ্চ অ্যাম্বার সুবাস, কোনো সিন্থেটিক গন্ধ নেই।'
       },
@@ -296,15 +293,13 @@
               class="w-full h-full object-cover hover:scale-105 transition duration-300"
               onerror="this.onerror=null; this.src='${p.fallback}';"
             />
-            <!-- ২. সফট গোল্ড ও রয়্যাল রেড ব্যাজ -->
             <span class="absolute top-2 left-2 bg-[#7F1D1D] text-amber-300 border border-amber-400/50 text-[8px] font-black px-1.5 py-0.5 rounded shadow-sm">
               ${p.badge}
             </span>
           </div>
-          <div class="p-3 space-y-1">
+          <div class="p-3 space-y-1.5">
             <h4 onclick="openProductDetail(${p.id})" class="text-xs font-bold text-slate-900 line-clamp-1 cursor-pointer leading-snug">${p.name}</h4>
             
-            <!-- ৩. সোশ্যাল প্রুফ ও স্টার রেটিং -->
             <div class="flex items-center gap-1 text-[10px] text-amber-600 font-bold">
               <span>★</span>
               <span>${p.rating}</span>
@@ -313,7 +308,11 @@
 
             <div class="flex justify-between items-center pt-1">
               <span class="text-xs font-black text-slate-900">৳${p.price}</span>
-              <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-black text-white px-2.5 py-1 rounded font-bold active:scale-90 transition shadow-2xs">+ কার্ট</button>
+              
+              <!-- ডিপ বার্গান্ডি ফিল ও গোল্ডেন আউটলাইন "অর্ডার করুন" বাটন -->
+              <button onclick="instantOrderProduct(${p.id})" class="text-[10px] bg-[#65101a] hover:bg-[#7c1421] text-amber-300 border border-amber-400/60 px-2.5 py-1 rounded-lg font-black active:scale-90 transition shadow-xs">
+                অর্ডার করুন
+              </button>
             </div>
           </div>
         </div>
@@ -348,6 +347,13 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function instantOrderProduct(id) {
+      const p = PRODUCTS.find(x => x.id === id);
+      cart.push({ ...p, qty: 1 });
+      updateCartUI();
+      toggleCartDrawer();
+    }
+
     function addToCartFromDetail() {
       if (!currentDetailProduct) return;
       cart.push({ ...currentDetailProduct, qty: 1 });
@@ -358,13 +364,6 @@
     function buyNowFromDetail() {
       addToCartFromDetail();
       toggleCartDrawer();
-    }
-
-    function quickAddToCart(id) {
-      const p = PRODUCTS.find(x => x.id === id);
-      cart.push({ ...p, qty: 1 });
-      updateCartUI();
-      alert(`"${p.name}" কার্টে যোগ হয়েছে!`);
     }
 
     function updateCartUI() {
@@ -428,4 +427,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
