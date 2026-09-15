@@ -26,21 +26,29 @@
     ⚡ সারাদেশে ক্যাশ অন ডেলিভারি | ৩টি অর্ডারে ডেলিভারি ফ্রি!
   </div>
 
-  <!-- Main Header with Logo -->
+  <!-- Main Header with Uploaded Logo (logo.png) -->
   <header class="bg-white sticky top-0 z-30 border-b border-slate-200/80 px-4 py-2.5 flex justify-between items-center shadow-xs">
     <div class="flex items-center gap-2.5">
       <button onclick="openDrawer()" class="text-2xl text-slate-900 active:scale-95 transition">☰</button>
       
-      <!-- Brand Unit -->
+      <!-- Brand Unit with logo.png -->
       <div onclick="goBackToHome()" class="flex items-center gap-2 cursor-pointer">
-        <div class="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-amber-400 font-black text-sm shadow-xs border border-amber-400/30">
-          👑
+        <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
+          <img 
+            src="logo.png" 
+            alt="Loot & Luxe Logo" 
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <!-- Fallback if image path fails -->
+          <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
         </div>
+
         <div class="flex flex-col">
-          <span class="text-base font-black tracking-tight leading-none text-slate-900">
+          <span class="text-base font-black tracking-tight leading-none text-slate-900 font-serif">
             LOOT & <span class="text-[#E02424]">LUXE</span>
           </span>
-          <span class="text-[8px] font-bold text-amber-600 tracking-widest uppercase mt-0.5">EXCLUSIVE</span>
+          <span class="text-[7.5px] font-black text-amber-700 tracking-[0.18em] uppercase mt-0.5">EXCLUSIVE</span>
         </div>
       </div>
     </div>
@@ -155,25 +163,31 @@
     </div>
   </main>
 
-  <!-- ==================== SIDE NAVIGATION DRAWER (OPTIMIZED) ==================== -->
+  <!-- ==================== SIDE NAVIGATION DRAWER ==================== -->
   <div id="drawerOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity">
     <div id="drawerContainer" class="bg-white w-[85%] max-w-xs h-full shadow-2xl flex flex-col justify-between overflow-hidden -translate-x-full transition-transform duration-300 ease-out">
       
       <!-- Top Scrollable Content -->
       <div class="overflow-y-auto no-scrollbar flex-1">
         
-        <!-- 1. Header & Branding Section -->
+        <!-- Header & Branding Section with logo.png -->
         <div class="drawer-header-gradient text-white px-4 pt-4 pb-4 border-b border-[#D4AF37]/30 shadow-sm relative">
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-black/60 border border-[#D4AF37]/50 flex items-center justify-center text-amber-300 text-sm shadow-xs">
-                👑
+              <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
+                <img 
+                  src="logo.png" 
+                  alt="Loot & Luxe Logo" 
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                />
+                <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
               </div>
               <div class="flex flex-col">
-                <span class="text-sm font-black tracking-wide text-white leading-none">
+                <span class="text-sm font-black tracking-wide text-white leading-none font-serif">
                   LOOT & <span class="text-amber-300">LUXE</span>
                 </span>
-                <span class="text-[8.5px] font-bold text-amber-200/70 tracking-widest uppercase mt-0.5">EXCLUSIVE CLUB</span>
+                <span class="text-[8px] font-bold text-amber-200/70 tracking-widest uppercase mt-0.5">EXCLUSIVE CLUB</span>
               </div>
             </div>
             <!-- Soft Gold Close Button -->
@@ -182,13 +196,11 @@
             </button>
           </div>
 
-          <!-- 2. Tab Switcher (Login / Register) -->
+          <!-- Tab Switcher (Login / Register) -->
           <div class="grid grid-cols-2 gap-2 mt-4">
-            <!-- Active Login Tab (Vibrant Gold/Amber Fill) -->
             <button onclick="alert('লগইন পেজ')" class="py-2 bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] text-slate-950 text-xs font-black rounded-lg shadow-sm active:scale-95 transition text-center">
               লগইন
             </button>
-            <!-- Inactive Register Tab (Semi-transparent dark grey) -->
             <button onclick="alert('রেজিস্ট্রেশন পেজ')" class="py-2 bg-black/40 text-slate-200 text-xs font-semibold rounded-lg active:scale-95 transition text-center border border-white/10 hover:bg-black/60">
               রেজিস্টার
             </button>
@@ -198,7 +210,6 @@
         <!-- Navigation Links & Categories -->
         <div class="py-3 px-3 space-y-3">
           
-          <!-- Primary Navigation Links (Bengali Localized) -->
           <div class="space-y-0.5">
             <a href="#" onclick="goBackToHome(); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-800 hover:bg-slate-50 rounded-xl transition">
               <span class="text-base">🏠</span><span>হোম পেজ</span>
@@ -207,7 +218,7 @@
               <span class="text-base">🛍️</span><span>সব প্রোডাক্টস</span>
             </a>
 
-            <!-- 4. Product Categories Section -->
+            <!-- Product Categories Section -->
             <div class="ml-6 pl-2 border-l-2 border-amber-200/80 my-1.5 space-y-0.5 py-0.5">
               <span class="block px-2 text-[9.5px] font-black text-amber-700 tracking-wider uppercase mb-1">ক্যাটাগরি সমূহ</span>
               <a href="#" onclick="filterByCategory('watch'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition">
@@ -247,15 +258,13 @@
         </div>
       </div>
 
-      <!-- 5. Trust & Support Fixed Footer -->
+      <!-- Trust & Support Fixed Footer -->
       <div class="bg-gradient-to-b from-white to-[#FDF8EE] p-3.5 border-t border-amber-200/60 space-y-2.5">
-        <!-- WhatsApp/Call Helpline CTA -->
         <a href="https://wa.me/8801700000000" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black shadow-xs active:scale-95 transition">
           <span class="text-sm">💬</span>
           <span>২৪/৭ হেল্পলাইন: সরাসরি কথা বলুন</span>
         </a>
 
-        <!-- Social Media Icons in Soft Gold Tint -->
         <div class="flex justify-center items-center gap-4 pt-0.5">
           <a href="#" class="w-7 h-7 rounded-full bg-amber-50 border border-[#D4AF37]/40 flex items-center justify-center text-[#B45309] hover:bg-amber-100 text-xs font-black transition" title="Facebook">
             f
@@ -516,4 +525,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
