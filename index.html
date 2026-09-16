@@ -17,13 +17,26 @@
     .drawer-header-gradient {
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
-    .modal-burgundy-card {
-      background: linear-gradient(165deg, #380a10 0%, #1a0306 100%);
-      box-shadow: 0 0 35px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(0,0,0,0.8);
+
+    /* স্ক্রিনশটের মতো ডার্ক বার্গান্ডি পপ-আপ কার্ড */
+    .modal-burgundy-backdrop {
+      background: #24050b;
+      border: 1.5px solid #d4af37;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.85), 0 0 25px rgba(212,175,55,0.25);
     }
-    /* Wheel Smooth Spin Animation */
+    .inner-form-box {
+      background: #360811;
+      border: 1.5px solid #c89d2d;
+    }
+    .gold-red-btn {
+      background: linear-gradient(180deg, #ff9f1c 0%, #d9381e 50%, #b81414 100%);
+      box-shadow: 0 4px 15px rgba(217,56,30,0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+      border: 1px solid #ffcc66;
+    }
+
+    /* চাকার মসৃণ ঘোরার অ্যানিমেশন */
     .wheel-spinning {
-      transition: transform 4.5s cubic-bezier(0.15, 0.9, 0.25, 1);
+      transition: transform 4.8s cubic-bezier(0.12, 0.95, 0.2, 1);
     }
   </style>
 </head>
@@ -39,7 +52,6 @@
     <div class="flex items-center gap-2.5">
       <button onclick="openDrawer()" class="text-2xl text-slate-900 active:scale-95 transition">☰</button>
       
-      <!-- Brand Unit with logo.png -->
       <div onclick="goBackToHome()" class="flex items-center gap-2 cursor-pointer">
         <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
           <img 
@@ -141,7 +153,7 @@
       <div class="flex items-center gap-2.5 pt-1">
         <span id="detailPrice" class="text-xl font-black text-[#E02424]"></span>
         <span id="detailOrigPrice" class="text-xs text-slate-400 line-through"></span>
-        <span id="detailDiscountTag" class="text-[10px] bg-red-50 text-[#E02424] font-bold px-2 py-0.5 rounded">২০% ছাড়</span>
+        <span class="text-[10px] bg-red-50 text-[#E02424] font-bold px-2 py-0.5 rounded">২০% ছাড়</span>
       </div>
 
       <div class="flex items-center justify-between text-[11px] bg-red-50 text-[#991B1B] p-2.5 rounded-[10px] font-bold border border-red-100">
@@ -169,125 +181,149 @@
     </div>
   </main>
 
-  <!-- ==================== ORNATE 'SPIN TO WIN' MODAL ==================== -->
-  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="modal-burgundy-card w-full max-w-xs sm:max-w-sm rounded-[26px] border-2 border-[#D4AF37]/80 p-5 relative text-white text-center shadow-2xl overflow-hidden">
+  <!-- ==================== EXACT SCREENSHOT 'SPIN TO WIN' MODAL ==================== -->
+  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="modal-burgundy-backdrop w-full max-w-[340px] rounded-[26px] p-5 pt-4 relative text-white text-center shadow-2xl">
       
-      <!-- Top Gold Filigree Corner Accent -->
-      <div class="absolute -top-6 -left-6 w-16 h-16 rounded-full bg-amber-400/20 blur-xl"></div>
-      <div class="absolute -bottom-6 -right-6 w-16 h-16 rounded-full bg-amber-400/20 blur-xl"></div>
-
-      <!-- Close (X) Button in Soft Gold -->
-      <button onclick="closeSpinModal()" class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/50 text-[#FDE68A] border border-[#D4AF37]/50 flex items-center justify-center text-xs font-black active:scale-90 transition">
+      <!-- Close (X) Button (Exactly like screenshot) -->
+      <button onclick="closeSpinModal()" class="absolute top-3.5 right-4 text-white/90 hover:text-white text-lg font-light active:scale-90 transition z-20">
         ✕
       </button>
 
-      <!-- Modal Title -->
-      <div class="space-y-0.5 pt-1 mb-3">
-        <span class="text-[9px] font-black text-amber-300 uppercase tracking-widest">ROYAL FORTUNE WHEEL</span>
-        <h3 class="text-base font-black text-white font-serif">ভাগ্য চাকা ঘুরিয়ে অফার জিতুন!</h3>
-      </div>
+      <!-- Exact Ornate Royal Fortune Wheel -->
+      <div class="relative w-56 h-56 mx-auto mt-2 mb-3 flex items-center justify-center">
+        <!-- Top Pointer Triangle -->
+        <div class="absolute -top-1.5 z-30 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></div>
 
-      <!-- Royal Fortune Wheel Section -->
-      <div class="relative w-48 h-48 mx-auto my-2 flex items-center justify-center">
-        <!-- Pointer Arrow -->
-        <div class="absolute -top-2 z-20 w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-t-[16px] border-t-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"></div>
-        
-        <!-- Multi-colored Jewel Toned Wheel (CSS Wheel) -->
-        <div id="fortuneWheel" class="w-full h-full rounded-full border-4 border-[#D4AF37] shadow-[0_0_25px_rgba(212,175,55,0.4)] relative overflow-hidden bg-cover"
-             style="background: conic-gradient(#1e3a8a 0deg 60deg, #581c87 60deg 120deg, #b45309 120deg 180deg, #047857 180deg 240deg, #881337 240deg 300deg, #312e81 300deg 360deg);">
-          
-          <!-- Inner Segment Dividers -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span class="absolute top-4 text-[9px] font-black text-amber-300 drop-shadow">২০% ছাড়</span>
-            <span class="absolute right-4 text-[9px] font-black text-white drop-shadow">ফ্রি গিফট</span>
-            <span class="absolute bottom-4 text-[9px] font-black text-amber-200 drop-shadow">৳২০০ ক্যাশ</span>
-            <span class="absolute left-4 text-[9px] font-black text-white drop-shadow">মেগা ডিল</span>
-          </div>
+        <!-- High-Detail Ornate SVG Wheel -->
+        <div id="fortuneWheel" class="w-full h-full relative drop-shadow-[0_0_15px_rgba(212,175,55,0.45)]">
+          <svg viewBox="0 0 200 200" class="w-full h-full">
+            <defs>
+              <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF3B0" />
+                <stop offset="35%" stop-color="#D4AF37" />
+                <stop offset="70%" stop-color="#996515" />
+                <stop offset="100%" stop-color="#E5A93C" />
+              </linearGradient>
+              <linearGradient id="goldHub" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFE082" />
+                <stop offset="100%" stop-color="#C58E17" />
+              </linearGradient>
+            </defs>
 
-          <!-- Wheel Center Golden Crown Logo -->
-          <div class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#2A080D] border-2 border-[#D4AF37] flex items-center justify-center shadow-lg z-10">
-            <span class="text-amber-400 text-base">👑</span>
-          </div>
+            <!-- Outer Gold Filigree Ring -->
+            <circle cx="100" cy="100" r="97" fill="none" stroke="url(#goldRim)" stroke-width="4.5"/>
+            <circle cx="100" cy="100" r="92" fill="#1d0408" stroke="url(#goldRim)" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- 12 Slices Group (Colored Segments) -->
+            <g transform="translate(100,100)">
+              <!-- Slices with Deep Blue, Purple, Crimson, Emerald -->
+              <!-- 1 --> <path d="M0,0 L0,-90 A90,90 0 0,1 45,-77.94 Z" fill="#6A102A" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 2 --> <path d="M0,0 L45,-77.94 A90,90 0 0,1 77.94,-45 Z" fill="#0C4A6E" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 3 --> <path d="M0,0 L77.94,-45 A90,90 0 0,1 90,0 Z" fill="#065F46" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 4 --> <path d="M0,0 L90,0 A90,90 0 0,1 77.94,45 Z" fill="#581C87" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 5 --> <path d="M0,0 L77.94,45 A90,90 0 0,1 45,77.94 Z" fill="#78350F" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 6 --> <path d="M0,0 L45,77.94 A90,90 0 0,1 0,90 Z" fill="#1E3A8A" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 7 --> <path d="M0,0 L0,90 A90,90 0 0,1 -45,77.94 Z" fill="#701A75" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 8 --> <path d="M0,0 L-45,77.94 A90,90 0 0,1 -77.94,45 Z" fill="#881337" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 9 --> <path d="M0,0 L-77.94,45 A90,90 0 0,1 -90,0 Z" fill="#1E293B" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 10 --> <path d="M0,0 L-90,0 A90,90 0 0,1 -77.94,-45 Z" fill="#064E3B" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 11 --> <path d="M0,0 L-77.94,-45 A90,90 0 0,1 -45,-77.94 Z" fill="#1E3A8A" stroke="url(#goldRim)" stroke-width="0.8"/>
+              <!-- 12 --> <path d="M0,0 L-45,-77.94 A90,90 0 0,1 0,-90 Z" fill="#4C0519" stroke="url(#goldRim)" stroke-width="0.8"/>
+
+              <!-- Bengali Reward Text & Icons in each segment -->
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(15)">১০% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(45)">🎁 উপহার</text>
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(75)">১৫% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(105)">💎 গিফট</text>
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(135)">২০% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(165)">৳২০০ অফ</text>
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(195)">২৫% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(225)">⌚ ঘড়ি ডিল</text>
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(255)">৩০% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(285)">🔥 মেগা ছাড়</text>
+              <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(315)">৫০% ছাড়</text>
+              <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(345)">👑 ভিআইপি</text>
+            </g>
+
+            <!-- Inner Gold Beaded Ring -->
+            <circle cx="100" cy="100" r="32" fill="none" stroke="url(#goldRim)" stroke-width="2.5"/>
+
+            <!-- Center Golden Hub with Crown Logo -->
+            <circle cx="100" cy="100" r="28" fill="url(#goldHub)" stroke="#5A3A05" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="23" fill="#24050B"/>
+
+            <!-- Stylized Gold Crown at Center -->
+            <path d="M88 108 L92 97 L100 103 L108 97 L112 108 H88 Z" fill="url(#goldRim)"/>
+            <circle cx="92" cy="95.5" r="1.5" fill="url(#goldRim)"/>
+            <circle cx="100" cy="101.5" r="1.5" fill="url(#goldRim)"/>
+            <circle cx="108" cy="95.5" r="1.5" fill="url(#goldRim)"/>
+          </svg>
         </div>
       </div>
 
-      <!-- Result Announcement Banner (Hidden Initially) -->
-      <div id="spinResultBadge" class="hidden my-2 py-1.5 px-3 bg-gradient-to-r from-amber-500/20 to-red-500/20 border border-amber-400/50 rounded-xl">
-        <span class="text-xs font-black text-amber-300">🎉 অভিনন্দন! আপনি জিতেছেন: ২০% বিশেষ ছাড়!</span>
+      <!-- Result Badge (After Spin) -->
+      <div id="spinResultBadge" class="hidden mb-2 py-1 px-2.5 bg-amber-400/20 border border-amber-400/60 rounded-lg">
+        <span class="text-[11px] font-black text-amber-300">🎉 অভিনন্দন! আপনি জিতেছেন: ২০% বিশেষ ছাড়!</span>
       </div>
 
-      <!-- Form Inputs Stack -->
-      <div id="spinFormStack" class="space-y-2.5 mt-3 text-left">
+      <!-- Exact Screenshot Inner Form Box -->
+      <div class="inner-form-box rounded-[18px] p-3.5 text-left space-y-2.5">
         <div>
-          <label class="block text-[11px] font-bold text-amber-200/90 mb-1">ধাপ ১: নাম দিন</label>
+          <label class="block text-[13px] font-bold text-white mb-1.5 leading-none">আপনার নাম</label>
           <input 
             type="text" 
             id="spinCustomerName" 
             placeholder="আপনার নাম" 
-            class="w-full bg-white text-slate-900 placeholder-slate-400 text-xs px-3.5 py-2.5 rounded-xl border border-amber-300/40 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
+            class="w-full bg-white text-slate-900 placeholder-slate-400 text-xs px-3.5 py-2 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
           />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-amber-200/90 mb-1">ধাপ ২: নম্বর দিন</label>
+          <label class="block text-[13px] font-bold text-white mb-1.5 leading-none">মোবাইল নম্বর</label>
           <input 
             type="tel" 
             id="spinCustomerPhone" 
             placeholder="মোবাইল নম্বর" 
-            class="w-full bg-white text-slate-900 placeholder-slate-400 text-xs px-3.5 py-2.5 rounded-xl border border-amber-300/40 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
+            class="w-full bg-white text-slate-900 placeholder-slate-400 text-xs px-3.5 py-2 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
           />
         </div>
 
-        <!-- Grab Offer Action Button -->
+        <!-- Exact Red/Gold Button -->
         <button 
           onclick="triggerSpinAction()" 
           id="spinActionButton"
-          class="w-full py-3 bg-gradient-to-r from-[#D4AF37] via-[#E5A93C] to-[#B45309] hover:brightness-110 text-slate-950 text-xs font-black rounded-xl shadow-lg shadow-amber-500/30 active:scale-95 transition flex items-center justify-center gap-1.5 mt-1 tracking-wide"
+          class="gold-red-btn w-full py-2.5 rounded-lg text-white font-black text-sm tracking-wide active:scale-95 transition mt-1"
         >
-          <span>অফার লুফে নিন</span>
-          <span>⚡</span>
+          অফার লুফে নিন
         </button>
       </div>
+
     </div>
   </div>
 
   <!-- ==================== SIDE NAVIGATION DRAWER ==================== -->
   <div id="drawerOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity">
     <div id="drawerContainer" class="bg-white w-[85%] max-w-xs h-full shadow-2xl flex flex-col justify-between overflow-hidden -translate-x-full transition-transform duration-300 ease-out">
-      
       <div class="overflow-y-auto no-scrollbar flex-1">
         <div class="drawer-header-gradient text-white px-4 pt-4 pb-4 border-b border-[#D4AF37]/30 shadow-sm relative">
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
-                <img 
-                  src="logo.png" 
-                  alt="Loot & Luxe Logo" 
-                  class="w-full h-full object-cover"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                />
+                <img src="logo.png" alt="Loot & Luxe Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
               </div>
               <div class="flex flex-col">
-                <span class="text-sm font-black tracking-wide text-white leading-none font-serif">
-                  LOOT & <span class="text-amber-300">LUXE</span>
-                </span>
+                <span class="text-sm font-black tracking-wide text-white leading-none font-serif">LOOT & <span class="text-amber-300">LUXE</span></span>
                 <span class="text-[8px] font-bold text-amber-200/70 tracking-widest uppercase mt-0.5">EXCLUSIVE CLUB</span>
               </div>
             </div>
-            <button onclick="closeDrawer()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-[#FDE68A] flex items-center justify-center text-xs font-black border border-[#D4AF37]/40 active:scale-90 transition">
-              ✕
-            </button>
+            <button onclick="closeDrawer()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-[#FDE68A] flex items-center justify-center text-xs font-black border border-[#D4AF37]/40 active:scale-90 transition">✕</button>
           </div>
 
           <div class="grid grid-cols-2 gap-2 mt-4">
-            <button onclick="alert('লগইন পেজ')" class="py-2 bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] text-slate-950 text-xs font-black rounded-lg shadow-sm active:scale-95 transition text-center">
-              লগইন
-            </button>
-            <button onclick="alert('রেজিস্ট্রেশন পেজ')" class="py-2 bg-black/40 text-slate-200 text-xs font-semibold rounded-lg active:scale-95 transition text-center border border-white/10 hover:bg-black/60">
-              রেজিস্টার
-            </button>
+            <button onclick="alert('লগইন পেজ')" class="py-2 bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] text-slate-950 text-xs font-black rounded-lg shadow-sm active:scale-95 transition text-center">লগইন</button>
+            <button onclick="alert('রেজিস্ট্রেশন পেজ')" class="py-2 bg-black/40 text-slate-200 text-xs font-semibold rounded-lg active:scale-95 transition text-center border border-white/10 hover:bg-black/60">রেজিস্টার</button>
           </div>
         </div>
 
@@ -302,18 +338,10 @@
 
             <div class="ml-6 pl-2 border-l-2 border-amber-200/80 my-1.5 space-y-0.5 py-0.5">
               <span class="block px-2 text-[9.5px] font-black text-amber-700 tracking-wider uppercase mb-1">ক্যাটাগরি সমূহ</span>
-              <a href="#" onclick="filterByCategory('watch'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition">
-                <span>⌚</span><span>ঘড়ি (Watches)</span>
-              </a>
-              <a href="#" onclick="filterByCategory('sunglass'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition">
-                <span>🕶️</span><span>সানগ্লাস (Sunglasses)</span>
-              </a>
-              <a href="#" onclick="filterByCategory('perfume'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition">
-                <span>🧪</span><span>আতর ও পারফিউম (Perfumes)</span>
-              </a>
-              <a href="#" onclick="filterByCategory('wallet'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition">
-                <span>👛</span><span>ওয়ালেট (Wallets)</span>
-              </a>
+              <a href="#" onclick="filterByCategory('watch'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>⌚</span><span>ঘড়ি (Watches)</span></a>
+              <a href="#" onclick="filterByCategory('sunglass'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>🕶️</span><span>সানগ্লাস (Sunglasses)</span></a>
+              <a href="#" onclick="filterByCategory('perfume'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>🧪</span><span>আতর ও পারফিউম (Perfumes)</span></a>
+              <a href="#" onclick="filterByCategory('wallet'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>👛</span><span>ওয়ালেট (Wallets)</span></a>
             </div>
 
             <a href="#" onclick="toggleCartDrawer(); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-800 hover:bg-slate-50 rounded-xl transition">
@@ -327,12 +355,8 @@
           <div class="pt-2 border-t border-slate-100">
             <span class="block px-3 text-[10px] font-black text-slate-400 tracking-wider uppercase mb-1">অ্যাকাউন্ট ও সেটিংস</span>
             <div class="space-y-0.5">
-              <a href="#" onclick="alert('আমার প্রোফাইল'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 rounded-xl transition">
-                <span class="text-base">👤</span><span>আমার প্রোফাইল</span>
-              </a>
-              <a href="#" onclick="alert('পছন্দের তালিকা'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 rounded-xl transition">
-                <span class="text-base">🤍</span><span>পছন্দের তালিকা</span>
-              </a>
+              <a href="#" onclick="alert('আমার প্রোফাইল'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 rounded-xl transition"><span>👤</span><span>আমার প্রোফাইল</span></a>
+              <a href="#" onclick="alert('পছন্দের তালিকা'); closeDrawer()" class="flex items-center gap-3.5 px-3 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 rounded-xl transition"><span>🤍</span><span>পছন্দের তালিকা</span></a>
             </div>
           </div>
         </div>
@@ -340,17 +364,11 @@
 
       <div class="bg-gradient-to-b from-white to-[#FDF8EE] p-3.5 border-t border-amber-200/60 space-y-2.5">
         <a href="https://wa.me/8801700000000" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black shadow-xs active:scale-95 transition">
-          <span class="text-sm">💬</span>
-          <span>২৪/৭ হেল্পলাইন: সরাসরি কথা বলুন</span>
+          <span class="text-sm">💬</span><span>২৪/৭ হেল্পলাইন: সরাসরি কথা বলুন</span>
         </a>
-
         <div class="flex justify-center items-center gap-4 pt-0.5">
-          <a href="#" class="w-7 h-7 rounded-full bg-amber-50 border border-[#D4AF37]/40 flex items-center justify-center text-[#B45309] hover:bg-amber-100 text-xs font-black transition" title="Facebook">
-            f
-          </a>
-          <a href="#" class="w-7 h-7 rounded-full bg-amber-50 border border-[#D4AF37]/40 flex items-center justify-center text-[#B45309] hover:bg-amber-100 text-xs font-black transition" title="Instagram">
-            📸
-          </a>
+          <a href="#" class="w-7 h-7 rounded-full bg-amber-50 border border-[#D4AF37]/40 flex items-center justify-center text-[#B45309] hover:bg-amber-100 text-xs font-black transition">f</a>
+          <a href="#" class="w-7 h-7 rounded-full bg-amber-50 border border-[#D4AF37]/40 flex items-center justify-center text-[#B45309] hover:bg-amber-100 text-xs font-black transition">📸</a>
           <span class="text-[10px] font-bold text-amber-800/80">Loot & Luxe Official</span>
         </div>
       </div>
@@ -451,7 +469,6 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       renderProductsGrid();
-      // ৩ সেকেন্ড পর স্বয়ংক্রিয়ভাবে স্পিন মডাল প্রম্পট করবে (যদি পূর্বে না ঘুরানো হয়)
       setTimeout(() => {
         if (!hasSpun) openSpinModal();
       }, 3000);
@@ -494,7 +511,7 @@
       `).join('');
     }
 
-    /* SPIN MODAL CONTROLS */
+    /* SPIN MODAL ACTION */
     function openSpinModal() {
       document.getElementById('spinModalOverlay').classList.remove('hidden');
     }
@@ -515,20 +532,20 @@
       const wheel = document.getElementById('fortuneWheel');
       wheel.classList.add('wheel-spinning');
       
-      // ৫ বার সম্পূর্ণ ঘুরে ২০% ছাড়ে থামবে (1800deg + offset)
-      const randomDegrees = 1800 + 360; 
-      wheel.style.transform = `rotate(${randomDegrees}deg)`;
+      // ৫ পূর্ণ ঘূর্ণন + ২০% ছাড়ে ল্যান্ডিং
+      const finalDegree = 1800 + 225;
+      wheel.style.transform = `rotate(${finalDegree}deg)`;
 
       setTimeout(() => {
         isSpinning = false;
         hasSpun = true;
         document.getElementById('spinResultBadge').classList.remove('hidden');
-        document.getElementById('spinActionButton').innerText = 'অফারটি ব্যবহার করুন ➔';
+        document.getElementById('spinActionButton').innerText = 'অফারটি শপ করুন ➔';
         document.getElementById('spinActionButton').onclick = () => {
           closeSpinModal();
           scrollToProducts();
         };
-      }, 4600);
+      }, 4900);
     }
 
     function filterByCategory(cat) {
@@ -647,4 +664,4 @@
     });
   </script>
 </body>
-</html>
+                </html>
