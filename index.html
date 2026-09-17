@@ -18,23 +18,25 @@
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
 
-    /* হুবহু স্ক্রিনশটের ডিপ বার্গান্ডি ফ্রেম ও বাটন */
+    /* স্ক্রিনশটের মতো ডার্ক বার্গান্ডি বাইরের ফ্রেম */
     .modal-outer-card {
       background: #25050B;
       border: 1.5px solid #d4af37;
       box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.25);
     }
+    /* স্ক্রিনশটের মতো ভেতরের ফর্ম বক্স */
     .modal-inner-form {
       background: #390812;
       border: 1.5px solid #c99e32;
     }
+    /* স্ক্রিনশটের মতো লাল-সোনালী বাটন */
     .btn-grab-offer {
       background: linear-gradient(180deg, #f39c12 0%, #d3381c 50%, #b31217 100%);
       border: 1px solid #f9ca24;
       box-shadow: 0 4px 15px rgba(211,56,28,0.4);
     }
     .wheel-spin-anim {
-      transition: transform 4.8s cubic-bezier(0.12, 0.95, 0.2, 1);
+      transition: transform 5s cubic-bezier(0.12, 0.95, 0.2, 1);
     }
   </style>
 </head>
@@ -167,29 +169,32 @@
     </div>
   </main>
 
-  <!-- ==================== EXACT SCREENSHOT MODAL (WITH DETAILED 12-SEGMENT WHEEL) ==================== -->
+  <!-- ==================== SCREENSHOT MATCHED 'SPIN TO WIN' MODAL ==================== -->
   <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="modal-outer-card w-full max-w-[340px] rounded-[24px] p-4 pt-3 relative text-white text-center shadow-2xl">
+    <div class="modal-outer-card w-full max-w-[340px] rounded-[24px] p-4 pt-3.5 relative text-white text-center shadow-2xl">
       
-      <!-- Close (X) Button (হুবহু স্ক্রিনশটের মতো উপরে ডানে) -->
-      <button onclick="closeSpinModal()" class="absolute top-3 right-4 text-white/90 hover:text-white text-lg font-light active:scale-90 transition z-20">
+      <!-- Close (X) Button -->
+      <button onclick="closeSpinModal()" class="absolute top-3.5 right-4 text-white/80 hover:text-white text-base font-light active:scale-90 transition z-20">
         ✕
       </button>
 
-      <!-- Ornate Detailed Wheel Section -->
+      <!-- Exact Screenshot Wheel Visual with Golden Filigree & Particles -->
       <div class="relative w-56 h-56 mx-auto mt-2 mb-2 flex items-center justify-center">
         <!-- Top Pointer Triangle -->
         <div class="absolute -top-1.5 z-30 w-0 h-0 border-l-[9px] border-l-transparent border-r-[9px] border-r-transparent border-t-[17px] border-t-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"></div>
 
-        <!-- Ornate High-Detail SVG Wheel -->
-        <div id="fortuneWheel" class="w-full h-full relative drop-shadow-[0_0_18px_rgba(212,175,55,0.4)]">
+        <!-- Glowing Particles Effect Backdrop -->
+        <div class="absolute inset-0 rounded-full bg-amber-400/10 blur-md pointer-events-none"></div>
+
+        <!-- SVG Detailed Wheel -->
+        <div id="fortuneWheel" class="w-full h-full relative drop-shadow-[0_0_20px_rgba(212,175,55,0.45)]">
           <svg viewBox="0 0 200 200" class="w-full h-full">
             <defs>
               <linearGradient id="goldRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#FFF5C0" />
+                <stop offset="0%" stop-color="#FFF8D6" />
                 <stop offset="35%" stop-color="#D4AF37" />
                 <stop offset="70%" stop-color="#8C5C12" />
-                <stop offset="100%" stop-color="#F3BA42" />
+                <stop offset="100%" stop-color="#F5BD4A" />
               </linearGradient>
               <linearGradient id="goldHubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FFEAA7" />
@@ -201,7 +206,7 @@
             <circle cx="100" cy="100" r="97" fill="none" stroke="url(#goldRimGrad)" stroke-width="4.5"/>
             <circle cx="100" cy="100" r="92" fill="#1b0307" stroke="url(#goldRimGrad)" stroke-width="1.2" stroke-dasharray="3,2"/>
 
-            <!-- 12 Slices (বহুরঙা গভীর লাক্সারি শেডস) -->
+            <!-- 12 Slices Matching Screenshot -->
             <g transform="translate(100,100)">
               <path d="M0,0 L0,-90 A90,90 0 0,1 45,-77.94 Z" fill="#6B1124" stroke="url(#goldRimGrad)" stroke-width="0.75"/>
               <path d="M0,0 L45,-77.94 A90,90 0 0,1 77.94,-45 Z" fill="#0E4A71" stroke="url(#goldRimGrad)" stroke-width="0.75"/>
@@ -216,7 +221,7 @@
               <path d="M0,0 L-77.94,-45 A90,90 0 0,1 -45,-77.94 Z" fill="#1E3A8A" stroke="url(#goldRimGrad)" stroke-width="0.75"/>
               <path d="M0,0 L-45,-77.94 A90,90 0 0,1 0,-90 Z" fill="#4A0E17" stroke="url(#goldRimGrad)" stroke-width="0.75"/>
 
-              <!-- Segment Rewards Texts & Icons -->
+              <!-- Rewards Text & Icons -->
               <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(15)">১০% ছাড়</text>
               <text x="18" y="-55" fill="#FFD700" font-size="6.5" font-weight="bold" transform="rotate(45)">🎁 গিফট</text>
               <text x="18" y="-55" fill="#FFF" font-size="6.5" font-weight="bold" transform="rotate(75)">১৫% ছাড়</text>
@@ -245,12 +250,12 @@
         </div>
       </div>
 
-      <!-- Result Banner -->
+      <!-- Result Banner (After Spin) -->
       <div id="spinResultBadge" class="hidden mb-2 py-1 px-2 bg-amber-400/20 border border-amber-400/60 rounded-lg">
         <span class="text-[11px] font-black text-amber-300">🎉 অভিনন্দন! আপনি জিতেছেন: ২০% বিশেষ ছাড়!</span>
       </div>
 
-      <!-- হুবহু স্ক্রিনশটের মতো ভেতরের ফর্ম বক্স -->
+      <!-- Screenshot Matching Inner Form Box -->
       <div class="modal-inner-form rounded-[18px] p-3 text-left space-y-2">
         <div>
           <label class="block text-[13px] font-bold text-white mb-1 leading-none">আপনার নাম</label>
@@ -268,11 +273,12 @@
             type="tel" 
             id="spinCustomerPhone" 
             placeholder="মোবাইল নম্বর" 
+            maxlength="11"
             class="w-full bg-white text-slate-900 placeholder-slate-400 text-xs px-3.5 py-2.5 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-amber-400 font-medium"
           />
         </div>
 
-        <!-- হুবহু স্ক্রিনশটের মতো লাল-সোনালী বাটন -->
+        <!-- Screenshot Matching Red/Gold Button -->
         <button 
           onclick="triggerSpinAction()" 
           id="spinActionButton"
@@ -448,13 +454,14 @@
     let cart = [];
     let currentDetailProduct = null;
     let isSpinning = false;
-    let hasSpun = false;
 
     window.addEventListener('DOMContentLoaded', () => {
       renderProductsGrid();
+      
+      // ওয়েবসাইটে ঢোকার সাথে সাথেই স্পিন মডাল ওপেন হবে
       setTimeout(() => {
-        if (!hasSpun) openSpinModal();
-      }, 3000);
+        openSpinModal();
+      }, 500);
     });
 
     function renderProductsGrid(items = PRODUCTS) {
@@ -502,13 +509,34 @@
       document.getElementById('spinModalOverlay').classList.add('hidden');
     }
 
+    // বাংলাদেশী মোবাইল নম্বর ও ১ দিনে ১ বার স্পিন চেকিং লজিক
     function triggerSpinAction() {
       if (isSpinning) return;
+      
       const name = document.getElementById('spinCustomerName').value.trim();
       const phone = document.getElementById('spinCustomerPhone').value.trim();
 
-      if (!name) return alert('অনুগ্রহ করে আপনার নাম লিখুন!');
-      if (!phone || phone.length < 11) return alert('সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন!');
+      if (!name) {
+        alert('অনুগ্রহ করে আপনার নাম লিখুন!');
+        return;
+      }
+
+      // বাংলাদেশী সঠিক ১১ ডিজিটের নম্বর ভ্যালিডেশন (যেমন: 017xxxxxxxx, 018xxxxxxxx)
+      const bdPhoneRegex = /^01[3-9]\d{8}$/;
+      if (!bdPhoneRegex.test(phone)) {
+        alert('অনুগ্রহ করে সঠিক ১১ ডিজিটের বাংলাদেশী মোবাইল নম্বর দিন (যেমন: 017XXXXXXXX)');
+        return;
+      }
+
+      // ১টি নম্বরে দিনে ১ বার স্পিনের ডেটা যাচাই
+      const today = new Date().toISOString().slice(0, 10);
+      const spunKey = `spun_${phone}`;
+      const lastSpunDate = localStorage.getItem(spunKey);
+
+      if (lastSpunDate === today) {
+        alert('⚠️ এই নম্বরটি দিয়ে আজ ইতিমধ্যে স্পিন করা হয়েছে!\nঅনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।');
+        return;
+      }
 
       isSpinning = true;
       const wheel = document.getElementById('fortuneWheel');
@@ -520,14 +548,17 @@
 
       setTimeout(() => {
         isSpinning = false;
-        hasSpun = true;
+        
+        // সফলভাবে স্পিন সম্পন্ন হলে নম্বরটি আজকের দিনের জন্য সেভ রাখা
+        localStorage.setItem(spunKey, today);
+
         document.getElementById('spinResultBadge').classList.remove('hidden');
-        document.getElementById('spinActionButton').innerText = 'অফারটি শপ করুন ➔';
+        document.getElementById('spinActionButton').innerText = 'অফারটি ব্যবহার করুন ➔';
         document.getElementById('spinActionButton').onclick = () => {
           closeSpinModal();
           scrollToProducts();
         };
-      }, 4900);
+      }, 5000);
     }
 
     function filterByCategory(cat) {
@@ -646,4 +677,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
