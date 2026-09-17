@@ -2,9 +2,11 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Loot & Luxe</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Confetti Animation Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -18,31 +20,16 @@
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
 
-    /* হুবহু স্ক্রিনশটের ব্যাকগ্রাউন্ড ও ড্রপ শ্যাডো */
-    .screenshot-bg {
-      background: radial-gradient(circle at 50% 20%, #4a0815 0%, #240309 60%, #120104 100%);
-      border: 1.5px solid #d4af37;
-      box-shadow: 0 10px 45px rgba(0,0,0,0.95), 0 0 35px rgba(212,175,55,0.25);
-    }
-
-    /* হুবহু স্ক্রিনশটের ক্যাপসুল শেপের ক্রিম ইনপুট ফিল্ড */
-    .screenshot-input {
-      background: #fdfaf3;
-      border: 1.8px solid #c99b2c;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06), 0 0 8px rgba(212,175,55,0.25);
-    }
-
-    /* হুবহু স্ক্রিনশটের ডবল গোল্ড বর্ডারযুক্ত লাল বাটন */
-    .screenshot-btn {
-      background: linear-gradient(180deg, #8a1325 0%, #560a14 100%);
+    /* উইনিং কার্ডের বার্গান্ডি ও গোল্ডেন ব্যাকগ্রাউন্ড */
+    .win-card-glow {
+      background: radial-gradient(circle at 50% 20%, #4a0815 0%, #200308 100%);
       border: 2px solid #d4af37;
-      outline: 1px solid #f9ca24;
-      outline-offset: -3px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 12px rgba(212,175,55,0.3);
+      box-shadow: 0 0 35px rgba(212,175,55,0.4), inset 0 0 15px rgba(0,0,0,0.8);
     }
 
-    .wheel-spin-anim {
-      transition: transform 5.2s cubic-bezier(0.12, 0.95, 0.2, 1);
+    /* বাস্তবসম্মত ফিজিক্স ও সাইকোলজিক্যাল কার্ভ (ধীরে ধীরে রোমাঞ্চকরভাবে থামার অ্যানিমেশন) */
+    .wheel-spinning-disk {
+      transition: transform 5.0s cubic-bezier(0.12, 0.99, 0.24, 1);
     }
   </style>
 </head>
@@ -175,91 +162,57 @@
     </div>
   </main>
 
-  <!-- ==================== EXACT 1000218664.png SCREENSHOT MODAL ==================== -->
-  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3">
-    <div class="screenshot-bg w-full max-w-[340px] rounded-[26px] p-4 pt-3.5 relative text-white text-center shadow-2xl overflow-hidden">
+  <!-- ==================== ফুল ডিসপ্লে স্পিন মডাল (100% FULLSCREEN) ==================== -->
+  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black z-50 flex items-center justify-center overflow-hidden">
+    <div class="relative w-full h-full max-w-md max-h-screen aspect-[720/1451] mx-auto flex items-center justify-center overflow-hidden bg-[#240309]">
       
-      <!-- Close (X) Button -->
-      <button onclick="closeSpinModal()" class="absolute top-3.5 right-4 text-amber-200/80 hover:text-white text-base font-light active:scale-90 transition z-30">
-        ✕
+      <!-- আপনার সম্পূর্ণ পোস্টার ইমেজ -->
+      <img src="wheel.png" alt="Loot & Luxe Spin to Win" class="w-full h-full object-fill select-none pointer-events-none" />
+
+      <!-- ক্লোজ বাটন -->
+      <button onclick="closeSpinModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 text-amber-200 hover:text-white flex items-center justify-center text-base font-black border border-amber-400/50 z-30 active:scale-90 transition shadow-lg">✕</button>
+
+      <!-- ঘূর্ণনশীল চাকা এলাকা -->
+      <div id="fortuneWheel" class="absolute left-[2.2%] top-[25.8%] w-[95.6%] aspect-square rounded-full overflow-hidden pointer-events-none z-10" style="transform-origin: 50% 50%;">
+        <img src="wheel.png" class="w-[104.6%] h-[153%] max-w-none absolute left-[-2.3%] top-[-27.4%] object-cover select-none" />
+      </div>
+
+      <!-- ইনপুট ও বাটন -->
+      <input type="text" id="spinCustomerName" placeholder="" class="absolute left-[19.4%] top-[83.0%] w-[61.2%] h-[3.8%] bg-transparent text-slate-950 text-xs sm:text-sm text-center font-black focus:outline-none z-20 caret-amber-700" />
+      <input type="tel" id="spinCustomerPhone" placeholder="" maxlength="11" class="absolute left-[19.4%] top-[87.8%] w-[61.2%] h-[3.8%] bg-transparent text-slate-950 text-xs sm:text-sm text-center font-black focus:outline-none z-20 caret-amber-700" />
+      <button onclick="triggerSpinAction()" id="spinActionButton" class="absolute left-[19.4%] top-[92.6%] w-[61.2%] h-[5.8%] bg-transparent cursor-pointer rounded-full z-20 active:scale-95 transition"></button>
+    </div>
+  </div>
+
+  <!-- ==================== অভিনন্দন ও কনফেটি অ্যানিমেশন পপ-আপ ==================== -->
+  <div id="winModalOverlay" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-[60] flex items-center justify-center p-4">
+    <div class="win-card-glow w-full max-w-xs rounded-[28px] p-5 text-center text-white relative shadow-2xl animate-bounce-short">
+      
+      <div class="w-14 h-14 mx-auto rounded-full bg-amber-400/20 border-2 border-amber-400 flex items-center justify-center text-2xl mb-2 shadow-[0_0_20px_rgba(251,191,36,0.6)]">
+        🏆
+      </div>
+
+      <span class="text-[10px] font-black text-amber-300 uppercase tracking-widest">CONGRATULATIONS!</span>
+      <h3 class="text-xl font-black text-white mt-1">অভিনন্দন, <span id="winnerNameText" class="text-amber-300">কাস্টমার</span>!</h3>
+      
+      <p class="text-xs text-slate-300 mt-1">আপনি ভাগ্যের চাকা ঘুরিয়ে জিতে নিয়েছেন:</p>
+      
+      <!-- প্রাইজ ব্যাজ -->
+      <div class="my-3 py-2.5 px-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl border border-amber-300 text-slate-950 shadow-lg">
+        <span class="block text-[10px] font-black uppercase tracking-wider text-amber-950">স্পেশাল মেগা প্রাইজ</span>
+        <span class="text-xl font-black tracking-tight">২০% বিশেষ ছাড় 🎉</span>
+      </div>
+
+      <!-- সাইকোলজিক্যাল আরজেন্সি কাউন্টডাউন টাইমার -->
+      <div class="bg-black/50 border border-amber-400/30 rounded-xl py-2 px-3 mb-3">
+        <span class="text-[10px] text-amber-200 block font-semibold">অফারটির মেয়াদ শেষ হতে বাকি:</span>
+        <span id="winTimer" class="text-sm font-mono font-black text-red-400">১৪:৫৯ মিনিট</span>
+      </div>
+
+      <!-- অফার ব্যবহারের অ্যাকশন বাটন -->
+      <button onclick="claimRewardAndShop()" class="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-[#E5A93C] hover:brightness-110 text-slate-950 text-xs font-black rounded-xl shadow-lg shadow-amber-500/40 active:scale-95 transition">
+        অফারটি ব্যবহার করে শপিং করুন ➔
       </button>
-
-      <!-- হুবহু ছবির হেডলাইন সেকশন -->
-      <div class="flex flex-col items-center justify-center space-y-0.5 mt-0.5 mb-1.5">
-        <div class="w-6 h-6 rounded-full bg-amber-400/20 border border-amber-300/40 flex items-center justify-center text-amber-300 text-xs mb-0.5">
-          👑
-        </div>
-        <span class="text-[11px] font-bold text-amber-200/90 tracking-wide">লুট অ্যান্ড লাক্স এক্সক্লুসিভ.com</span>
-        <h3 class="text-base font-black text-amber-300 tracking-tight leading-tight mt-0.5">ভাগ্য পরীক্ষা করুন!</h3>
-        <p class="text-xs font-black text-amber-400/90 tracking-tight">এখনই ঘুরান আর জিতে নিন!</p>
-      </div>
-
-      <!-- হুবহু চাকা ডিসপ্লে -->
-      <div class="relative w-64 h-64 mx-auto my-1 flex items-center justify-center">
-        <!-- ফ্লেম পয়েন্টার (ছবি অনুযায়ী সেন্ট্রাল হাব থেকে ওপরের স্লটে পয়েন্ট করা) -->
-        <div class="absolute top-[41%] left-1/2 -translate-x-1/2 -translate-y-full z-30 pointer-events-none drop-shadow-[0_2px_8px_rgba(255,200,0,0.8)]">
-          <svg width="24" height="30" viewBox="0 0 28 34" fill="none">
-            <path d="M14 0 C14 8 26 18 20 28 C17 33 11 33 8 28 C2 18 14 8 14 0 Z" fill="url(#flameGrad)"/>
-            <defs>
-              <linearGradient id="flameGrad" x1="14" y1="0" x2="14" y2="34" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FFFDF0"/>
-                <stop offset="30%" stop-color="#FFD700"/>
-                <stop offset="85%" stop-color="#E67E22"/>
-                <stop offset="100%" stop-color="#D35400"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- চাকা -->
-        <div id="fortuneWheel" class="w-full h-full relative rounded-full overflow-hidden flex items-center justify-center drop-shadow-[0_0_20px_rgba(212,175,55,0.45)]">
-          <img 
-            src="wheel.png" 
-            alt="Royal Fortune Wheel" 
-            class="w-full h-full object-contain"
-            onerror="this.src='wheel.jpg';"
-          />
-        </div>
-      </div>
-
-      <!-- Result Banner -->
-      <div id="spinResultBadge" class="hidden my-1.5 py-1 px-2.5 bg-amber-400/20 border border-amber-400/60 rounded-xl">
-        <span class="text-[11px] font-black text-amber-300">🎉 অভিনন্দন! আপনি জিতেছেন: ২০% বিশেষ ছাড়!</span>
-      </div>
-
-      <!-- হুবহু ছবির মতো কোনো আলাদা নাম/নম্বর লেবেল ছাড়া ক্যাপসুল ইনপুট ফর্ম -->
-      <div class="space-y-2.5 mt-2 px-3">
-        <!-- নাম দিন -->
-        <div class="relative">
-          <input 
-            type="text" 
-            id="spinCustomerName" 
-            placeholder="নাম দিন" 
-            class="screenshot-input w-full text-slate-900 placeholder-amber-900/60 text-xs px-5 py-2.5 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-amber-400 font-bold"
-          />
-        </div>
-
-        <!-- মোবাইল দিন -->
-        <div class="relative">
-          <input 
-            type="tel" 
-            id="spinCustomerPhone" 
-            placeholder="মোবাইল দিন" 
-            maxlength="11"
-            class="screenshot-input w-full text-slate-900 placeholder-amber-900/60 text-xs px-5 py-2.5 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-amber-400 font-bold"
-          />
-        </div>
-
-        <!-- হুবহু ছবির ডবল গোল্ড বর্ডারযুক্ত "অফার লুফে নিন" বাটন -->
-        <button 
-          onclick="triggerSpinAction()" 
-          id="spinActionButton"
-          class="screenshot-btn w-full py-2.5 rounded-full text-amber-300 font-black text-sm tracking-wide active:scale-95 transition mt-1"
-        >
-          অফার লুফে নিন
-        </button>
-      </div>
-
     </div>
   </div>
 
@@ -426,14 +379,13 @@
     let cart = [];
     let currentDetailProduct = null;
     let isSpinning = false;
+    let countdownInterval = null;
 
     window.addEventListener('DOMContentLoaded', () => {
       renderProductsGrid();
-      
-      // সাইটে প্রবেশের সাথে সাথেই পপ-আপ ওপেন হবে
       setTimeout(() => {
         openSpinModal();
-      }, 300);
+      }, 350);
     });
 
     function renderProductsGrid(items = PRODUCTS) {
@@ -481,7 +433,7 @@
       document.getElementById('spinModalOverlay').classList.add('hidden');
     }
 
-    // মোবাইল নম্বর যাচাই ও ১ দিনে ১ বার স্পিন লজিক
+    // নাম, মোবাইল নম্বর যাচাই এবং ৫ সেকেন্ডে বাস্তবসম্মতভাবে চাকা ঘোরার লজিক
     function triggerSpinAction() {
       if (isSpinning) return;
       
@@ -489,18 +441,18 @@
       const phone = document.getElementById('spinCustomerPhone').value.trim();
 
       if (!name) {
-        alert('অনুগ্রহ করে আপনার নাম দিন!');
+        alert('অনুগ্রহ করে "নাম দিন" ঘরে আপনার নাম লিখুন!');
         return;
       }
 
-      // সঠিক ১১ ডিজিটের বাংলাদেশী মোবাইল নম্বর
+      // বাংলাদেশী ১১ ডিজিটের নম্বর ভ্যালিডেশন
       const bdPhoneRegex = /^01[3-9]\d{8}$/;
       if (!bdPhoneRegex.test(phone)) {
-        alert('অনুগ্রহ করে সঠিক ১১ ডিজিটের বাংলাদেশী মোবাইল দিন (যেমন: 017XXXXXXXX)');
+        alert('অনুগ্রহ করে "মোবাইল দিন" ঘরে সঠিক ১১ ডিজিটের বাংলাদেশী নম্বর লিখুন (যেমন: 017XXXXXXXX)');
         return;
       }
 
-      // ১টি নম্বরে দিনে ১ বার স্পিন
+      // ১ নম্বরে দিনে ১ বার স্পিন
       const today = new Date().toISOString().slice(0, 10);
       const spunKey = `spun_${phone}`;
       const lastSpunDate = localStorage.getItem(spunKey);
@@ -512,23 +464,73 @@
 
       isSpinning = true;
       const wheel = document.getElementById('fortuneWheel');
-      wheel.classList.add('wheel-spin-anim');
+      wheel.classList.add('wheel-spinning-disk');
       
-      // ৫ বার ঘুরে নির্দিষ্ট স্লটে থামবে
+      // ৫ পূর্ণ ঘূর্ণন + ২০% ছাড়ে ল্যান্ডিং (১৮০০° + ৩৬০°)
       const targetDegree = 1800 + 360;
       wheel.style.transform = `rotate(${targetDegree}deg)`;
 
+      // ঠিক ৫.০ সেকেন্ড পর চাকা থামার সাথে সাথে কনগ্র্যাচুলেশন স্ক্রিন ওপেন হবে
       setTimeout(() => {
         isSpinning = false;
         localStorage.setItem(spunKey, today);
 
-        document.getElementById('spinResultBadge').classList.remove('hidden');
-        document.getElementById('spinActionButton').innerText = 'অফারটি ব্যবহার করুন ➔';
-        document.getElementById('spinActionButton').onclick = () => {
-          closeSpinModal();
-          scrollToProducts();
-        };
-      }, 5200);
+        closeSpinModal();
+        triggerWinningCelebration(name);
+      }, 5000);
+    }
+
+    // কনফেটি ফায়ারওয়ার্কস ও অভিনন্দন বার্তা
+    function triggerWinningCelebration(winnerName) {
+      document.getElementById('winnerNameText').innerText = winnerName;
+      document.getElementById('winModalOverlay').classList.remove('hidden');
+
+      // সোনালী ও লাল কনফেটি ব্লাস্ট
+      const duration = 3.5 * 1000;
+      const end = Date.now() + duration;
+      const colors = ['#D4AF37', '#E02424', '#FDE68A', '#FFFFFF'];
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+
+      // ১৫ মিনিটের আরজেন্সি টাইমার
+      let totalSeconds = 15 * 60;
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        totalSeconds--;
+        if (totalSeconds <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById('winTimer').innerText = "সময় শেষ!";
+        } else {
+          const m = Math.floor(totalSeconds / 60);
+          const s = totalSeconds % 60;
+          document.getElementById('winTimer').innerText = `${m}:${s < 10 ? '0' : ''}${s} মিনিট`;
+        }
+      }, 1000);
+    }
+
+    function claimRewardAndShop() {
+      document.getElementById('winModalOverlay').classList.add('hidden');
+      clearInterval(countdownInterval);
+      scrollToProducts();
     }
 
     function filterByCategory(cat) {
