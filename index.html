@@ -20,33 +20,51 @@
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
 
-    /* সম্পূর্ণ অদৃশ্য ও প্রাকৃতিক ইনপুট ফিল্ড (যাতে ছবির সৌন্দর্য ১০০% অক্ষুণ্ণ থাকে) */
-    .invisible-natural-input {
-      background: transparent !important;
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-      color: #38030B;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      text-align: center;
-      caret-color: #880812;
-    }
-    .invisible-natural-input::placeholder {
-      color: rgba(90, 40, 10, 0.45);
-      font-weight: 700;
+    /* রয়্যাল লাক্সারি মডাল ফ্রেম */
+    .luxury-modal-card {
+      background: radial-gradient(circle at 50% 15%, #46050e 0%, #1c0206 60%, #0d0103 100%);
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(212, 175, 55, 0.35);
     }
 
-    /* উইনিং কার্ড */
-    .win-card-glow {
-      background: radial-gradient(circle at 50% 20%, #4a0815 0%, #1c0206 100%);
-      border: 2px solid #d4af37;
-      box-shadow: 0 0 45px rgba(212,175,55,0.45), inset 0 0 20px rgba(0,0,0,0.85);
+    /* গ্লাস-মরফিক গোল্ডেন ইনপুট */
+    .glass-gold-input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(212, 175, 55, 0.5);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+    }
+    .glass-gold-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.16);
+      border-color: #f59e0b;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+    }
+    .glass-gold-input::placeholder {
+      color: rgba(253, 230, 138, 0.55);
+    }
+
+    /* থ্রিডি এমবসড গোল্ডেন বাটন */
+    .gold-action-btn {
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 40%, #b45309 100%);
+      border: 2px solid #fef3c7;
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    .gold-action-btn:active {
+      transform: scale(0.97);
     }
 
     /* বাস্তবসম্মত ৫.০ সেকেন্ড সাসপেন্স ঘূর্ণন */
     .wheel-physics-rotation {
       transition: transform 5.0s cubic-bezier(0.12, 0.99, 0.24, 1);
+    }
+
+    .win-card-glow {
+      background: radial-gradient(circle at 50% 20%, #4a0815 0%, #1c0206 100%);
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 45px rgba(212,175,55,0.45), inset 0 0 20px rgba(0,0,0,0.85);
     }
   </style>
 </head>
@@ -65,7 +83,7 @@
       <div onclick="goBackToHome()" class="flex items-center gap-2 cursor-pointer">
         <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
           <img 
-            src="logo.png?v=20" 
+            src="logo.png" 
             alt="Loot & Luxe" 
             class="w-full h-full object-cover"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -178,74 +196,164 @@
     </div>
   </main>
 
-  <!-- ==================== ফুল-স্ক্রিন ১০০% প্রাকৃতিক ডায়মন্ড জ্যাকপট স্পিন মডাল ==================== -->
-  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center overflow-hidden">
-    
-    <!-- সম্পূর্ণ ফ্রেম ক্যানভাস -->
-    <div class="relative w-full h-full max-w-md max-h-screen aspect-[562/1000] mx-auto flex items-center justify-center overflow-hidden bg-[#180206]">
+  <!-- ==================== প্রিমিয়াম জ্যাকপট স্পিন পপ-আপ মডাল ==================== -->
+  <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 overflow-y-auto">
+    <div class="luxury-modal-card w-full max-w-[340px] rounded-[30px] p-5 pt-3.5 relative text-white text-center shadow-2xl my-auto">
       
-      <!-- ১. মূল ব্যাকগ্রাউন্ড আর্টওয়ার্ক (wheel_bg.png) -->
-      <img src="wheel_bg.png?v=20" alt="Royal Diamond Jackpot" class="w-full h-full object-fill select-none pointer-events-none" />
+      <!-- ক্লোজ বাটন -->
+      <button onclick="closeSpinModal()" class="absolute top-3.5 right-4 w-8 h-8 rounded-full bg-black/60 text-amber-200 hover:text-white flex items-center justify-center text-sm font-bold border border-amber-400/40 z-30 active:scale-90 transition">
+        ✕
+      </button>
 
-      <!-- ২. ক্লোজ (X) বাটন -->
-      <button onclick="closeSpinModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/75 text-amber-200 hover:text-white flex items-center justify-center text-base font-black border border-amber-400/50 z-30 active:scale-90 transition shadow-lg">✕</button>
-
-      <!-- ৩. ফ্রেমের সেন্টারে ঘোরন্ত আসল চাকা (wheel_disk.png) -->
-      <div 
-        class="absolute left-[16.8%] top-[25.2%] w-[66.4%] aspect-square rounded-full overflow-hidden z-10 pointer-events-none"
-        style="box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);"
-      >
-        <img 
-          id="fortuneWheel"
-          src="wheel_disk.png?v=20" 
-          alt="Spin Disk" 
-          class="w-full h-full object-contain select-none"
-          style="transform-origin: 50% 50%;"
-        />
+      <!-- রাজকীয় হেডার -->
+      <div class="flex flex-col items-center justify-center mt-1 mb-2">
+        <span class="text-[10px] font-black text-amber-300 tracking-[0.2em] uppercase">LOOT & LUXE EXCLUSIVE</span>
+        <h3 class="text-base font-black text-white tracking-wide mt-0.5">রয়্যাল জ্যাকপট হুইল 👑</h3>
+        <p class="text-[11px] text-amber-200/80">নাম ও নম্বর দিয়ে ভাগ্য পরীক্ষা করুন!</p>
       </div>
 
-      <!-- ৪. ছবির "ধাপ ১: নাম দিন" রিবনের ভেতরে সরাসরি অদৃশ্য ইনপুট (কোনো রোবটিক বক্স নেই) -->
-      <input 
-        type="text" 
-        id="spinCustomerName" 
-        placeholder="নাম লিখুন..." 
-        autocomplete="off"
-        class="invisible-natural-input absolute left-[31.0%] top-[72.7%] w-[38.0%] h-[3.8%] text-xs sm:text-sm z-20"
-      />
+      <!-- ভেক্টর ডায়নামিক চাকা ফ্রেম -->
+      <div class="relative w-60 h-60 mx-auto my-1 flex items-center justify-center">
+        
+        <!-- টপ পয়েন্টার -->
+        <div class="absolute -top-1.5 z-30 pointer-events-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+          <svg width="24" height="30" viewBox="0 0 24 30" fill="none">
+            <path d="M12 30 L3 8 C1 3 7 0 12 0 C17 0 23 3 21 8 L12 30 Z" fill="url(#pointGold)"/>
+            <defs>
+              <linearGradient id="pointGold" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="30%" stop-color="#FFD700"/>
+                <stop offset="100%" stop-color="#D97706"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
 
-      <!-- ৫. ছবির "ধাপ ২: নম্বর দিন" রিবনের ভেতরে সরাসরি অদৃশ্য ইনপুট -->
-      <input 
-        type="tel" 
-        id="spinCustomerPhone" 
-        placeholder="নম্বর লিখুন..." 
-        maxlength="11"
-        autocomplete="off"
-        class="invisible-natural-input absolute left-[31.0%] top-[80.7%] w-[38.0%] h-[3.8%] text-xs sm:text-sm z-20"
-      />
+        <!-- ঘূর্ণনশীল চাকা -->
+        <div id="fortuneWheel" class="w-full h-full relative rounded-full drop-shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+          <svg viewBox="0 0 240 240" class="w-full h-full">
+            <defs>
+              <linearGradient id="goldRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF5C0"/>
+                <stop offset="35%" stop-color="#D4AF37"/>
+                <stop offset="70%" stop-color="#784B06"/>
+                <stop offset="100%" stop-color="#F5BD4A"/>
+              </linearGradient>
+            </defs>
 
-      <!-- ৬. ছবির "স্পিন করুন" বাটনের ওপর অদৃশ্য স্পর্শ জোন -->
-      <button 
-        onclick="triggerSpinAction()" 
-        id="spinActionButton"
-        class="absolute left-[24.0%] top-[87.2%] w-[52.0%] h-[6.4%] bg-transparent cursor-pointer rounded-full z-20 active:scale-95 transition"
-      >
-      </button>
+            <!-- গোল্ডেন বাল্ব রিং -->
+            <circle cx="120" cy="120" r="116" fill="none" stroke="url(#goldRimGrad)" stroke-width="7"/>
+            <circle cx="120" cy="120" r="112" fill="#2A040A" stroke="#D4AF37" stroke-width="1.5"/>
+
+            <!-- ৮টি স্লট -->
+            <g transform="translate(120,120)">
+              <!-- ১. হীরা আংটি -->
+              <path d="M0,0 L-40.2,-97 A105,105 0 0,1 40.2,-97 Z" fill="#4A044E" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ২. ৯০% ডিসকাউন্ট -->
+              <path d="M0,0 L40.2,-97 A105,105 0 0,1 97,-40.2 Z" fill="#1E3A8A" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৩. ৮৫% ডিসকাউন্ট -->
+              <path d="M0,0 L97,-40.2 A105,105 0 0,1 97,40.2 Z" fill="#065F46" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৪. ৬০০ ডিসকাউন্ট -->
+              <path d="M0,0 L97,40.2 A105,105 0 0,1 40.2,97 Z" fill="#0E7490" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৫. ফ্রি ডিসকাউন্ট -->
+              <path d="M0,0 L40.2,97 A105,105 0 0,1 -40.2,97 Z" fill="#854D0E" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৬. ওয়ালেট -->
+              <path d="M0,0 L-40.2,97 A105,105 0 0,1 -97,40.2 Z" fill="#9A3412" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৭. লাক্সারি ওয়াচ -->
+              <path d="M0,0 L-97,40.2 A105,105 0 0,1 -97,-40.2 Z" fill="#881337" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+              <!-- ৮. মেগা গিফট -->
+              <path d="M0,0 L-97,-40.2 A105,105 0 0,1 -40.2,-97 Z" fill="#3B0764" stroke="url(#goldRimGrad)" stroke-width="1.2"/>
+
+              <!-- টেক্সট ও আইকন -->
+              <g transform="rotate(0)">
+                <text x="0" y="-72" fill="#FFD700" font-size="9" text-anchor="middle">💍</text>
+                <text x="0" y="-58" fill="#FFF" font-size="7.5" font-weight="900" text-anchor="middle">হীরা আংটি</text>
+              </g>
+              <g transform="rotate(45)">
+                <text x="0" y="-70" fill="#FFF" font-size="8" text-anchor="middle">🔥</text>
+                <text x="0" y="-57" fill="#FFF" font-size="8" font-weight="900" text-anchor="middle">৯০% ছাড়</text>
+              </g>
+              <g transform="rotate(90)">
+                <text x="0" y="-70" fill="#FFF" font-size="8" text-anchor="middle">🎉</text>
+                <text x="0" y="-57" fill="#FFF" font-size="8" font-weight="900" text-anchor="middle">৮৫% ছাড়</text>
+              </g>
+              <g transform="rotate(135)">
+                <text x="0" y="-68" fill="#FFF" font-size="7.5" font-weight="bold" text-anchor="middle">৳৬০০</text>
+                <text x="0" y="-56" fill="#FFF" font-size="6" font-weight="bold" text-anchor="middle">ভাউচার</text>
+              </g>
+              <g transform="rotate(180)">
+                <text x="0" y="-68" fill="#FFF" font-size="7.5" font-weight="bold" text-anchor="middle">৳৩০০০</text>
+                <text x="0" y="-56" fill="#FFF" font-size="6" font-weight="bold" text-anchor="middle">ডিসকাউন্ট</text>
+              </g>
+              <g transform="rotate(225)">
+                <text x="0" y="-68" fill="#FFF" font-size="7.5" font-weight="bold" text-anchor="middle">ফ্রি ওয়ালেট</text>
+                <text x="0" y="-56" fill="#FFF" font-size="7" text-anchor="middle">👛</text>
+              </g>
+              <g transform="rotate(270)">
+                <text x="0" y="-68" fill="#FFF" font-size="7.5" font-weight="bold" text-anchor="middle">লাক্সারি ওয়াচ</text>
+                <text x="0" y="-56" fill="#FFF" font-size="7" text-anchor="middle">⌚</text>
+              </g>
+              <g transform="rotate(315)">
+                <text x="0" y="-68" fill="#FFF" font-size="7.5" font-weight="bold" text-anchor="middle">মেগা গিফট</text>
+                <text x="0" y="-56" fill="#FFF" font-size="7" text-anchor="middle">🎁</text>
+              </g>
+            </g>
+
+            <!-- মেটালিক সেন্ট্রাল ক্যাপ -->
+            <circle cx="120" cy="120" r="26" fill="url(#goldRimGrad)"/>
+            <circle cx="120" cy="120" r="18" fill="#2A040A"/>
+            <text x="120" y="125" fill="#FFD700" font-size="12" font-weight="900" text-anchor="middle">👑</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ইনপুট ফর্ম সেকশন -->
+      <div class="space-y-2 mt-3 text-left">
+        <div>
+          <label class="block text-[10.5px] font-bold text-amber-200 mb-1 ml-1">আপনার পূর্ণ নাম</label>
+          <input 
+            type="text" 
+            id="spinCustomerName" 
+            placeholder="নাম লিখুন..." 
+            autocomplete="off"
+            class="glass-gold-input w-full py-2.5 px-3.5 rounded-xl text-xs"
+          />
+        </div>
+
+        <div>
+          <label class="block text-[10.5px] font-bold text-amber-200 mb-1 ml-1">মোবাইল নম্বর (১১ ডিজিট)</label>
+          <input 
+            type="tel" 
+            id="spinCustomerPhone" 
+            placeholder="০১৭XXXXXXXX" 
+            maxlength="11"
+            autocomplete="off"
+            class="glass-gold-input w-full py-2.5 px-3.5 rounded-xl text-xs"
+          />
+        </div>
+
+        <!-- অ্যাকশন বাটন -->
+        <button 
+          onclick="triggerSpinAction()" 
+          id="spinActionButton"
+          class="gold-action-btn w-full py-3 rounded-xl text-slate-950 font-black text-xs tracking-wider uppercase mt-2 shadow-lg"
+        >
+          অফার লুফে নিন ➔
+        </button>
+      </div>
 
     </div>
   </div>
 
-  <!-- ==================== অভিনন্দন ও কনফেটি অ্যানিমেশন পপ-আপ ==================== -->
+  <!-- ==================== উইনিং পপ-আপ ==================== -->
   <div id="winModalOverlay" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-[60] flex items-center justify-center p-4">
     <div class="win-card-glow w-full max-w-xs rounded-[28px] p-5 text-center text-white relative shadow-2xl">
-      
       <div class="w-14 h-14 mx-auto rounded-full bg-amber-400/20 border-2 border-amber-400 flex items-center justify-center text-2xl mb-2 shadow-[0_0_20px_rgba(251,191,36,0.6)]">
-        💎
+        🏆
       </div>
-
       <span class="text-[10px] font-black text-amber-300 uppercase tracking-widest">JACKPOT WINNER!</span>
       <h3 class="text-xl font-black text-white mt-1">অভিনন্দন, <span id="winnerNameText" class="text-amber-300">কাস্টমার</span>!</h3>
-      
-      <p class="text-xs text-slate-300 mt-1">আপনি জ্যাকপট স্পিন করে জিতে নিয়েছেন:</p>
+      <p class="text-xs text-slate-300 mt-1">আপনি ভাগ্যের চাকা ঘুরিয়ে জিতে নিয়েছেন:</p>
       
       <div class="my-3 py-2.5 px-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl border border-amber-300 text-slate-950 shadow-lg">
         <span class="block text-[10px] font-black uppercase tracking-wider text-amber-950">স্পেশাল মেগা অফার</span>
@@ -271,7 +379,7 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
-                <img src="logo.png?v=20" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <img src="logo.png" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
               </div>
               <div class="flex flex-col">
@@ -537,7 +645,7 @@
         if (tickCount > 28) clearInterval(tickInterval);
       }, 160);
 
-      // ৫ বার ঘুরে সুনির্দিষ্টভাবে '৮৫% ডিসকাউন্ট'-এ এসে ল্যান্ডিং করবে
+      // ৫ বার ঘুরে নির্দিষ্ট আকর্ষণীয় স্লট '৮৫% ছাড়'-এ ল্যান্ড করবে
       const targetDegree = 1800 + 90;
       wheel.style.transform = `rotate(${targetDegree}deg)`;
 
@@ -555,7 +663,6 @@
       document.getElementById('winnerNameText').innerText = winnerName;
       document.getElementById('winModalOverlay').classList.remove('hidden');
 
-      // কনফেটি ফায়ারওয়ার্কস
       const duration = 3.5 * 1000;
       const end = Date.now() + duration;
       const colors = ['#D4AF37', '#E02424', '#FDE68A', '#FFFFFF'];
@@ -581,7 +688,7 @@
         }
       }());
 
-      // ১৫ মিনিটের আরজেন্সি টাইমার
+      // ১৫ মিনিটের কাউন্টডাউন আরজেন্সি টাইমার
       let totalSeconds = 15 * 60;
       clearInterval(countdownInterval);
       countdownInterval = setInterval(() => {
@@ -719,4 +826,4 @@
     });
   </script>
 </body>
-                </html>
+            </html>
