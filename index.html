@@ -70,7 +70,7 @@
       <div onclick="goBackToHome()" class="flex items-center gap-2 cursor-pointer">
         <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
           <img 
-            src="logo.png" 
+            src="logo.png?v=2" 
             alt="Loot & Luxe" 
             class="w-full h-full object-cover"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -190,7 +190,7 @@
     <div class="relative w-full h-full max-w-md max-h-screen aspect-[562/1000] mx-auto flex items-center justify-center overflow-hidden bg-[#180206]">
       
       <!-- ১. ব্যাকগ্রাউন্ড আর্টওয়ার্ক (wheel_bg.png) -->
-      <img src="wheel_bg.png" alt="Royal Diamond Jackpot" class="w-full h-full object-fill select-none pointer-events-none" />
+      <img src="wheel_bg.png?v=2" alt="Royal Diamond Jackpot" class="w-full h-full object-fill select-none pointer-events-none" />
 
       <!-- ২. ক্লোজ (X) বাটন -->
       <button onclick="closeSpinModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/75 text-amber-200 hover:text-white flex items-center justify-center text-base font-black border border-amber-400/50 z-30 active:scale-90 transition shadow-lg">✕</button>
@@ -202,7 +202,7 @@
       >
         <img 
           id="fortuneWheel"
-          src="wheel_disk.png" 
+          src="wheel_disk.png?v=2" 
           alt="Spin Disk" 
           class="w-full h-full object-contain select-none"
           style="transform-origin: 50% 50%;"
@@ -276,7 +276,7 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
-                <img src="logo.png" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <img src="logo.png?v=2" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
               </div>
               <div class="flex flex-col">
@@ -526,7 +526,7 @@
       const lastSpunDate = localStorage.getItem(spunKey);
 
       if (lastSpunDate === today) {
-        alert('⚠️️ এই নম্বরটি দিয়ে আজ ইতিমধ্যে স্পিন করা হয়েছে!\nঅনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।');
+        alert('⚠ এই নম্বরটি দিয়ে আজ ইতিমধ্যে স্পিন করা হয়েছে!\nঅনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।');
         return;
       }
 
@@ -574,7 +574,7 @@
           colors: colors
         });
         confetti({
-          particleCount: 5,
+          particleCount: 4,
           angle: 120,
           spread: 60,
           origin: { x: 1 },
@@ -724,4 +724,4 @@
     });
   </script>
 </body>
-  </html>
+          </html>
