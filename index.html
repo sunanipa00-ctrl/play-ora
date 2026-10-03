@@ -20,9 +20,9 @@
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
 
-    /* রিবন স্ক্রোলের সাথে ম্যাচিং স্বচ্ছ ৩ডি ইনপুট */
+    /* রিবন স্ক্রোল ইনপুট স্টাইলিং */
     .royal-scroll-field {
-      background: linear-gradient(180deg, rgba(255, 244, 214, 0.95) 0%, rgba(235, 198, 126, 0.95) 100%);
+      background: linear-gradient(180deg, rgba(255, 244, 214, 0.96) 0%, rgba(235, 198, 126, 0.96) 100%);
       border: 1.5px solid #8D5C14;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.4);
       color: #38030B;
@@ -49,7 +49,7 @@
       box-shadow: 0 0 45px rgba(212,175,55,0.45), inset 0 0 20px rgba(0,0,0,0.85);
     }
 
-    /* বাস্তবসম্মত ৫.০ সেকেন্ড সাসপেন্স ঘূর্ণন */
+    /* ৫.০ সেকেন্ড সাসপেন্স ঘূর্ণন */
     .wheel-physics-rotation {
       transition: transform 5.0s cubic-bezier(0.12, 0.99, 0.24, 1);
     }
@@ -70,7 +70,7 @@
       <div onclick="goBackToHome()" class="flex items-center gap-2 cursor-pointer">
         <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
           <img 
-            src="logo.png?v=2" 
+            src="logo.png?v=10" 
             alt="Loot & Luxe" 
             class="w-full h-full object-cover"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -186,23 +186,22 @@
   <!-- ==================== ফুল-স্ক্রিন ডায়মন্ড ক্রাউন জ্যাকপট স্পিন মডাল ==================== -->
   <div id="spinModalOverlay" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center overflow-hidden">
     
-    <!-- সম্পূর্ণ ফ্রেম ক্যানভাস -->
     <div class="relative w-full h-full max-w-md max-h-screen aspect-[562/1000] mx-auto flex items-center justify-center overflow-hidden bg-[#180206]">
       
-      <!-- ১. ব্যাকগ্রাউন্ড আর্টওয়ার্ক (wheel_bg.png) -->
-      <img src="wheel_bg.png?v=2" alt="Royal Diamond Jackpot" class="w-full h-full object-fill select-none pointer-events-none" />
+      <!-- ১. ব্যাকগ্রাউন্ড ফ্রেম (wheel_bg.png) -->
+      <img src="wheel_bg.png?v=10" alt="Royal Diamond Jackpot" class="w-full h-full object-fill select-none pointer-events-none" />
 
       <!-- ২. ক্লোজ (X) বাটন -->
       <button onclick="closeSpinModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/75 text-amber-200 hover:text-white flex items-center justify-center text-base font-black border border-amber-400/50 z-30 active:scale-90 transition shadow-lg">✕</button>
 
-      <!-- ৩. ফ্রেমের সেন্টারে ঘোরন্ত আসল চাকা (wheel_disk.png) -->
+      <!-- ৩. ফ্রেমের সেন্টারে ঘূর্ণনশীল চাকা (wheel_disk.png) -->
       <div 
         class="absolute left-[16.8%] top-[25.2%] w-[66.4%] aspect-square rounded-full overflow-hidden z-10 pointer-events-none"
         style="box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);"
       >
         <img 
           id="fortuneWheel"
-          src="wheel_disk.png?v=2" 
+          src="wheel_disk.png?v=10" 
           alt="Spin Disk" 
           class="w-full h-full object-contain select-none"
           style="transform-origin: 50% 50%;"
@@ -276,7 +275,7 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg overflow-hidden border border-[#D4AF37]/50 shadow-xs bg-[#2A080D] flex items-center justify-center">
-                <img src="logo.png?v=2" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <img src="logo.png?v=10" alt="Loot & Luxe" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                 <span style="display:none;" class="text-amber-400 font-black text-xs">👑</span>
               </div>
               <div class="flex flex-col">
@@ -305,7 +304,7 @@
             <div class="ml-6 pl-2 border-l-2 border-amber-200/80 my-1.5 space-y-0.5 py-0.5">
               <span class="block px-2 text-[9.5px] font-black text-amber-700 tracking-wider uppercase mb-1">ক্যাটাগরি সমূহ</span>
               <a href="#" onclick="filterByCategory('watch'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>⌚</span><span>ঘড়ি (Watches)</span></a>
-              <a href="#" onclick="filterByCategory('sunglass'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>🕶️</span><span>সানগ্লাস (Sunglasses)</span></a>
+              <a href="#" onclick="filterByCategory('sunglass'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>🕶️️</span><span>সানগ্লাস (Sunglasses)</span></a>
               <a href="#" onclick="filterByCategory('perfume'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>🧪</span><span>আতর ও পারফিউম (Perfumes)</span></a>
               <a href="#" onclick="filterByCategory('wallet'); closeDrawer()" class="flex items-center gap-2.5 px-2 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-950 hover:bg-amber-50/60 rounded-lg transition"><span>👛</span><span>ওয়ালেট (Wallets)</span></a>
             </div>
@@ -526,7 +525,7 @@
       const lastSpunDate = localStorage.getItem(spunKey);
 
       if (lastSpunDate === today) {
-        alert('⚠ এই নম্বরটি দিয়ে আজ ইতিমধ্যে স্পিন করা হয়েছে!\nঅনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।');
+        alert('⚠️ এই নম্বরটি দিয়ে আজ ইতিমধ্যে স্পিন করা হয়েছে!\nঅনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।');
         return;
       }
 
@@ -724,4 +723,4 @@
     });
   </script>
 </body>
-          </html>
+  </html>
