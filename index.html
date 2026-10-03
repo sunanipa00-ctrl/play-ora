@@ -20,14 +20,14 @@
       background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
     }
 
-    /* রয়্যাল লাক্সারি মডাল ফ্রেম */
+    /* রয়্যাল লাক্সারি পপ-আপ ফ্রেম */
     .luxury-modal-card {
       background: radial-gradient(circle at 50% 15%, #46050e 0%, #1c0206 60%, #0d0103 100%);
       border: 2px solid #d4af37;
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(212, 175, 55, 0.35);
     }
 
-    /* গ্লাস-মরফিক গোল্ডেন ইনপুট */
+    /* প্রিমিয়াম গ্লাস-গোল্ড ইনপুট ফিল্ড */
     .glass-gold-input {
       background: rgba(255, 255, 255, 0.08);
       border: 1.5px solid rgba(212, 175, 55, 0.5);
@@ -56,11 +56,12 @@
       transform: scale(0.97);
     }
 
-    /* বাস্তবসম্মত ৫.০ সেকেন্ড সাসপেন্স ঘূর্ণন */
+    /* ৫.০ সেকেন্ড বাস্তবসম্মত সাসপেন্স ঘূর্ণন */
     .wheel-physics-rotation {
       transition: transform 5.0s cubic-bezier(0.12, 0.99, 0.24, 1);
     }
 
+    /* উইনিং কার্ড */
     .win-card-glow {
       background: radial-gradient(circle at 50% 20%, #4a0815 0%, #1c0206 100%);
       border: 2px solid #d4af37;
@@ -536,7 +537,7 @@
     let isSpinning = false;
     let countdownInterval = null;
 
-    // সাউন্ড ইফেক্ট ইঞ্জিন
+    // সাউন্ড ইফেক্ট ইঞ্জিন (ওয়েব অডিও এপিআই)
     function playTickSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -637,7 +638,7 @@
       const wheel = document.getElementById('fortuneWheel');
       wheel.classList.add('wheel-physics-rotation');
       
-      // সাউন্ড প্লেয়ার
+      // সাউন্ড ইফেক্ট সিমুলেশন
       let tickCount = 0;
       const tickInterval = setInterval(() => {
         playTickSound();
@@ -663,6 +664,7 @@
       document.getElementById('winnerNameText').innerText = winnerName;
       document.getElementById('winModalOverlay').classList.remove('hidden');
 
+      // কনফেটি ফায়ারওয়ার্কস
       const duration = 3.5 * 1000;
       const end = Date.now() + duration;
       const colors = ['#D4AF37', '#E02424', '#FDE68A', '#FFFFFF'];
@@ -826,4 +828,4 @@
     });
   </script>
 </body>
-            </html>
+  </html>
