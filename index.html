@@ -2,428 +2,228 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>সবুজ ঘরদোর | ঘরের কোণে এক টুকরো প্রকৃতি</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Confetti library for winning celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Hind Siliguri', sans-serif;
-      background-color: #FAF8F5;
-      color: #2D3748;
+      background-color: #F8F9FA;
+      color: #1A1A1A;
+      -webkit-tap-highlight-color: transparent;
     }
-    .bg-forest { background-color: #16382C; }
-    .text-forest { color: #16382C; }
-    .border-forest { border-color: #16382C; }
-    .accent-btn {
+    .brand-green { color: #16423C; }
+    .bg-brand-green { background-color: #16423C; }
+    .btn-order-now {
       background-color: #D97706;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
-    .accent-btn:hover {
+    .btn-order-now:active {
+      transform: scale(0.97);
       background-color: #B45309;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(217, 119, 6, 0.25);
     }
-    .product-card {
-      transition: all 0.3s ease;
+
+    /* চলমান ট্যাগলাইন অ্যানিমেশন */
+    @keyframes scrollTagline {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0%); }
     }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px -10px rgba(22, 56, 44, 0.15);
+    .tagline-ticker {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: scrollTagline 14s linear infinite;
+    }
+
+    /* স্পিন হুইল স্টাইলিং */
+    #wheel {
+      transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+    }
+
+    /* স্ক্র্যাচ কার্ড ক্যানভাস */
+    #scratchCanvas {
+      touch-action: none;
     }
   </style>
 </head>
-<body class="antialiased">
+<body class="pb-20 select-none">
 
-  <!-- টপ নোটিফিকেশন বার -->
-  <div class="bg-forest text-amber-200 text-xs sm:text-sm py-2 px-4 text-center font-medium">
-    🌿 সীমিত স্টক! প্রথম অর্ডারে ডেলিভারি চার্জ সম্পূর্ণ ফ্রি! কোড: <span class="font-bold underline">SOBUJ100</span>
-  </div>
-
-  <!-- নেভিগেশন বার -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-      <div class="flex items-center space-x-3 space-x-reverse">
-        <div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-white text-xl font-bold shadow-sm">
-          🌱
-        </div>
-        <div>
-          <span class="text-2xl font-bold text-forest tracking-tight block leading-none">সবুজ ঘরদোর</span>
-          <span class="text-[11px] text-stone-500 font-medium">ঘরের কোণে এক টুকরো প্রকৃতি</span>
-        </div>
+  <!-- টপ অ্যাপ বার / হেডার -->
+  <header class="sticky top-0 z-40 bg-white border-b border-stone-200 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <button class="text-stone-700 text-xl font-bold p-1">☰</button>
+      <div class="flex items-center gap-1.5">
+        <span class="text-xl">🌿</span>
+        <span class="text-xl font-black tracking-tight brand-green">সবুজ ঘরদোর</span>
       </div>
-      <nav class="hidden md:flex space-x-8 space-x-reverse text-stone-700 font-medium text-sm">
-        <a href="#products" class="hover:text-forest transition">কালেকশন</a>
-        <a href="#quiz" class="hover:text-forest transition">প্ল্যান্ট গাইড কুইজ</a>
-        <a href="#reviews" class="hover:text-forest transition">রিভিউ</a>
-        <a href="#about" class="hover:text-forest transition">আমাদের কথা</a>
-      </nav>
-      <div class="flex items-center space-x-3">
-        <a href="#products" class="accent-btn text-white text-sm font-semibold px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-1.5">
-          <span>অর্ডার করুন</span> 🛒
-        </a>
-      </div>
+    </div>
+    <div class="flex items-center text-stone-600 text-lg">
+      <button class="p-1 hover:text-stone-900">🔍</button>
     </div>
   </header>
 
-  <!-- হিরো সেকশন -->
-  <section class="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-      
-      <div class="lg:col-span-7 space-y-5">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
-          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-          আধুনিক ইনডোর গার্ডেনিং সল্যুশন
-        </div>
-        <h1 class="text-3xl sm:text-5xl font-extrabold text-stone-900 leading-tight">
-          ঘরের ভেতরেই আনুন <br>
-          <span class="text-forest">প্রকৃতির চিরসবুজ সজীবতা</span>
-        </h1>
-        <p class="text-stone-600 text-base sm:text-lg leading-relaxed max-w-xl">
-          ফ্ল্যাটে রোদ পৌঁছায় না বলে কি শখের গাছগুলো শুকিয়ে যাচ্ছে? "সবুজ ঘরদোর" নিয়ে এসেছে প্রিমিয়াম গ্রো লাইট, সেলফ-ওয়াটারিং পট ও নর্ডিক ডেকর—আপনার ঘরকে করবে সতেজ ও নান্দনিক।
-        </p>
-        <div class="pt-2 flex flex-col sm:flex-row gap-3">
-          <a href="#products" class="accent-btn text-white text-center font-bold px-7 py-3.5 rounded-xl shadow-md text-base">
-            কালেকশন দেখুন &rarr;
-          </a>
-          <a href="#quiz" class="bg-white border-2 border-forest text-forest hover:bg-emerald-50 font-bold px-6 py-3.5 rounded-xl text-center transition text-base">
-            কোন পটটি আপনার জন্য সেরা? (কুইজ)
-          </a>
-        </div>
-        
-        <!-- ট্রাস্ট সিগন্যাল -->
-        <div class="pt-6 grid grid-cols-3 gap-4 border-t border-stone-200 max-w-lg">
-          <div>
-            <p class="text-xl font-bold text-forest">১০০%</p>
-            <p class="text-xs text-stone-500">টেস্টেড প্রোডাক্ট</p>
-          </div>
-          <div>
-            <p class="text-xl font-bold text-forest">ক্যাশ অন</p>
-            <p class="text-xs text-stone-500">ডেলিভারি সুবিধা</p>
-          </div>
-          <div>
-            <p class="text-xl font-bold text-forest">২৪-৪৮ ঘণ্টা</p>
-            <p class="text-xs text-stone-500">দ্রুত ডেলিভারি</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-5 relative">
-        <div class="relative mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white">
-          <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=800&q=80" alt="Indoor plants with aesthetic lighting" class="w-full h-[420px] object-cover">
-          <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3.5 rounded-xl shadow-sm border border-stone-100 flex items-center justify-between">
-            <div>
-              <p class="text-xs font-semibold text-stone-500">হিরো প্রোডাক্ট</p>
-              <p class="text-sm font-bold text-stone-900">Halo LED Grow Light</p>
-            </div>
-            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded">ইন-স্টক (১৫ পিস)</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- প্রবলেম-সলভিং ফিচারস সেকশন -->
-  <section class="py-12 bg-white border-y border-stone-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200">
-          <div class="text-3xl mb-3">💡</div>
-          <h3 class="text-lg font-bold text-stone-900 mb-1">রোদের ঘাটতি পূরণ</h3>
-          <p class="text-sm text-stone-600">রোদের অভাবে ঘরের ভেতরের গাছ পাতা ঝরায়? Halo Grow Light নিশ্চিত করে সূর্যালোকের মতো সঠিক স্পেকট্রাম।</p>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200">
-          <div class="text-3xl mb-3">💧</div>
-          <h3 class="text-lg font-bold text-stone-900 mb-1">পানি দেওয়ার ঝামেলা নেই</h3>
-          <p class="text-sm text-stone-600">কর্মব্যস্ততায় গাছে পানি দিতে ভুলে যান? সেলফ-ওয়াটারিং পট শিকড়ে সঠিক আর্দ্রতা বজায় রাখে টানা ৭-১০ দিন।</p>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200">
-          <div class="text-3xl mb-3">✨</div>
-          <h3 class="text-lg font-bold text-stone-900 mb-1">নর্ডিক নান্দনিকতা</h3>
-          <p class="text-sm text-stone-600">সাধারণ প্লাস্টিকের টব ছেড়ে আপনার লিভিং রুম বা কাজের টেবিল সাজান মিনিমালিস্টিক প্রিমিয়াম নর্ডিক ভাসে।</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- প্রোডাক্ট শোকেস / ক্যাটালগ সেকশন -->
-  <section id="products" class="py-16 md:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="text-3xl font-extrabold text-stone-900">আমাদের সিলেক্টিভ কালেকশন</h2>
-        <p class="text-stone-600 mt-2">সীমিত স্টক—প্রতিটি পণ্য বাছাই করা হয়েছে আপনার ইনডোর প্ল্যান্ট ও ঘরের সৌন্দর্যের কথা ভেবে।</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <!-- কার্ড ১: Halo LED Grow Light -->
-        <div class="product-card bg-white rounded-2xl overflow-hidden border border-stone-200 flex flex-col justify-between">
-          <div>
-            <div class="relative h-56 bg-stone-100 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?auto=format&fit=crop&w=600&q=80" alt="Halo LED Grow Light" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-red-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">বেস্টসেলার</span>
-            </div>
-            <div class="p-4 space-y-2">
-              <h3 class="font-bold text-lg text-stone-900">Halo LED Grow Light</h3>
-              <p class="text-xs text-stone-500 line-clamp-2">ইনডোর প্ল্যান্টের দ্রুত বৃদ্ধির জন্য বিশেষায়িত স্পেকট্রাম। কম বিদ্যুৎ খরচে দীর্ঘস্থায়ী আলো।</p>
-              <div class="pt-2 flex items-baseline gap-2">
-                <span class="text-xl font-bold text-forest">৳ ১,৪৫০</span>
-                <span class="text-xs text-stone-400 line-through">৳ ১,৮৫০</span>
-              </div>
-            </div>
-          </div>
-          <div class="p-4 pt-0">
-            <button onclick="openOrderModal('Halo LED Grow Light', 1450)" class="w-full accent-btn text-white py-2.5 rounded-xl font-semibold text-sm">
-              অর্ডার করুন
-            </button>
-          </div>
-        </div>
-
-        <!-- কার্ড ২: Self-Watering Pots -->
-        <div class="product-card bg-white rounded-2xl overflow-hidden border border-stone-200 flex flex-col justify-between">
-          <div>
-            <div class="relative h-56 bg-stone-100 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=600&q=80" alt="Self-Watering Pots" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-forest text-white text-[11px] font-bold px-2 py-0.5 rounded-full">৪ ইঞ্চি সাইজ</span>
-            </div>
-            <div class="p-4 space-y-2">
-              <h3 class="font-bold text-lg text-stone-900">Self-Watering Pots (4")</h3>
-              <p class="text-xs text-stone-500 line-clamp-2">ব্যস্ত মানুষের পারফেক্ট চয়েস। রিজার্ভার থেকে স্বয়ংক্রিয়ভাবে শিকড় প্রয়োজনীয় পানি টেনে নেয়।</p>
-              <div class="pt-2 flex items-baseline gap-2">
-                <span class="text-xl font-bold text-forest">৳ ৩৫০</span>
-                <span class="text-xs text-stone-400 line-through">৳ ৪৫০</span>
-              </div>
-            </div>
-          </div>
-          <div class="p-4 pt-0">
-            <button onclick="openOrderModal('Self-Watering Pots (4 inch)', 350)" class="w-full accent-btn text-white py-2.5 rounded-xl font-semibold text-sm">
-              অর্ডার করুন
-            </button>
-          </div>
-        </div>
-
-        <!-- কার্ড ৩: Nordic Resin Vases -->
-        <div class="product-card bg-white rounded-2xl overflow-hidden border border-stone-200 flex flex-col justify-between">
-          <div>
-            <div class="relative h-56 bg-stone-100 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80" alt="Nordic Resin Vases" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-stone-800 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">প্রিমিয়াম ডেকর</span>
-            </div>
-            <div class="p-4 space-y-2">
-              <h3 class="font-bold text-lg text-stone-900">Nordic Resin Vases</h3>
-              <p class="text-xs text-stone-500 line-clamp-2">মডার্ন ও স্ক্যান্ডিনেভিয়ান ডিজাইন। লিভিং রুম ও অফিস ডেস্কে এনে দেবে রাজকীয় ছোঁয়া।</p>
-              <div class="pt-2 flex items-baseline gap-2">
-                <span class="text-xl font-bold text-forest">৳ ৯৫০</span>
-                <span class="text-xs text-stone-400 line-through">৳ ১,২০০</span>
-              </div>
-            </div>
-          </div>
-          <div class="p-4 pt-0">
-            <button onclick="openOrderModal('Nordic Resin Vases', 950)" class="w-full accent-btn text-white py-2.5 rounded-xl font-semibold text-sm">
-              অর্ডার করুন
-            </button>
-          </div>
-        </div>
-
-        <!-- কার্ড ৪: Indoor Mini Grow Kit -->
-        <div class="product-card bg-white rounded-2xl overflow-hidden border border-stone-200 flex flex-col justify-between">
-          <div>
-            <div class="relative h-56 bg-stone-100 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=600&q=80" alt="Indoor Mini Grow Kit" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">গিফটিং স্পেশাল</span>
-            </div>
-            <div class="p-4 space-y-2">
-              <h3 class="font-bold text-lg text-stone-900">Indoor Mini Grow Kit</h3>
-              <p class="text-xs text-stone-500 line-clamp-2">নতুনদের জন্য কমপ্লিট সল্যুশন। পট, মিডিয়াম ও নির্দেশিকা সহ অল-ইন-ওয়ান প্যাকেজ।</p>
-              <div class="pt-2 flex items-baseline gap-2">
-                <span class="text-xl font-bold text-forest">৳ ১,১৫০</span>
-                <span class="text-xs text-stone-400 line-through">৳ ১,৫০০</span>
-              </div>
-            </div>
-          </div>
-          <div class="p-4 pt-0">
-            <button onclick="openOrderModal('Indoor Mini Grow Kit', 1150)" class="w-full accent-btn text-white py-2.5 rounded-xl font-semibold text-sm">
-              অর্ডার করুন
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ইন্টারেক্টিভ কুইজ সেকশন -->
-  <section id="quiz" class="py-14 bg-emerald-950 text-white">
-    <div class="max-w-3xl mx-auto px-4 text-center">
-      <span class="text-amber-400 text-sm font-semibold tracking-wider uppercase">দ্রুত গাইড</span>
-      <h2 class="text-2xl sm:text-3xl font-bold mt-1 mb-4">আপনার ঘরের জন্য কোন প্রোডাক্টটি সেরা?</h2>
-      <p class="text-stone-300 text-sm mb-8">মাত্র ২টি ছোট প্রশ্নের উত্তর দিয়ে জেনে নিন আপনার ঘরের পরিবেশের সাথে কোনটি সেরা মানাবে:</p>
-
-      <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-right space-y-6">
-        <div>
-          <label class="block text-sm font-medium mb-2 text-stone-200">১. আপনার ঘরে দিনের বেলা কেমন আলো আসে?</label>
-          <div class="grid grid-cols-2 gap-3 text-sm">
-            <button type="button" class="quiz-btn p-3 rounded-xl border border-white/20 hover:border-amber-400 hover:bg-white/5 transition" onclick="selectAnswer(this)">খুব কম বা কোনো রোদ নেই</button>
-            <button type="button" class="quiz-btn p-3 rounded-xl border border-white/20 hover:border-amber-400 hover:bg-white/5 transition" onclick="selectAnswer(this)">পর্যাপ্ত উজ্জ্বল আলো থাকে</button>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-2 text-stone-200">২. আপনার প্রধান উদ্দেশ্য কী?</label>
-          <div class="grid grid-cols-2 gap-3 text-sm">
-            <button type="button" class="quiz-btn p-3 rounded-xl border border-white/20 hover:border-amber-400 hover:bg-white/5 transition" onclick="selectAnswer(this)">গাছের যত্ন সহজ করা</button>
-            <button type="button" class="quiz-btn p-3 rounded-xl border border-white/20 hover:border-amber-400 hover:bg-white/5 transition" onclick="selectAnswer(this)">ঘরের সৌন্দর্য বৃদ্ধি (ডেকর)</button>
-          </div>
-        </div>
-
-        <button onclick="calculateRecommendation()" class="w-full accent-btn text-white py-3 rounded-xl font-bold text-base mt-4">
-          সুপারিশ দেখুন
-        </button>
-
-        <div id="quiz-result" class="hidden mt-4 p-4 rounded-xl bg-amber-500/20 border border-amber-400 text-amber-200 text-sm font-medium text-center">
-          <!-- ডায়নামিক রেজাল্ট -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- কাস্টমার রিভিউ / সোশ্যাল প্রুফ -->
-  <section id="reviews" class="py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-stone-900">প্ল্যান্ট লাভারদের অভিজ্ঞতা</h2>
-        <p class="text-stone-500 text-sm mt-1">সবুজ ঘরদোরের সাথে যাদের ঘর হয়েছে আরও সতেজ</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-          <div class="flex text-amber-400 text-sm mb-2">★★★★★</div>
-          <p class="text-sm text-stone-600 mb-4">"আমার ডেস্কে কোনো আলো থাকত না। Halo Grow Light নেওয়ার পর থেকে আমার মানি প্ল্যান্টের পাতাগুলো এখন সবসময় চকচকে সবুজ থাকে!"</p>
-          <div class="font-bold text-sm text-stone-900">— ফারহানা হক, ধানমন্ডি</div>
-        </div>
-
-        <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-          <div class="flex text-amber-400 text-sm mb-2">★★★★★</div>
-          <p class="text-sm text-stone-600 mb-4">"অফিসের কাজে প্রায়ই ঢাকার বাইরে যেতে হয়। সেলফ-ওয়াটারিং পটগুলো আমাকে টেনশন ফ্রি করে দিয়েছে। দারুণ কোয়ালিটি।"</p>
-          <div class="font-bold text-sm text-stone-900">— তানভীর মাহমুদ, গুলশান</div>
-        </div>
-
-        <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
-          <div class="flex text-amber-400 text-sm mb-2">★★★★★</div>
-          <p class="text-sm text-stone-600 mb-4">"নর্ডিক ভাসটির ফিনিশিং এতো চমৎকার হবে ভাবিনি। প্যাকেজিংও অনেক সুরক্ষিত ছিল। ধন্যবাদ সবুজ ঘরদোর।"</p>
-          <div class="font-bold text-sm text-stone-900">— মেহরীন কবীর, উত্তরা</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- পেমেন্ট ও ট্রাস্ট ব্যাজ -->
-  <section class="py-8 bg-stone-100 border-t border-stone-200 text-center">
-    <div class="max-w-4xl mx-auto px-4">
-      <p class="text-xs uppercase tracking-widest text-stone-500 font-semibold mb-3">সহজ ও নিরাপদ পেমেন্ট মেথড</p>
-      <div class="flex flex-wrap items-center justify-center gap-6 text-sm font-semibold text-stone-700">
-        <span class="bg-white px-3 py-1.5 rounded-lg border border-stone-200 shadow-xs">🌸 বিকাশ (bKash)</span>
-        <span class="bg-white px-3 py-1.5 rounded-lg border border-stone-200 shadow-xs">🟠 নগদ (Nagad)</span>
-        <span class="bg-white px-3 py-1.5 rounded-lg border border-stone-200 shadow-xs">💳 কার্ড পেমেন্ট</span>
-        <span class="bg-white px-3 py-1.5 rounded-lg border border-stone-200 shadow-xs">📦 ক্যাশ অন ডেলিভারি</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ফুটার -->
-  <footer id="about" class="bg-forest text-stone-300 py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left sm:flex sm:justify-between sm:items-center">
-      <div>
-        <h4 class="text-xl font-bold text-white">সবুজ ঘরদোর</h4>
-        <p class="text-xs text-stone-400 mt-1">ঘরের কোণে এক টুকরো প্রকৃতি। শহুরে জীবনে সবুজের ছোঁয়া।</p>
-      </div>
-      <div class="mt-4 sm:mt-0 text-xs text-stone-400">
-        &copy; 2026 সবুজ ঘরদোর। সর্বস্বত্ব সংরক্ষিত।
-      </div>
-    </div>
-  </footer>
-
-  <!-- ১-ক্লিক অর্ডার পপ-আপ মডাল -->
-  <div id="orderModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl">
-      <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 text-2xl font-bold">&times;</button>
-      
-      <div class="text-center mb-4">
-        <span class="text-2xl">🌿</span>
-        <h3 class="text-xl font-bold text-stone-900 mt-1">অর্ডার কনফার্ম করুন</h3>
-        <p id="modalProductName" class="text-sm font-semibold text-forest"></p>
-        <p id="modalProductPrice" class="text-xs text-stone-500"></p>
-      </div>
-
-      <form id="checkoutForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">আপনার নাম *</label>
-          <input type="text" required placeholder="যেমন: রিয়াজ মোর্শেদ" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-forest text-sm">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">মোবাইল নম্বর *</label>
-          <input type="tel" required placeholder="017XXXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-forest text-sm">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">পূর্ণ ঠিকানা *</label>
-          <textarea required rows="2" placeholder="বাসা/ফ্ল্যাট নম্বর, রোড, এলাকা, জেলা" class="w-full px-3.5 py-2 rounded-xl border border-stone-300 focus:outline-none focus:border-forest text-sm"></textarea>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-stone-700 mb-1">পেমেন্ট মেথড</label>
-          <select class="w-full px-3 py-2 rounded-xl border border-stone-300 text-sm focus:outline-none focus:border-forest bg-stone-50">
-            <option>ক্যাশ অন ডেলিভারি (পণ্য হাতে পেয়ে টাকা দিন)</option>
-            <option>বিকাশ / নগদ (অগ্রিম পেমেন্ট)</option>
-          </select>
-        </div>
-        
-        <button type="submit" class="w-full accent-btn text-white py-3 rounded-xl font-bold text-sm shadow-md mt-2">
-          অর্ডার সম্পূর্ণ করুন (৳ <span id="btnPrice"></span>)
-        </button>
-      </form>
+  <!-- বাম থেকে ডানে চলমান ট্যাগলাইন বার -->
+  <div class="bg-[#16423C] text-amber-200 py-2 border-b border-[#0f2d29] overflow-hidden">
+    <div class="tagline-ticker text-xs font-bold tracking-wide">
+      <span class="mx-4">🌿 ঘরের কোণে এক টুকরো প্রকৃতি</span>
+      <span class="mx-4">•</span>
+      <span class="mx-4">🌿 ঘরের কোণে এক টুকরো প্রকৃতি</span>
+      <span class="mx-4">•</span>
+      <span class="mx-4">🌿 ঘরের কোণে এক টুকরো প্রকৃতি</span>
+      <span class="mx-4">•</span>
+      <span class="mx-4">🌿 ঘরের কোণে এক টুকরো প্রকৃতি</span>
+      <span class="mx-4">•</span>
     </div>
   </div>
 
-  <script>
-    let currentPrice = 0;
+  <!-- হিরো ব্যানার -->
+  <div class="relative w-full aspect-[16/10] bg-stone-200 overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=900&q=80" alt="Indoor Greenery" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
+      <span class="text-amber-300 text-xs font-bold uppercase tracking-wider">সীমিত স্টক কালেকশন</span>
+      <h1 class="text-2xl font-black leading-tight mt-0.5">ঘরের কোণে এক টুকরো প্রকৃতি</h1>
+      <p class="text-[11px] text-stone-300 mt-1">ফ্ল্যাটে সূর্যালোকের চিন্তা ছাড়াই ঘরের ভেতরে আনুন তরতাজা সজীবতা।</p>
+    </div>
+  </div>
 
-    function openOrderModal(productName, price) {
-      currentPrice = price;
-      document.getElementById('modalProductName').innerText = productName;
-      document.getElementById('modalProductPrice').innerText = 'মূল্য: ৳ ' + price;
-      document.getElementById('btnPrice').innerText = price;
-      document.getElementById('orderModal').classList.remove('hidden');
-    }
+  <!-- ক্যাম্পেইন ও গেম শর্টকাট বোতাম -->
+  <div class="p-2.5 bg-amber-50 border-b border-amber-200 flex justify-between items-center text-xs">
+    <span class="font-bold text-amber-900" id="campaignStatusText">🎁 স্পিন করে জিতে নিন আকর্ষণীয় অফার!</span>
+    <button onclick="checkGameModal()" class="bg-amber-600 text-white font-bold px-3 py-1 rounded-full text-[11px] shadow-sm">
+      গেম খেলুন 🎮
+    </button>
+  </div>
 
-    function closeOrderModal() {
-      document.getElementById('orderModal').classList.add('hidden');
-    }
+  <!-- সেকশন হেডার: NEW ARRIVAL -->
+  <div class="bg-[#FFF8EE] py-2.5 px-4 text-center border-y border-amber-200/60 my-2">
+    <h2 class="text-xs font-extrabold tracking-widest text-[#B45309] uppercase">✦ NEW ARRIVAL • নতুন কালেকশন ✦</h2>
+  </div>
 
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      alert('ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে। আমাদের টিম খুব দ্রুত আপনার সাথে যোগাযোগ করবে।');
-      closeOrderModal();
-    }
+  <!-- ২-কলাম প্রোডাক্ট গ্রিড -->
+  <main class="max-w-4xl mx-auto px-2">
+    <div class="grid grid-cols-2 gap-2">
 
-    function selectAnswer(btn) {
-      const parent = btn.parentElement;
-      parent.querySelectorAll('.quiz-btn').forEach(b => {
-        b.classList.remove('bg-amber-500', 'text-white', 'border-amber-400');
-      });
-      btn.classList.add('bg-amber-500', 'text-white', 'border-amber-400');
-    }
+      <!-- প্রোডাক্ট ১: Halo LED Grow Light -->
+      <div class="bg-white rounded-xl overflow-hidden border border-stone-200 flex flex-col justify-between shadow-xs">
+        <div class="relative aspect-square bg-[#F3F4F6] p-2 flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?auto=format&fit=crop&w=400&q=80" alt="Halo LED Grow Light" class="max-h-full max-w-full object-contain">
+        </div>
+        <div class="p-2.5">
+          <h3 class="text-xs font-bold text-stone-800 line-clamp-1">Halo LED Grow Light</h3>
+          <p class="text-[10px] text-stone-400 mt-0.5">সূর্যালোকের ঘাটতি পূরণ করে</p>
+          <div class="flex items-baseline gap-1.5 mt-1">
+            <span class="text-sm font-extrabold brand-green">৳ ১,৪৫০</span>
+            <span class="text-[10px] text-stone-400 line-through">৳ ১,৮৫০</span>
+          </div>
+          <button onclick="openQuickOrder('Halo LED Grow Light', 1450)" class="w-full mt-2 btn-order-now text-white text-xs font-bold py-2 rounded-lg shadow-sm">
+            Order Now 🛒
+          </button>
+        </div>
+      </div>
 
-    function calculateRecommendation() {
-      const resultBox = document.getElementById('quiz-result');
-      resultBox.classList.remove('hidden');
-      resultBox.innerHTML = '✨ আপনার পছন্দের জন্য সেরা সাজেশন: <b>Halo LED Grow Light</b> ও <b>Self-Watering Pot</b> এর কম্বো!';
-    }
-  </script>
-</body>
-</html>
+      <!-- প্রোডাক্ট ২: Self-Watering Pots -->
+      <div class="bg-white rounded-xl overflow-hidden border border-stone-200 flex flex-col justify-between shadow-xs">
+        <div class="relative aspect-square bg-[#F3F4F6] p-2 flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=400&q=80" alt="Self-Watering Pots" class="max-h-full max-w-full object-contain">
+          <span class="absolute top-2 left-2 bg-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">২০ পিস (৪ ইঞ্চি)</span>
+        </div>
+        <div class="p-2.5">
+          <h3 class="text-xs font-bold text-stone-800 line-clamp-1">Self-Watering Pot</h3>
+          <p class="text-[10px] text-stone-400 mt-0.5">৭-১০ দিন পানি দেওয়ার ঝামেলাহীন</p>
+          <div class="flex items-baseline gap-1.5 mt-1">
+            <span class="text-sm font-extrabold brand-green">৳ ৩৫০</span>
+            <span class="text-[10px] text-stone-400 line-through">৳ ৪৫০</span>
+          </div>
+          <button onclick="openQuickOrder('Self-Watering Pots (4 inch)', 350)" class="w-full mt-2 btn-order-now text-white text-xs font-bold py-2 rounded-lg shadow-sm">
+            Order Now 🛒
+          </button>
+        </div>
+      </div>
+
+      <!-- প্রোডাক্ট ৩: Nordic Resin Vases -->
+      <div class="bg-white rounded-xl overflow-hidden border border-stone-200 flex flex-col justify-between shadow-xs">
+        <div class="relative aspect-square bg-[#F3F4F6] p-2 flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=400&q=80" alt="Nordic Resin Vases" class="max-h-full max-w-full object-contain">
+          <span class="absolute top-2 left-2 bg-stone-700 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">১০ পিস (By Sea)</span>
+        </div>
+        <div class="p-2.5">
+          <h3 class="text-xs font-bold text-stone-800 line-clamp-1">Nordic Resin Vases</h3>
+          <p class="text-[10px] text-stone-400 mt-0.5">আধুনিক এস্থেটিক হোম ডেকর</p>
+          <div class="flex items-baseline gap-1.5 mt-1">
+            <span class="text-sm font-extrabold brand-green">৳ ৯৫০</span>
+            <span class="text-[10px] text-stone-400 line-through">৳ ১,২০০</span>
+          </div>
+          <button onclick="openQuickOrder('Nordic Resin Vases', 950)" class="w-full mt-2 btn-order-now text-white text-xs font-bold py-2 rounded-lg shadow-sm">
+            Order Now 🛒
+          </button>
+        </div>
+      </div>
+
+      <!-- প্রোডাক্ট ৪: Indoor Mini Grow Kit -->
+      <div class="bg-white rounded-xl overflow-hidden border border-stone-200 flex flex-col justify-between shadow-xs">
+        <div class="relative aspect-square bg-[#F3F4F6] p-2 flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=400&q=80" alt="Indoor Mini Grow Kit" class="max-h-full max-w-full object-contain">
+          <span class="absolute top-2 left-2 bg-emerald-700 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">১০ পিস (By Air)</span>
+        </div>
+        <div class="p-2.5">
+          <h3 class="text-xs font-bold text-stone-800 line-clamp-1">Indoor Mini Grow Kit</h3>
+          <p class="text-[10px] text-stone-400 mt-0.5">নতুনদের কমপ্লিট সল্যুশন</p>
+          <div class="flex items-baseline gap-1.5 mt-1">
+            <span class="text-sm font-extrabold brand-green">৳ ১,১৫০</span>
+            <span class="text-[10px] text-stone-400 line-through">৳ ১,৫০০</span>
+          </div>
+          <button onclick="openQuickOrder('Indoor Mini Grow Kit', 1150)" class="w-full mt-2 btn-order-now text-white text-xs font-bold py-2 rounded-lg shadow-sm">
+            Order Now 🛒
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- মোবাইল বটম বার (হোম, ক্যাটাগরি, চ্যাট, রিভিউ, প্রোফাইল) -->
+  <footer class="fixed bottom-0 inset-x-0 bg-white border-t border-stone-200 py-1.5 px-4 flex justify-between items-center z-40 text-[10px] font-medium text-stone-500">
+    <a href="#" class="flex flex-col items-center brand-green font-bold">
+      <span class="text-lg leading-none">🏠</span>
+      <span class="mt-0.5">হোম</span>
+    </a>
+    <a href="#" class="flex flex-col items-center hover:text-stone-900">
+      <span class="text-lg leading-none">▦</span>
+      <span class="mt-0.5">ক্যাটাগরি</span>
+    </a>
+    <a href="https://wa.me/" class="flex flex-col items-center hover:text-stone-900">
+      <span class="text-lg leading-none">💬</span>
+      <span class="mt-0.5">চ্যাট</span>
+    </a>
+    <a href="#reviews" class="flex flex-col items-center text-amber-500 font-bold">
+      <span class="text-lg leading-none">⭐</span>
+      <span class="mt-0.5">রিভিউ</span>
+    </a>
+    <a href="#" onclick="checkGameModal()" class="flex flex-col items-center hover:text-stone-900">
+      <span class="text-lg leading-none">👤</span>
+      <span class="mt-0.5">প্রোফাইল</span>
+    </a>
+  </footer>
+
+  <!-- ==================== গ্যামিফিকেশন মডালসমূহ ==================== -->
+
+  <!-- লেভেল ১: স্পিন টু উইন মডাল -->
+  <div id="spinModal" class="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl w-full max-w-sm p-5 text-center relative shadow-2xl overflow-hidden">
+      <button onclick="closeModal('spinModal')" class="absolute top-3 right-4 text-stone-400 hover:text-stone-700 text-2xl font-bold">&times;</button>
+      
+      <span class="text-2xl">🎡</span>
+      <h3 class="text-lg font-black text-stone-900 mt-1">ফ্রি লাকি স্পিন হুইল</h3>
+      <p class="text-xs text-stone-500 mb-3">নাম ও মোবাইল নম্বর দিন এবং জিতে নিন নিশ্চিত ছাড়!</p>
+
+      <!-- স্পিন হুইল গ্রাফিক্স -->
+      <div class="relative w-48 h-48 mx-auto my-2 flex items-center justify-center">
+        <!-- পয়েন্টার -->
+        <div class="absolute -top-1 z-20 text-red-600 text-xl font-bold">▼</div>
+        <!-- হুইল সার্কেল -->
+        <svg id="wheel" class="w-full h-full rounded-full shadow-lg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="48" fill="#16423C"
